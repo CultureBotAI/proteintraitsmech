@@ -1,0 +1,931 @@
+# Review of requires GTP
+
+- Review: 20261021T123806Z-gtp-chebi15996
+- Repository: CultureBotAI/proteintraitsmech
+- Started UTC: 2026-10-21T12:31:24Z
+- Finished UTC: 2026-10-21T12:38:06Z
+- Reviewer: Codex (unknown)
+- Completion: completed
+- Verdict: needs_curation
+- Scientific review: true
+
+## Summary
+
+Neutral GTP identity is supported and its positive allosteric activation context is retained. Findings are confirmed major chemical-to-protein-trait equivalence and confirmed minor category-token synonym. Exact-state obligatory non-substrate requirement remains explicitly unqualified, without a universal negative inference.
+
+## Scope And Provenance
+
+Field-by-field scientific review of one complete ProteinTraitRecord.
+
+Selection: Path-order position 4 in batch 023. Fresh main inventory has 429359 records; union with validated published review heads (batch-001 at b36c4b5ad6c1ee1f31f1cc8c4da5cad94651719d; batch-002 at 357a22ff037976ab142a6bf2267191b5f4a98d21; batch-003 at cc32a8c59ea04af980930b521773705380a9d85a; batch-004 at 23d5cee9fdad2ee701ca7d5cadfc76b54df242ca; batch-005 at 678797be94bf7bcf5673a5c9dcd2e779ec1c76cc; batch-006 at 1696e53c414be3be3641f470a8eade2ec004b6b1; batch-007 at ecd1ed5f09754b6cee1695d813f62f9b23b6ccf5; batch-008 at 914248190c8fd158835c16572946efde3dd87af4; batch-009 at 12d47e9145517b395c6ffdacd172003af66f5618; batch-010 at d51f823a5de8645ec50586992dc9e2e27fdef83f; batch-011 at 3f0697b8989b56af606b2eee7248b55fa21cd4f5; batch-012 at 86f94d00a00a8b0fbaa16d5301a35ff03fa8abc0; batch-013 at ef73f3abddbb3786a9d95cc0e4616aeaea5ca3fb; batch-014 at dc70a3cb9267c42c78bc4c356ec28109fb45114f; batch-015 at 10d0148878b3b2e203d2f368ac3b3fd48c8b0e50; batch-016 at 8a2bb4c2441c87fb0eeda6e7623c87c0e0a6c1fd; batch-017 at 952d4d2227f24b9d7a96481536971328f8c9e7c9; batch-018 at 63c8c7d6546a6e5e23c634b191f7dbb9791c6a3c; batch-019 at a14da7a2c18c5f53a33fb69c8556ca6de9526a87; batch-020 at 58ea13ba743688b992e16e34888a75384d259bc7; batch-021 at 27121a6951a72021e2037a04ee1e1424215a61df; batch-022 at 484164d64a30c3578caabf4600044501f6c73ce5) covers 218 record paths, leaving 429141 before this batch. 23 inventories were combined. Published branch coverage is not described as merged main. Snapshot-row context paths are excluded.
+Coverage: full; 1 reviewed / 1 in the declared population.
+Source: working_tree at Git base 6cbcac34bb17f44ea7516dd3308d890367014e2b.
+Working-tree hashes do not imply those bytes were committed.
+
+| Target | Path / selector | Kind | Label |
+| --- | --- | --- | --- |
+| proteintraitsmech:COFACTOR_REQ_CHEBI_15996 | data/traits/function/cofactor_requirement/chebi/gtp-chebi15996.yaml | generated | requires GTP |
+
+## Validation
+
+| Check | Status | Required | Targets | Result |
+| --- | --- | --- | --- | --- |
+| Closed schema | passed | True | proteintraitsmech:COFACTOR_REQ_CHEBI_15996 | Single target validated in closed mode. |
+| Closed schema and applicable source semantics | passed | True | proteintraitsmech:COFACTOR_REQ_CHEBI_15996 | One shared invocation scanned all ten listed batch targets; target SHA256 matches before and after execution. Source-specific checks apply where implemented; this gate does not qualify a protein requirement or prove semantic equivalence. |
+| Causal graph integrity | passed | True | proteintraitsmech:COFACTOR_REQ_CHEBI_15996 | No graphs in target; no molecular-mechanism coverage is inferred. |
+| Curation history validity | passed | True | proteintraitsmech:COFACTOR_REQ_CHEBI_15996 | Full curation-history gate; this review adds no history event. |
+| Source reference inspection | passed | True | proteintraitsmech:COFACTOR_REQ_CHEBI_15996 | Official ChEBI/OLS confirm neutral GTP and its asserted structural/conjugate context. Maintained alignment provenance and ChEBI licensing resolve; original MGA table provenance remains bounded. Positive GTP activation is preserved without overclaiming absolute requirement. |
+
+## Scientific And Domain Assessments
+
+### Maintained cofactor requirement emitter
+
+ownership: supported. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_15996.
+
+scripts/seed_cofactor_alignment.py owns this aligned requirement, with the captured ChEBI helper dependency and crosswalk provenance. No emitted record has been edited.
+
+### Protein trait class completeness
+
+completeness: supported. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_15996.
+
+The local identifier and requires-label denote a proposed reusable requirement class rather than a protein instance. Optional examples, sequence/structure representations and mechanisms are not automatically required; none are newly qualified.
+
+### Causal mechanism evidence
+
+graph: not_applicable. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_15996.
+
+No causal graph or molecular mechanism is asserted by this YAML; graph validation does not constitute mechanism evidence.
+
+### Requirement scope and scientific status
+
+scope: supported. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_15996.
+
+The target remains SEEDED, and no protein example, native review status or curation-history event is promoted by this observation.
+
+### GTP chemical identity and phosphate protonation
+
+identity: supported. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_15996.
+
+The GTP label, aliases and exact neutral source identity agree. Its four phosphate OH groups and ribose stereochemistry distinguish it from ionized conjugates. No source definition is supplied; the local requirement sentence is synthesized, not quoted chemical prose.
+
+### GTP allosteric activation and activity-dependent inhibition
+
+evidence: supported. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_15996.
+
+The CTP-synthase experiment supports a positive regulatory function, and the mitochondrial experiment supports a distinct inhibitor context. These observations cannot be reduced to a universal substrate-only or cofactor-only classification. Allosteric rate enhancement alone does not establish absolute activity dependence.
+
+### Exact-state non-substrate GTP requirement
+
+representation: unknown. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_15996.
+
+The alignment category supplies candidate selection, not a demonstrated activity-relative non-substrate requirement. Positive allosteric function is retained, while exact neutral-state dependence, bound protonation/metal speciation and obligatory requirement remain unqualified. No extra negative finding is inferred solely from the absence of a direct ChEBI cofactor relation.
+
+### Alignment-derived cofactor parent
+
+consistency: unknown. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_15996.
+
+The broader local cofactor-requirement parent resolves but was attached by build_aligned, not selected by a current direct chemical cofactor-role relation. Its activity-relative scope needs adjudication; the positive activation evidence does not establish every GTP-bearing protein or free charge state.
+
+### MGA alignment owner and source-release limits
+
+provenance: supported. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_15996.
+
+The captured alignment seeder, ChEBI dependency and exact crosswalk row explain the label and aliases. The original upstream MGA input, licence and release were not independently inspected. Current ChEBI chemistry and licence do not validate that upstream selection or establish chemical-to-protein equivalence.
+
+### Chemical entity versus protein requirement
+
+grounding: concern. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_15996.
+
+CHEBI:15996 denotes the inspected chemical entity or chemical class, while the local identifier denotes a protein functional requirement. Correct source identity, authentic roles and bounded functional context do not establish the true own-source equivalence asserted by xrefs.
+
+## Findings
+
+### F1: Chemical source entity is asserted equivalent to a protein requirement
+
+major / open / confirmed; issue key: chebi.cofactor-requirement.CHEBI-15996.chemical-entity-equivalence.
+
+CHEBI:15996 denotes the inspected chemical entity or chemical class, while the local identifier denotes a protein functional requirement. Correct source identity, authentic roles and bounded functional context do not establish the true own-source equivalence asserted by xrefs.
+
+### F2: Nucleotides grouping is emitted as a related synonym
+
+minor / open / confirmed; issue key: chebi.cofactor-requirement.CHEBI-15996.category-token-synonym.
+
+The RELATED_SYNONYM nucleotides comes from the alignment category, not an alternate name for this exact GTP requirement. The separate gtp alias is a legitimate label variant and should remain.
+
+## Recommended Actions And Acceptance Checks
+
+### A1
+
+Update build_aligned in scripts/seed_cofactor_alignment.py and its maintained input or registered override to remove chemical-to-protein-trait equality while preserving exact supported chemical scope and source provenance. Adjudicate the activity-relative role and chemical state before adding any typed COFACTOR participant. If that role is unsupported, retain provenance and explicit uncertainty without inventing a participant. Do not move the equality to mapped_xrefs, merge chemical states, require optional examples or promote native status.
+
+- The regenerated xrefs no longer equate the source chemical or biochemical role with the protein requirement. Provenance and the intended requirement scope remain explicit; optional participant absence is not itself a defect.
+- Use an audited existing-record selection route: the alignment main function selects missing IDs before force, so --force alone cannot regenerate this target. Preserve proper scientific aliases and original-input provenance limits.
+- Run just validate data/traits/function/cofactor_requirement/chebi/gtp-chebi15996.yaml; just validate-all data/traits/function/cofactor_requirement/chebi/gtp-chebi15996.yaml; and just audit-graphs data/traits/function/cofactor_requirement/chebi/gtp-chebi15996.yaml after the scoped repair.
+- For maintained writer changes add focused pytest coverage and run just audit-writers, just lint and just test. Regenerate the existing target through an audited route. Run full just validate-all before merging record changes; capture changed inputs and save a fresh structured review without overwriting this observation.
+
+### A2
+
+Stop emitting the broad category token as an alternate label in build_aligned while preserving it as provenance or appropriate grouping metadata. Retain gtp and the exact supported chemical identity; use an audited route that selects this existing ID rather than relying on --force alone.
+
+- Regenerated synonyms preserve scientific aliases and exclude nucleotides as an alternate label. A focused fixture distinguishes cofactor name/identifier from category metadata.
+- Run just validate data/traits/function/cofactor_requirement/chebi/gtp-chebi15996.yaml; just validate-all data/traits/function/cofactor_requirement/chebi/gtp-chebi15996.yaml; and just audit-graphs data/traits/function/cofactor_requirement/chebi/gtp-chebi15996.yaml after the scoped repair.
+- For maintained writer changes add focused pytest coverage and run just audit-writers, just lint and just test. Regenerate the existing target through an audited route. Run full just validate-all before merging record changes; capture changed inputs and save a fresh structured review without overwriting this observation.
+
+## Category Boundaries
+
+
+## Evidence
+
+| Evidence | Reference / locator | Support | Observation |
+| --- | --- | --- | --- |
+| record | data/traits/function/cofactor_requirement/chebi/gtp-chebi15996.yaml; Entire target YAML | supports | Entire alignment-owned YAML inspected, including the GTP requirement label/identifier, short nucleotide-category requirement definition, MGA attribution, RELATED_SYNONYM values gtp and nucleotides, cofactor parent, chemical xref and ChEBI licence. |
+| schema | src/proteintraitsmech/schema/proteintraitsmech.yaml; ProteinTraitRecord xrefs, parent_traits, chemical_participants; ChemicalParticipant/ChemicalRoleEnum; FUNC_COFACTOR_REQUIREMENT | supports | FUNC_COFACTOR_REQUIREMENT describes a non-substrate small molecule required for activity. xrefs asserts true own-source equivalence; chemical_participants represents chemical entities with typed roles. parent_traits asserts a broader class. Optional examples and causal graphs are not mandatory class representations. |
+| registry | download.yaml; ChEBI source entry | supports | ChEBI is declared CC-BY 4.0 with seed_chebi_cofactor.py, enrichment status/role and chemistry as a typed per-trait attribute. This identifies maintained source provenance; it does not establish a particular protein requirement. |
+| owner | scripts/seed_cofactor_alignment.py; load_mg_cofactors, build_aligned, main | supports | load_mg_cofactors reads sibling reference-table metadata; build_aligned synthesizes the protein requirement, attaches the broad cofactor parent, emits the chemical xref, and copies cofactor_id/category as RELATED_SYNONYM. main selects only missing chemical IDs before considering force, so an existing-record repair requires an audited scoped route. This local review does not access the sibling checkout. |
+| chebi-dependency | scripts/seed_chebi_cofactor.py; load_names, rid, clean, LICENSE and imported helpers | supports | The alignment emitter imports ChEBI chemical-name/definition loading, identifiers, formatting, output location and ChEBI licensing from this module. This dependency does not itself establish a role for an alignment-selected chemical. |
+| alignment-crosswalk | data/mappings/cofactor_crosswalk.tsv; Header and exact CHEBI:15996 row24 | supports | Captured crosswalk row24 records GTP, cofactor identifier gtp and category nucleotides for CHEBI:15996. This establishes maintained output provenance, not independent source-table release, licence or protein-requirement validation. |
+| local-parent-1 | data/traits/function/cofactor_requirement/chebi/cofactor-chebi23357.yaml; Entire local parent YAML | supports | Entire local parent YAML inspected: local requirement identifier, definition, category, hierarchy, source chemical-role xref and SEEDED status. Parent resolution does not establish that its own xrefs have equivalent-class semantics. |
+| licence | https://www.ebi.ac.uk/chebi/about/; Introduction and Licensing sections | supports | The inspected official Introduction and Licensing sections establish ChEBI chemical-entity/role scope and CC BY 4.0 licensing. This supports ChEBI attribution, not chemical-to-protein equivalence or licensing of an uninspected MGA table. |
+| release | https://www.ebi.ac.uk/ols4/api/ontologies/chebi; Inspected source response captured at the recorded UTC time | supports | Verified reused OLS metadata reports ChEBI version 256, loaded 2026-10-16. Original access time and digest are preserved. This is distinct from the live backend and does not identify the original seed release. |
+| chemical | https://www.ebi.ac.uk/chebi/backend/api/public/compound/15996/; Exact identity, names, definition or null, formula/charge, structure and complete outgoing relations; incoming relations inspected for target scope | supports | CHEBI:15996 is GTP, guanosine 5′-(tetrahydrogen triphosphate), C10H16N5O14P3, net 0. The structure retains four specified ribose stereocentres and four phosphate OH groups. Its actual prose definition is null. Direct roles are mouse/E. coli metabolite and uncoupling-protein inhibitor, not a direct cofactor role. Structural parents are guanosine 5′-phosphate and purine ribonucleoside 5′-triphosphate; its conjugate base is GTP(3−) CHEBI:57600. |
+| chemical-ontology | https://www.ebi.ac.uk/ols4/api/ontologies/chebi/terms?obo_id=CHEBI:15996; Inspected source response captured at the recorded UTC time | supports | OLS resolves CHEBI:15996 as nonobsolete. Its actual names, definition or empty description, and available chemical annotations were inspected; a null field is not filled by assumption. |
+| cofactor-role | https://www.ebi.ac.uk/chebi/backend/api/public/compound/23357/; Exact identity, names, definition or null, formula/charge, structure and complete outgoing relations; incoming relations inspected for target scope | supports | Cofactor CHEBI:23357 is a biochemical role for an organic molecule or ion required for enzyme activity, under biochemical role CHEBI:52206. This role is distinct from a protein class requiring a cofactor. |
+| conjugate | https://www.ebi.ac.uk/chebi/backend/api/public/compound/57600/; Exact identity, names, definition or null, formula/charge, structure and complete outgoing relations; incoming relations inspected for target scope | supports | GTP(3−) CHEBI:57600 is C10H13N5O14P3, net −3, formed by deprotonating three of the four phosphate OH groups while preserving ribose stereochemistry and nucleobase connectivity. Its source relations connect neutral GTP and GTP(4−); no physiological population or bound metal-complex identity is established here. |
+| phosphate-parent | https://www.ebi.ac.uk/chebi/backend/api/public/compound/37121/; Exact identity, names, definition or null, formula/charge, structure and complete outgoing relations; incoming relations inspected for target scope | supports | Guanosine 5′-phosphate CHEBI:37121 is a broader structural class under guanosine phosphate. Its definition and fixed chemical data are null in the inspected response. |
+| triphosphate-parent | https://www.ebi.ac.uk/chebi/backend/api/public/compound/37045/; Exact identity, names, definition or null, formula/charge, structure and complete outgoing relations; incoming relations inspected for target scope | supports | Purine ribonucleoside 5′-triphosphate CHEBI:37045 is a broader structural nucleotide class; current definition and fixed chemical data are null. Its ancestry does not independently assert a cofactor requirement. |
+| inhibitor-role | https://www.ebi.ac.uk/chebi/backend/api/public/compound/145437/; Exact identity, names, definition or null, formula/charge, structure and complete outgoing relations; incoming relations inspected for target scope | supports | Uncoupling protein inhibitor CHEBI:145437 is a role for an inhibitor acting on an uncoupling protein, under inhibitor. It is distinct from an obligatory non-substrate cofactor role. |
+| ctp-activation | https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=DOI%3A10.1046/j.1432-1033.2002.03175.x&amp;format=json&amp;resultType=core; Verified PMID/DOI and complete indexed abstract; full article not independently inspected | supports | PMID:12354108; DOI:10.1046/j.1432-1033.2002.03175.x. The complete primary abstract reports GTP allosteric stimulation of Lactococcus lactis CTP synthase and distinguishes its glutaminase/CTP-synthesis coupling from E. coli. It supports positive regulatory activity. The nonhydrolyzable analogue mentioned is an ATP-binding analogue, not a demonstration that every GTP molecule is unhydrolyzed or that GTP is absolutely required under all conditions. |
+| ucp-inhibition | https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID%3A24904988%20AND%20SRC%3AMED&amp;format=json&amp;resultType=core; Verified PMID/DOI and complete indexed abstract; full article not independently inspected | supports | PMID:24904988; DOI:10.1371/journal.pone.0098969. In isolated rat-kidney and human-endothelial mitochondria, added GTP and GDP had condition-dependent effects on respiration and membrane potential. The abstract supports GTP inhibition in the tested uncoupling-protein context, not an exact neutral-molecule protonation assignment, universal cofactor absence or protein requirement. |
+| bacterial-origin | https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID%3A21988831%20AND%20SRC%3AMED&amp;format=json&amp;resultType=core; Complete indexed model-paper abstract | context_only | PMID:21988831; DOI:10.1038/msb.2011.65. The complete E. coli model/knockout-screen abstract is source-origin context, not exact neutral-GTP requirement evidence. |
+| mouse-origin | https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID%3A19425150%20AND%20SRC%3AMED&amp;format=json&amp;resultType=core; Complete indexed model-paper abstract | context_only | PMID:19425150. The complete mouse reconstruction abstract supports the model nature of the source-origin reference, not a measurement of neutral GTP in a protein. |
+| validation-1 | just validate data/traits/function/cofactor_requirement/chebi/gtp-chebi15996.yaml; Executed 2026-10-21T12:32:07Z through 2026-10-21T12:32:09Z; exit 0 | supports | === validate-strict summary ===<br>  files scanned:      1<br>  files with ERROR:   0<br>  total ERROR rows:   0<br>  TSV:                reports/instance_validation_failures.tsv |
+| validation-2 | just validate-all data/traits/function/cofactor_requirement/chebi/glutathionate-1-chebi57925.yaml data/traits/function/cofactor_requirement/chebi/glutathione-chebi16856.yaml data/traits/function/cofactor_requirement/chebi/group-transfer-coenzymes-chebi24430.yaml data/traits/function/cofactor_requirement/chebi/gtp-chebi15996.yaml data/traits/function/cofactor_requirement/chebi/heme-chebi30413.yaml data/traits/function/cofactor_requirement/chebi/heme-d-cis-diol-2-chebi62814.yaml data/traits/function/cofactor_requirement/chebi/heme-d-cis-diol-chebi62811.yaml data/traits/function/cofactor_requirement/chebi/heme-o-chebi24480.yaml data/traits/function/cofactor_requirement/chebi/ho-chebi49648.yaml data/traits/function/cofactor_requirement/chebi/hydrogen-peroxide-chebi16240.yaml; Executed 2026-10-21T12:31:57Z through 2026-10-21T12:33:46Z; exit 0 | supports | === validate-strict summary ===<br>  files scanned:      10<br>  files with ERROR:   0<br>  total ERROR rows:   0<br>  TSV:                reports/instance_validation_failures.tsv<br>files scanned: 10<br>registry proteins: 12700<br>source evidence objects: 21048<br>qualified record bindings: 21048<br>UniProt membership objects: 431<br>hierarchy records: 0<br>semantic findings: 0<br>TSV: /private/tmp/ptm-record-reviews-20261021/repo/reports/uniprot-grounding/validation.tsv |
+| validation-3 | just audit-graphs data/traits/function/cofactor_requirement/chebi/gtp-chebi15996.yaml; Executed 2026-10-21T12:32:09Z through 2026-10-21T12:32:09Z; exit 0 | supports | causal-graph audit: 0 records, 0 graphs, 0 nodes, 0 edges &#124; grounded nodes 0/0, snippet-cited edges 0/0 &#124; 0 errors, 0 warnings |
+| validation-4 | just validate-history; Executed 2026-10-21T12:33:46Z through 2026-10-21T12:33:47Z; exit 0 | supports | No issues found |
+
+## Limits And Additional Notes
+
+- The reviewed record does not identify the exact ChEBI source release used for the seed. Current official responses are comparison snapshots, not proof of the original release.
+- This candidate was selected by MGA alignment metadata, not demonstrated by direct ChEBI cofactor-role selection. Original upstream table evidence, licence and release remain uninspected; the captured crosswalk is output provenance rather than independent physiology.
+- External sources were inspected and SHA256-captured in session scratch. This bundle retains URLs, access times, digests and bounded observations rather than full response bodies.
+- This one-record review does not certify its source cohort or parents. iModulonDB is not applicable to this generic chemical requirement class without a gene, organism or expression dataset.
+- Both biological studies were inspected through their complete indexed abstracts. The CTP-synthase abstract establishes allosteric stimulation, not universal absolute dependence or GTP nonhydrolysis. Neither study locates all bound protons or establishes the exact neutral chemical as the unique physiological state.
+
+## Complete Structured Record
+
+The sibling review.yaml is authoritative.
+
+```yaml
+schema_version: 1.0.0
+review_id: 20261021T123806Z-gtp-chebi15996
+kind: record
+repository: CultureBotAI/proteintraitsmech
+title: Review of requires GTP
+started_at: '2026-10-21T12:31:24Z'
+finished_at: '2026-10-21T12:38:06Z'
+reviewer:
+  identity: Codex
+  kind: agent
+  independence: unknown
+  independence_basis: Unchanged target bytes assessed against inspected primary sources
+    and repository rules, with independent source-acquisition and scope checks. Prior
+    authorship independence is not established; this is not human sign-off.
+skill: .claude/skills/review-yaml-record/SKILL.md
+completion: completed
+verdict: needs_curation
+scientific_review: true
+summary: Neutral GTP identity is supported and its positive allosteric activation
+  context is retained. Findings are confirmed major chemical-to-protein-trait equivalence
+  and confirmed minor category-token synonym. Exact-state obligatory non-substrate
+  requirement remains explicitly unqualified, without a universal negative inference.
+source:
+  git_revision: 6cbcac34bb17f44ea7516dd3308d890367014e2b
+  state: working_tree
+  inputs:
+  - path: .claude/skills/curate-yaml-record/references/review-checklist.md
+    sha256: 59f39fad3e6447e7be30da72667befd3d2e383b68bea5f497952f2ab080da90d
+    role: context
+  - path: .claude/skills/review-yaml-record/SKILL.md
+    sha256: ac1094d8aef512845dbe56ee041e62e62aeeed32326578ff3f7dd8455495f303
+    role: context
+  - path: CLAUDE.md
+    sha256: 0fe3358571b7e3fc0016a94bd514719202ddfb6b8ea020df4431348ed518bc42
+    role: context
+  - path: LICENSE
+    sha256: d920683ada4ab4646467cbe49944e08172d8f10c92ce3e631d6f3460b4b40a52
+    role: context
+  - path: LICENSE-DATA
+    sha256: 9e5f1b3c610b9c2da5c313bf81d577a7d1acec686bdb0384edefa6df0f90cd94
+    role: context
+  - path: conf/record_review.yaml
+    sha256: d3fd2e272546bf2505ded4ef86f7340753c4e422c691bd69f8e79f577b2c5f59
+    role: context
+  - path: data/mappings/cofactor_crosswalk.tsv
+    sha256: a1ebb2af5d9e39ae072efb1a0d6a4774272d6e0e881b3c792faae53b4fc748ba
+    role: context
+  - path: data/traits/function/cofactor_requirement/chebi/cofactor-chebi23357.yaml
+    sha256: d5a2579eae56a7b94424792e5694c0d1c58765e388630b1ab7807be0c8ded909
+    role: context
+  - path: data/traits/function/cofactor_requirement/chebi/gtp-chebi15996.yaml
+    sha256: 9cb8c836d5f4d1d3690e68e2cf4b797b30812ecb103dba8388d310f09c22bbbc
+    role: target
+  - path: docs/fetch-migration.md
+    sha256: 11718531ccc1346002cfafbe62e8cfdc3859271ded178c34a17e26dabc70b55c
+    role: context
+  - path: docs/record-review-profile.md
+    sha256: 06cec6693ded193231a378bba04e7c1ad3e295f88903ee8b7c30b3238daab9df
+    role: context
+  - path: docs/record-reviews.md
+    sha256: 452a19ab688276747b7c4308523a14d4d99c1c39ef6909ae8a90b85b7a9b3e9b
+    role: context
+  - path: download.yaml
+    sha256: 63a62092f919dc534d7b5d9087ada35dea39ed88579f3fd281f8f0ffe6ef4417
+    role: context
+  - path: history/README.md
+    sha256: db3db1da49f08244c863689856f31bc764aadb6e629b25aff45b3b4598dbef2c
+    role: context
+  - path: justfile
+    sha256: 090b16ab565dbc137f589ab913e57efac5cb37bb7511547391267ba6ea96dd5b
+    role: context
+  - path: schema/record_review.yaml
+    sha256: 229baf9b69118a1fe318e4c31085c0820e4e3d1365e7b04d6ace451b7c35f9bb
+    role: context
+  - path: scripts/build_docs_index.py
+    sha256: 926f593f6d3c81b16ff72148f1777d0b6d81cabe5fe806f4667c5745f28bb818
+    role: context
+  - path: scripts/seed_chebi_cofactor.py
+    sha256: c94f89132779ded0393c70a67ea35da9bc1d1d5a5adbc5212aeac144a124c802
+    role: context
+  - path: scripts/seed_cofactor_alignment.py
+    sha256: b93c398484e659617770bc99f2116757bf0d9b25f731fd31c6e7c1e9c65536cf
+    role: context
+  - path: src/proteintraitsmech/schema/proteintraitsmech.yaml
+    sha256: 7d29139f696497dffa018b8d68b3f72d4e1adbadd4f67f7904ddbb4b12275418
+    role: context
+scope:
+  description: Field-by-field scientific review of one complete ProteinTraitRecord.
+  selection: Path-order position 4 in batch 023. Fresh main inventory has 429359 records;
+    union with validated published review heads (batch-001 at b36c4b5ad6c1ee1f31f1cc8c4da5cad94651719d;
+    batch-002 at 357a22ff037976ab142a6bf2267191b5f4a98d21; batch-003 at cc32a8c59ea04af980930b521773705380a9d85a;
+    batch-004 at 23d5cee9fdad2ee701ca7d5cadfc76b54df242ca; batch-005 at 678797be94bf7bcf5673a5c9dcd2e779ec1c76cc;
+    batch-006 at 1696e53c414be3be3641f470a8eade2ec004b6b1; batch-007 at ecd1ed5f09754b6cee1695d813f62f9b23b6ccf5;
+    batch-008 at 914248190c8fd158835c16572946efde3dd87af4; batch-009 at 12d47e9145517b395c6ffdacd172003af66f5618;
+    batch-010 at d51f823a5de8645ec50586992dc9e2e27fdef83f; batch-011 at 3f0697b8989b56af606b2eee7248b55fa21cd4f5;
+    batch-012 at 86f94d00a00a8b0fbaa16d5301a35ff03fa8abc0; batch-013 at ef73f3abddbb3786a9d95cc0e4616aeaea5ca3fb;
+    batch-014 at dc70a3cb9267c42c78bc4c356ec28109fb45114f; batch-015 at 10d0148878b3b2e203d2f368ac3b3fd48c8b0e50;
+    batch-016 at 8a2bb4c2441c87fb0eeda6e7623c87c0e0a6c1fd; batch-017 at 952d4d2227f24b9d7a96481536971328f8c9e7c9;
+    batch-018 at 63c8c7d6546a6e5e23c634b191f7dbb9791c6a3c; batch-019 at a14da7a2c18c5f53a33fb69c8556ca6de9526a87;
+    batch-020 at 58ea13ba743688b992e16e34888a75384d259bc7; batch-021 at 27121a6951a72021e2037a04ee1e1424215a61df;
+    batch-022 at 484164d64a30c3578caabf4600044501f6c73ce5) covers 218 record paths,
+    leaving 429141 before this batch. 23 inventories were combined. Published branch
+    coverage is not described as merged main. Snapshot-row context paths are excluded.
+  coverage: full
+  population_size: 1
+  reviewed_target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_15996
+targets:
+- kind: generated
+  label: requires GTP
+  owner_paths:
+  - path: scripts/seed_cofactor_alignment.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Maintained alignment table reader and build_aligned requirement-class emitter
+  - path: scripts/seed_chebi_cofactor.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Imported ChEBI chemical-name/definition and formatting dependency
+  path: data/traits/function/cofactor_requirement/chebi/gtp-chebi15996.yaml
+  record_class: ProteinTraitRecord
+  target_id: proteintraitsmech:COFACTOR_REQ_CHEBI_15996
+checks:
+- check_id: gate-1
+  name: Closed schema
+  command: just validate data/traits/function/cofactor_requirement/chebi/gtp-chebi15996.yaml
+  exit_code: 0
+  status: passed
+  required: true
+  summary: Single target validated in closed mode.
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_15996
+  evidence_ids:
+  - validation-1
+- check_id: gate-2
+  name: Closed schema and applicable source semantics
+  command: just validate-all data/traits/function/cofactor_requirement/chebi/glutathionate-1-chebi57925.yaml
+    data/traits/function/cofactor_requirement/chebi/glutathione-chebi16856.yaml data/traits/function/cofactor_requirement/chebi/group-transfer-coenzymes-chebi24430.yaml
+    data/traits/function/cofactor_requirement/chebi/gtp-chebi15996.yaml data/traits/function/cofactor_requirement/chebi/heme-chebi30413.yaml
+    data/traits/function/cofactor_requirement/chebi/heme-d-cis-diol-2-chebi62814.yaml
+    data/traits/function/cofactor_requirement/chebi/heme-d-cis-diol-chebi62811.yaml
+    data/traits/function/cofactor_requirement/chebi/heme-o-chebi24480.yaml data/traits/function/cofactor_requirement/chebi/ho-chebi49648.yaml
+    data/traits/function/cofactor_requirement/chebi/hydrogen-peroxide-chebi16240.yaml
+  exit_code: 0
+  status: passed
+  required: true
+  summary: One shared invocation scanned all ten listed batch targets; target SHA256
+    matches before and after execution. Source-specific checks apply where implemented;
+    this gate does not qualify a protein requirement or prove semantic equivalence.
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_15996
+  evidence_ids:
+  - validation-2
+- check_id: gate-3
+  name: Causal graph integrity
+  command: just audit-graphs data/traits/function/cofactor_requirement/chebi/gtp-chebi15996.yaml
+  exit_code: 0
+  status: passed
+  required: true
+  summary: No graphs in target; no molecular-mechanism coverage is inferred.
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_15996
+  evidence_ids:
+  - validation-3
+- check_id: gate-4
+  name: Curation history validity
+  command: just validate-history
+  exit_code: 0
+  status: passed
+  required: true
+  summary: Full curation-history gate; this review adds no history event.
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_15996
+  evidence_ids:
+  - validation-4
+- check_id: source-resolution
+  name: Source reference inspection
+  status: passed
+  required: true
+  summary: Official ChEBI/OLS confirm neutral GTP and its asserted structural/conjugate
+    context. Maintained alignment provenance and ChEBI licensing resolve; original
+    MGA table provenance remains bounded. Positive GTP activation is preserved without
+    overclaiming absolute requirement.
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_15996
+  evidence_ids:
+  - licence
+  - release
+  - chemical
+  - chemical-ontology
+  - cofactor-role
+  - conjugate
+  - phosphate-parent
+  - triphosphate-parent
+  - inhibitor-role
+  - ctp-activation
+  - ucp-inhibition
+  - bacterial-origin
+  - mouse-origin
+evidence:
+- evidence_id: record
+  kind: record_content
+  reference: data/traits/function/cofactor_requirement/chebi/gtp-chebi15996.yaml
+  locator: Entire target YAML
+  accessed_at: '2026-10-21T12:31:24Z'
+  snapshot_sha256: 9cb8c836d5f4d1d3690e68e2cf4b797b30812ecb103dba8388d310f09c22bbbc
+  support: supports
+  summary: Entire alignment-owned YAML inspected, including the GTP requirement label/identifier,
+    short nucleotide-category requirement definition, MGA attribution, RELATED_SYNONYM
+    values gtp and nucleotides, cofactor parent, chemical xref and ChEBI licence.
+- evidence_id: schema
+  kind: record_content
+  reference: src/proteintraitsmech/schema/proteintraitsmech.yaml
+  locator: ProteinTraitRecord xrefs, parent_traits, chemical_participants; ChemicalParticipant/ChemicalRoleEnum;
+    FUNC_COFACTOR_REQUIREMENT
+  accessed_at: '2026-10-21T12:31:24Z'
+  snapshot_sha256: 7d29139f696497dffa018b8d68b3f72d4e1adbadd4f67f7904ddbb4b12275418
+  support: supports
+  summary: FUNC_COFACTOR_REQUIREMENT describes a non-substrate small molecule required
+    for activity. xrefs asserts true own-source equivalence; chemical_participants
+    represents chemical entities with typed roles. parent_traits asserts a broader
+    class. Optional examples and causal graphs are not mandatory class representations.
+- evidence_id: registry
+  kind: record_content
+  reference: download.yaml
+  locator: ChEBI source entry
+  accessed_at: '2026-10-21T12:31:24Z'
+  snapshot_sha256: 63a62092f919dc534d7b5d9087ada35dea39ed88579f3fd281f8f0ffe6ef4417
+  support: supports
+  summary: ChEBI is declared CC-BY 4.0 with seed_chebi_cofactor.py, enrichment status/role
+    and chemistry as a typed per-trait attribute. This identifies maintained source
+    provenance; it does not establish a particular protein requirement.
+- evidence_id: owner
+  kind: record_content
+  reference: scripts/seed_cofactor_alignment.py
+  locator: load_mg_cofactors, build_aligned, main
+  accessed_at: '2026-10-21T12:31:24Z'
+  snapshot_sha256: b93c398484e659617770bc99f2116757bf0d9b25f731fd31c6e7c1e9c65536cf
+  support: supports
+  summary: load_mg_cofactors reads sibling reference-table metadata; build_aligned
+    synthesizes the protein requirement, attaches the broad cofactor parent, emits
+    the chemical xref, and copies cofactor_id/category as RELATED_SYNONYM. main selects
+    only missing chemical IDs before considering force, so an existing-record repair
+    requires an audited scoped route. This local review does not access the sibling
+    checkout.
+- evidence_id: chebi-dependency
+  kind: record_content
+  reference: scripts/seed_chebi_cofactor.py
+  locator: load_names, rid, clean, LICENSE and imported helpers
+  accessed_at: '2026-10-21T12:31:24Z'
+  snapshot_sha256: c94f89132779ded0393c70a67ea35da9bc1d1d5a5adbc5212aeac144a124c802
+  support: supports
+  summary: The alignment emitter imports ChEBI chemical-name/definition loading, identifiers,
+    formatting, output location and ChEBI licensing from this module. This dependency
+    does not itself establish a role for an alignment-selected chemical.
+- evidence_id: alignment-crosswalk
+  kind: record_content
+  reference: data/mappings/cofactor_crosswalk.tsv
+  locator: Header and exact CHEBI:15996 row24
+  accessed_at: '2026-10-21T12:31:24Z'
+  snapshot_sha256: a1ebb2af5d9e39ae072efb1a0d6a4774272d6e0e881b3c792faae53b4fc748ba
+  support: supports
+  summary: Captured crosswalk row24 records GTP, cofactor identifier gtp and category
+    nucleotides for CHEBI:15996. This establishes maintained output provenance, not
+    independent source-table release, licence or protein-requirement validation.
+- evidence_id: local-parent-1
+  kind: record_content
+  reference: data/traits/function/cofactor_requirement/chebi/cofactor-chebi23357.yaml
+  locator: Entire local parent YAML
+  accessed_at: '2026-10-21T12:31:24Z'
+  snapshot_sha256: d5a2579eae56a7b94424792e5694c0d1c58765e388630b1ab7807be0c8ded909
+  support: supports
+  summary: 'Entire local parent YAML inspected: local requirement identifier, definition,
+    category, hierarchy, source chemical-role xref and SEEDED status. Parent resolution
+    does not establish that its own xrefs have equivalent-class semantics.'
+- evidence_id: licence
+  kind: authority
+  reference: https://www.ebi.ac.uk/chebi/about/
+  accessed_at: '2026-10-21T08:48:05.571149Z'
+  snapshot_sha256: f541592fc56a6bda901699cf4a970e5129a18cdbd780e642ad5c36a5ad55251b
+  support: supports
+  locator: Introduction and Licensing sections
+  summary: The inspected official Introduction and Licensing sections establish ChEBI
+    chemical-entity/role scope and CC BY 4.0 licensing. This supports ChEBI attribution,
+    not chemical-to-protein equivalence or licensing of an uninspected MGA table.
+- evidence_id: release
+  kind: database
+  reference: https://www.ebi.ac.uk/ols4/api/ontologies/chebi
+  accessed_at: '2026-10-21T08:47:19.026327Z'
+  snapshot_sha256: ec4c86fcec2d75393b2fd28d66fafbed591ab17b0a1cd58fbbf1bceb8bcefa22
+  support: supports
+  locator: Inspected source response captured at the recorded UTC time
+  summary: Verified reused OLS metadata reports ChEBI version 256, loaded 2026-10-16.
+    Original access time and digest are preserved. This is distinct from the live
+    backend and does not identify the original seed release.
+- evidence_id: chemical
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/15996/
+  accessed_at: '2026-10-21T12:32:17.331929Z'
+  snapshot_sha256: 5cfcfae1d68368fe59130401704084ad9eb0307767d4fb38bb2a76b0e7bcc007
+  support: supports
+  locator: Exact identity, names, definition or null, formula/charge, structure and
+    complete outgoing relations; incoming relations inspected for target scope
+  summary: CHEBI:15996 is GTP, guanosine 5′-(tetrahydrogen triphosphate), C10H16N5O14P3,
+    net 0. The structure retains four specified ribose stereocentres and four phosphate
+    OH groups. Its actual prose definition is null. Direct roles are mouse/E. coli
+    metabolite and uncoupling-protein inhibitor, not a direct cofactor role. Structural
+    parents are guanosine 5′-phosphate and purine ribonucleoside 5′-triphosphate;
+    its conjugate base is GTP(3−) CHEBI:57600.
+- evidence_id: chemical-ontology
+  kind: database
+  reference: https://www.ebi.ac.uk/ols4/api/ontologies/chebi/terms?obo_id=CHEBI:15996
+  accessed_at: '2026-10-21T12:32:17.319163Z'
+  snapshot_sha256: f16a31a6310b2a57d7bdcb7b497f8c32db7db9e11363be1c811f9bca551771b5
+  support: supports
+  locator: Inspected source response captured at the recorded UTC time
+  summary: OLS resolves CHEBI:15996 as nonobsolete. Its actual names, definition or
+    empty description, and available chemical annotations were inspected; a null field
+    is not filled by assumption.
+- evidence_id: cofactor-role
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/23357/
+  accessed_at: '2026-10-21T10:41:31.355972Z'
+  snapshot_sha256: 4c04bfdbe6bd7fe5edd952eef8fbf70b950df6ab9693d629e1c6a1a7c00917a7
+  support: supports
+  locator: Exact identity, names, definition or null, formula/charge, structure and
+    complete outgoing relations; incoming relations inspected for target scope
+  summary: Cofactor CHEBI:23357 is a biochemical role for an organic molecule or ion
+    required for enzyme activity, under biochemical role CHEBI:52206. This role is
+    distinct from a protein class requiring a cofactor.
+- evidence_id: conjugate
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/57600/
+  accessed_at: '2026-10-21T12:32:52.680875Z'
+  snapshot_sha256: 216ba642eafe03957738fb41e28cac85384f973619454884a68e9159f69200e3
+  support: supports
+  locator: Exact identity, names, definition or null, formula/charge, structure and
+    complete outgoing relations; incoming relations inspected for target scope
+  summary: GTP(3−) CHEBI:57600 is C10H13N5O14P3, net −3, formed by deprotonating three
+    of the four phosphate OH groups while preserving ribose stereochemistry and nucleobase
+    connectivity. Its source relations connect neutral GTP and GTP(4−); no physiological
+    population or bound metal-complex identity is established here.
+- evidence_id: phosphate-parent
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/37121/
+  accessed_at: '2026-10-21T12:32:51.941057Z'
+  snapshot_sha256: fdd665ff8dab6e0adb42a7a82c8d75cb86dd3d1a895f3f3f9e25f6302e3c0cd7
+  support: supports
+  locator: Exact identity, names, definition or null, formula/charge, structure and
+    complete outgoing relations; incoming relations inspected for target scope
+  summary: Guanosine 5′-phosphate CHEBI:37121 is a broader structural class under
+    guanosine phosphate. Its definition and fixed chemical data are null in the inspected
+    response.
+- evidence_id: triphosphate-parent
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/37045/
+  accessed_at: '2026-10-21T12:32:52.680574Z'
+  snapshot_sha256: 601bd3ffbe71b184bc7711e56a6bb0a3769935dddd162a8a804b648f956ed842
+  support: supports
+  locator: Exact identity, names, definition or null, formula/charge, structure and
+    complete outgoing relations; incoming relations inspected for target scope
+  summary: Purine ribonucleoside 5′-triphosphate CHEBI:37045 is a broader structural
+    nucleotide class; current definition and fixed chemical data are null. Its ancestry
+    does not independently assert a cofactor requirement.
+- evidence_id: inhibitor-role
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/145437/
+  accessed_at: '2026-10-21T12:32:52.680645Z'
+  snapshot_sha256: 1bb230d5a24b423f2eeecdec1ec9915f06d02706066e96bda73e6a6527e9f4eb
+  support: supports
+  locator: Exact identity, names, definition or null, formula/charge, structure and
+    complete outgoing relations; incoming relations inspected for target scope
+  summary: Uncoupling protein inhibitor CHEBI:145437 is a role for an inhibitor acting
+    on an uncoupling protein, under inhibitor. It is distinct from an obligatory non-substrate
+    cofactor role.
+- evidence_id: ctp-activation
+  kind: primary_source
+  reference: https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=DOI%3A10.1046/j.1432-1033.2002.03175.x&format=json&resultType=core
+  accessed_at: '2026-10-21T12:32:54.979261Z'
+  snapshot_sha256: 21343a8c4a42dd902e3c0800a915cac14ce60c856e13d20d5a8bcc748dc1a1af
+  support: supports
+  locator: Verified PMID/DOI and complete indexed abstract; full article not independently
+    inspected
+  summary: PMID:12354108; DOI:10.1046/j.1432-1033.2002.03175.x. The complete primary
+    abstract reports GTP allosteric stimulation of Lactococcus lactis CTP synthase
+    and distinguishes its glutaminase/CTP-synthesis coupling from E. coli. It supports
+    positive regulatory activity. The nonhydrolyzable analogue mentioned is an ATP-binding
+    analogue, not a demonstration that every GTP molecule is unhydrolyzed or that
+    GTP is absolutely required under all conditions.
+- evidence_id: ucp-inhibition
+  kind: primary_source
+  reference: https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID%3A24904988%20AND%20SRC%3AMED&format=json&resultType=core
+  accessed_at: '2026-10-21T12:32:54.330819Z'
+  snapshot_sha256: 4aaaaad90fd04199cbc418579a3c291c08a560b2b3b1a20b04811e12d0bb1fa6
+  support: supports
+  locator: Verified PMID/DOI and complete indexed abstract; full article not independently
+    inspected
+  summary: PMID:24904988; DOI:10.1371/journal.pone.0098969. In isolated rat-kidney
+    and human-endothelial mitochondria, added GTP and GDP had condition-dependent
+    effects on respiration and membrane potential. The abstract supports GTP inhibition
+    in the tested uncoupling-protein context, not an exact neutral-molecule protonation
+    assignment, universal cofactor absence or protein requirement.
+- evidence_id: bacterial-origin
+  kind: database
+  reference: https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID%3A21988831%20AND%20SRC%3AMED&format=json&resultType=core
+  accessed_at: '2026-10-21T11:37:45.903388Z'
+  snapshot_sha256: e25a797a813b88b0e3053e41aacefa22b641206af4570c409c52515a8233a3e0
+  support: context_only
+  locator: Complete indexed model-paper abstract
+  summary: PMID:21988831; DOI:10.1038/msb.2011.65. The complete E. coli model/knockout-screen
+    abstract is source-origin context, not exact neutral-GTP requirement evidence.
+- evidence_id: mouse-origin
+  kind: database
+  reference: https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID%3A19425150%20AND%20SRC%3AMED&format=json&resultType=core
+  accessed_at: '2026-10-21T11:58:03.279980Z'
+  snapshot_sha256: ac9747be911a86fd9ddca3187da9a837bb098a6e33461797277ff5a1e4ad0fcd
+  support: context_only
+  locator: Complete indexed model-paper abstract
+  summary: PMID:19425150. The complete mouse reconstruction abstract supports the
+    model nature of the source-origin reference, not a measurement of neutral GTP
+    in a protein.
+- evidence_id: validation-1
+  kind: validation
+  reference: just validate data/traits/function/cofactor_requirement/chebi/gtp-chebi15996.yaml
+  locator: Executed 2026-10-21T12:32:07Z through 2026-10-21T12:32:09Z; exit 0
+  accessed_at: '2026-10-21T12:32:09Z'
+  support: supports
+  summary: "=== validate-strict summary ===\n  files scanned:      1\n  files with\
+    \ ERROR:   0\n  total ERROR rows:   0\n  TSV:                reports/instance_validation_failures.tsv"
+- evidence_id: validation-2
+  kind: validation
+  reference: just validate-all data/traits/function/cofactor_requirement/chebi/glutathionate-1-chebi57925.yaml
+    data/traits/function/cofactor_requirement/chebi/glutathione-chebi16856.yaml data/traits/function/cofactor_requirement/chebi/group-transfer-coenzymes-chebi24430.yaml
+    data/traits/function/cofactor_requirement/chebi/gtp-chebi15996.yaml data/traits/function/cofactor_requirement/chebi/heme-chebi30413.yaml
+    data/traits/function/cofactor_requirement/chebi/heme-d-cis-diol-2-chebi62814.yaml
+    data/traits/function/cofactor_requirement/chebi/heme-d-cis-diol-chebi62811.yaml
+    data/traits/function/cofactor_requirement/chebi/heme-o-chebi24480.yaml data/traits/function/cofactor_requirement/chebi/ho-chebi49648.yaml
+    data/traits/function/cofactor_requirement/chebi/hydrogen-peroxide-chebi16240.yaml
+  locator: Executed 2026-10-21T12:31:57Z through 2026-10-21T12:33:46Z; exit 0
+  accessed_at: '2026-10-21T12:33:46Z'
+  support: supports
+  summary: "=== validate-strict summary ===\n  files scanned:      10\n  files with\
+    \ ERROR:   0\n  total ERROR rows:   0\n  TSV:                reports/instance_validation_failures.tsv\n\
+    files scanned: 10\nregistry proteins: 12700\nsource evidence objects: 21048\n\
+    qualified record bindings: 21048\nUniProt membership objects: 431\nhierarchy records:\
+    \ 0\nsemantic findings: 0\nTSV: /private/tmp/ptm-record-reviews-20261021/repo/reports/uniprot-grounding/validation.tsv"
+- evidence_id: validation-3
+  kind: validation
+  reference: just audit-graphs data/traits/function/cofactor_requirement/chebi/gtp-chebi15996.yaml
+  locator: Executed 2026-10-21T12:32:09Z through 2026-10-21T12:32:09Z; exit 0
+  accessed_at: '2026-10-21T12:32:09Z'
+  support: supports
+  summary: 'causal-graph audit: 0 records, 0 graphs, 0 nodes, 0 edges | grounded nodes
+    0/0, snippet-cited edges 0/0 | 0 errors, 0 warnings'
+- evidence_id: validation-4
+  kind: validation
+  reference: just validate-history
+  locator: Executed 2026-10-21T12:33:46Z through 2026-10-21T12:33:47Z; exit 0
+  accessed_at: '2026-10-21T12:33:47Z'
+  support: supports
+  summary: No issues found
+assessments:
+- area: ownership
+  outcome: supported
+  summary: scripts/seed_cofactor_alignment.py owns this aligned requirement, with
+    the captured ChEBI helper dependency and crosswalk provenance. No emitted record
+    has been edited.
+  evidence_ids:
+  - owner
+  - registry
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_15996
+  assessment_id: assessment-1
+  topic: Maintained cofactor requirement emitter
+- area: completeness
+  outcome: supported
+  summary: The local identifier and requires-label denote a proposed reusable requirement
+    class rather than a protein instance. Optional examples, sequence/structure representations
+    and mechanisms are not automatically required; none are newly qualified.
+  evidence_ids:
+  - record
+  - schema
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_15996
+  assessment_id: assessment-2
+  topic: Protein trait class completeness
+- area: graph
+  outcome: not_applicable
+  summary: No causal graph or molecular mechanism is asserted by this YAML; graph
+    validation does not constitute mechanism evidence.
+  evidence_ids:
+  - record
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_15996
+  assessment_id: assessment-3
+  topic: Causal mechanism evidence
+- area: scope
+  outcome: supported
+  summary: The target remains SEEDED, and no protein example, native review status
+    or curation-history event is promoted by this observation.
+  evidence_ids:
+  - record
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_15996
+  assessment_id: assessment-4
+  topic: Requirement scope and scientific status
+- area: identity
+  outcome: supported
+  summary: The GTP label, aliases and exact neutral source identity agree. Its four
+    phosphate OH groups and ribose stereochemistry distinguish it from ionized conjugates.
+    No source definition is supplied; the local requirement sentence is synthesized,
+    not quoted chemical prose.
+  evidence_ids:
+  - record
+  - chemical
+  - chemical-ontology
+  - conjugate
+  topic: GTP chemical identity and phosphate protonation
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_15996
+  assessment_id: assessment-5
+- area: evidence
+  outcome: supported
+  summary: The CTP-synthase experiment supports a positive regulatory function, and
+    the mitochondrial experiment supports a distinct inhibitor context. These observations
+    cannot be reduced to a universal substrate-only or cofactor-only classification.
+    Allosteric rate enhancement alone does not establish absolute activity dependence.
+  evidence_ids:
+  - ctp-activation
+  - ucp-inhibition
+  - chemical
+  topic: GTP allosteric activation and activity-dependent inhibition
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_15996
+  assessment_id: assessment-6
+- area: representation
+  outcome: unknown
+  summary: The alignment category supplies candidate selection, not a demonstrated
+    activity-relative non-substrate requirement. Positive allosteric function is retained,
+    while exact neutral-state dependence, bound protonation/metal speciation and obligatory
+    requirement remain unqualified. No extra negative finding is inferred solely from
+    the absence of a direct ChEBI cofactor relation.
+  evidence_ids:
+  - record
+  - schema
+  - chemical
+  - ctp-activation
+  - conjugate
+  topic: Exact-state non-substrate GTP requirement
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_15996
+  assessment_id: assessment-7
+- area: consistency
+  outcome: unknown
+  summary: The broader local cofactor-requirement parent resolves but was attached
+    by build_aligned, not selected by a current direct chemical cofactor-role relation.
+    Its activity-relative scope needs adjudication; the positive activation evidence
+    does not establish every GTP-bearing protein or free charge state.
+  evidence_ids:
+  - record
+  - local-parent-1
+  - owner
+  - chemical
+  - ctp-activation
+  topic: Alignment-derived cofactor parent
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_15996
+  assessment_id: assessment-8
+- area: provenance
+  outcome: supported
+  summary: The captured alignment seeder, ChEBI dependency and exact crosswalk row
+    explain the label and aliases. The original upstream MGA input, licence and release
+    were not independently inspected. Current ChEBI chemistry and licence do not validate
+    that upstream selection or establish chemical-to-protein equivalence.
+  evidence_ids:
+  - record
+  - owner
+  - chebi-dependency
+  - alignment-crosswalk
+  - chemical
+  - licence
+  - release
+  topic: MGA alignment owner and source-release limits
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_15996
+  assessment_id: assessment-9
+- area: grounding
+  outcome: concern
+  summary: CHEBI:15996 denotes the inspected chemical entity or chemical class, while
+    the local identifier denotes a protein functional requirement. Correct source
+    identity, authentic roles and bounded functional context do not establish the
+    true own-source equivalence asserted by xrefs.
+  evidence_ids:
+  - record
+  - schema
+  - chemical
+  - chemical-ontology
+  - owner
+  topic: Chemical entity versus protein requirement
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_15996
+  assessment_id: assessment-10
+findings:
+- issue_key: chebi.cofactor-requirement.CHEBI-15996.chemical-entity-equivalence
+  category: grounding
+  severity: major
+  title: Chemical source entity is asserted equivalent to a protein requirement
+  description: CHEBI:15996 denotes the inspected chemical entity or chemical class,
+    while the local identifier denotes a protein functional requirement. Correct source
+    identity, authentic roles and bounded functional context do not establish the
+    true own-source equivalence asserted by xrefs.
+  evidence_ids:
+  - record
+  - schema
+  - chemical
+  - chemical-ontology
+  - owner
+  certainty: confirmed
+  field_paths:
+  - xrefs
+  - chemical_participants
+  normalization_reason: The source denotation and the synthesized protein-requirement
+    class are distinct. This is a major grounding defect even when identity and biological
+    relevance are supported; it is not a finding about an absent optional representation.
+  finding_id: F1
+  status: open
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_15996
+  owner_paths:
+  - path: scripts/seed_cofactor_alignment.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Maintained alignment table reader and build_aligned requirement-class emitter
+  - path: scripts/seed_chebi_cofactor.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Imported ChEBI chemical-name/definition and formatting dependency
+  rule_id: ProteinTraitRecord field checklist
+  native_severity: major
+- issue_key: chebi.cofactor-requirement.CHEBI-15996.category-token-synonym
+  category: nomenclature
+  severity: minor
+  title: Nucleotides grouping is emitted as a related synonym
+  description: The RELATED_SYNONYM nucleotides comes from the alignment category,
+    not an alternate name for this exact GTP requirement. The separate gtp alias is
+    a legitimate label variant and should remain.
+  evidence_ids:
+  - record
+  - schema
+  - owner
+  - alignment-crosswalk
+  - chemical
+  certainty: confirmed
+  field_paths:
+  - synonyms
+  normalization_reason: The exact GTP identity remains coherent; a broad category
+    token in alternate labels is a bounded minor nomenclature defect, independent
+    of requirement and equivalence adjudication.
+  finding_id: F2
+  status: open
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_15996
+  owner_paths:
+  - path: scripts/seed_cofactor_alignment.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Maintained alignment table reader and build_aligned requirement-class emitter
+  - path: scripts/seed_chebi_cofactor.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Imported ChEBI chemical-name/definition and formatting dependency
+  rule_id: ProteinTraitRecord field checklist
+  native_severity: minor
+actions:
+- action_id: A1
+  description: Update build_aligned in scripts/seed_cofactor_alignment.py and its
+    maintained input or registered override to remove chemical-to-protein-trait equality
+    while preserving exact supported chemical scope and source provenance. Adjudicate
+    the activity-relative role and chemical state before adding any typed COFACTOR
+    participant. If that role is unsupported, retain provenance and explicit uncertainty
+    without inventing a participant. Do not move the equality to mapped_xrefs, merge
+    chemical states, require optional examples or promote native status.
+  finding_ids:
+  - F1
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_15996
+  owner_paths:
+  - path: scripts/seed_cofactor_alignment.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Maintained alignment table reader and build_aligned requirement-class emitter
+  - path: scripts/seed_chebi_cofactor.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Imported ChEBI chemical-name/definition and formatting dependency
+  acceptance_checks:
+  - The regenerated xrefs no longer equate the source chemical or biochemical role
+    with the protein requirement. Provenance and the intended requirement scope remain
+    explicit; optional participant absence is not itself a defect.
+  - 'Use an audited existing-record selection route: the alignment main function selects
+    missing IDs before force, so --force alone cannot regenerate this target. Preserve
+    proper scientific aliases and original-input provenance limits.'
+  - Run just validate data/traits/function/cofactor_requirement/chebi/gtp-chebi15996.yaml;
+    just validate-all data/traits/function/cofactor_requirement/chebi/gtp-chebi15996.yaml;
+    and just audit-graphs data/traits/function/cofactor_requirement/chebi/gtp-chebi15996.yaml
+    after the scoped repair.
+  - For maintained writer changes add focused pytest coverage and run just audit-writers,
+    just lint and just test. Regenerate the existing target through an audited route.
+    Run full just validate-all before merging record changes; capture changed inputs
+    and save a fresh structured review without overwriting this observation.
+- action_id: A2
+  description: Stop emitting the broad category token as an alternate label in build_aligned
+    while preserving it as provenance or appropriate grouping metadata. Retain gtp
+    and the exact supported chemical identity; use an audited route that selects this
+    existing ID rather than relying on --force alone.
+  finding_ids:
+  - F2
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_15996
+  owner_paths:
+  - path: scripts/seed_cofactor_alignment.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Maintained alignment table reader and build_aligned requirement-class emitter
+  - path: scripts/seed_chebi_cofactor.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Imported ChEBI chemical-name/definition and formatting dependency
+  acceptance_checks:
+  - Regenerated synonyms preserve scientific aliases and exclude nucleotides as an
+    alternate label. A focused fixture distinguishes cofactor name/identifier from
+    category metadata.
+  - Run just validate data/traits/function/cofactor_requirement/chebi/gtp-chebi15996.yaml;
+    just validate-all data/traits/function/cofactor_requirement/chebi/gtp-chebi15996.yaml;
+    and just audit-graphs data/traits/function/cofactor_requirement/chebi/gtp-chebi15996.yaml
+    after the scoped repair.
+  - For maintained writer changes add focused pytest coverage and run just audit-writers,
+    just lint and just test. Regenerate the existing target through an audited route.
+    Run full just validate-all before merging record changes; capture changed inputs
+    and save a fresh structured review without overwriting this observation.
+limitations:
+- The reviewed record does not identify the exact ChEBI source release used for the
+  seed. Current official responses are comparison snapshots, not proof of the original
+  release.
+- This candidate was selected by MGA alignment metadata, not demonstrated by direct
+  ChEBI cofactor-role selection. Original upstream table evidence, licence and release
+  remain uninspected; the captured crosswalk is output provenance rather than independent
+  physiology.
+- External sources were inspected and SHA256-captured in session scratch. This bundle
+  retains URLs, access times, digests and bounded observations rather than full response
+  bodies.
+- This one-record review does not certify its source cohort or parents. iModulonDB
+  is not applicable to this generic chemical requirement class without a gene, organism
+  or expression dataset.
+- Both biological studies were inspected through their complete indexed abstracts.
+  The CTP-synthase abstract establishes allosteric stimulation, not universal absolute
+  dependence or GTP nonhydrolysis. Neither study locates all bound protons or establishes
+  the exact neutral chemical as the unique physiological state.
+tags:
+- unreviewed-path-order
+- batch-023
+- chebi-cofactor
+```
