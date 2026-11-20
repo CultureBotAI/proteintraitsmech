@@ -1,0 +1,974 @@
+# Review of requires Cu
+
+- Review: 20261021T110203Z-cu-chebi28694
+- Repository: CultureBotAI/proteintraitsmech
+- Started UTC: 2026-10-21T10:55:38Z
+- Finished UTC: 2026-10-21T11:02:03Z
+- Reviewer: Codex (unknown)
+- Completion: completed
+- Verdict: needs_curation
+- Scientific review: true
+
+## Summary
+
+CHEBI:28694 identifies neutral copper atom, while the imported copper_ion alias creates a major state-scope conflict. A separate major chemical-to-trait equivalence finding requires state adjudication first; the metals category synonym is a minor defect. No charged-state replacement or protein qualification is automatic.
+
+## Scope And Provenance
+
+Field-by-field scientific review of one complete ProteinTraitRecord.
+
+Selection: Path-order position 7 in batch 017. Fresh main inventory has 429359 records; union with validated published review heads (batch-001 at b36c4b5ad6c1ee1f31f1cc8c4da5cad94651719d; batch-002 at 357a22ff037976ab142a6bf2267191b5f4a98d21; batch-003 at cc32a8c59ea04af980930b521773705380a9d85a; batch-004 at 23d5cee9fdad2ee701ca7d5cadfc76b54df242ca; batch-005 at 678797be94bf7bcf5673a5c9dcd2e779ec1c76cc; batch-006 at 1696e53c414be3be3641f470a8eade2ec004b6b1; batch-007 at ecd1ed5f09754b6cee1695d813f62f9b23b6ccf5; batch-008 at 914248190c8fd158835c16572946efde3dd87af4; batch-009 at 12d47e9145517b395c6ffdacd172003af66f5618; batch-010 at d51f823a5de8645ec50586992dc9e2e27fdef83f; batch-011 at 3f0697b8989b56af606b2eee7248b55fa21cd4f5; batch-012 at 86f94d00a00a8b0fbaa16d5301a35ff03fa8abc0; batch-013 at ef73f3abddbb3786a9d95cc0e4616aeaea5ca3fb; batch-014 at dc70a3cb9267c42c78bc4c356ec28109fb45114f; batch-015 at 10d0148878b3b2e203d2f368ac3b3fd48c8b0e50; batch-016 at 8a2bb4c2441c87fb0eeda6e7623c87c0e0a6c1fd) covers 158 record paths, leaving 429201 before this batch. 17 inventories were combined. Published branch coverage is not described as merged main. Snapshot-row context paths are excluded.
+Coverage: full; 1 reviewed / 1 in the declared population.
+Source: working_tree at Git base 6cbcac34bb17f44ea7516dd3308d890367014e2b.
+Working-tree hashes do not imply those bytes were committed.
+
+| Target | Path / selector | Kind | Label |
+| --- | --- | --- | --- |
+| proteintraitsmech:COFACTOR_REQ_CHEBI_28694 | data/traits/function/cofactor_requirement/chebi/cu-chebi28694.yaml | generated | requires Cu |
+
+## Validation
+
+| Check | Status | Required | Targets | Result |
+| --- | --- | --- | --- | --- |
+| Closed schema | passed | True | proteintraitsmech:COFACTOR_REQ_CHEBI_28694 | Single target validated in closed mode. |
+| Closed schema and applicable source semantics | passed | True | proteintraitsmech:COFACTOR_REQ_CHEBI_28694 | One shared invocation scanned all ten listed batch targets; target SHA256 matches before and after execution. Source-specific checks apply where implemented; this gate does not qualify a protein requirement or prove semantic equivalence. |
+| Causal graph integrity | passed | True | proteintraitsmech:COFACTOR_REQ_CHEBI_28694 | No graphs in target; no molecular-mechanism coverage is inferred. |
+| Curation history validity | passed | True | proteintraitsmech:COFACTOR_REQ_CHEBI_28694 | Full curation-history gate; this review adds no history event. |
+| Source reference inspection | passed | True | proteintraitsmech:COFACTOR_REQ_CHEBI_28694 | Official structured ChEBI and OLS resolve CHEBI:28694 and the inspected chemical/role context. The neutral-atom identity resolves but conflicts in state scope with the imported ionic alias; resolution is not state-adjudication approval. |
+
+## Scientific And Domain Assessments
+
+### Maintained cofactor requirement emitter
+
+ownership: supported. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_28694.
+
+seed_cofactor_alignment.py owns this generated target, with the captured ChEBI helper and local crosswalk. The original upstream alignment table/release is not inspected and no sibling checkout is accessed.
+
+### Protein trait class completeness
+
+completeness: supported. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_28694.
+
+The local identifier and requires-label denote a proposed reusable requirement class rather than a protein instance. Optional examples, sequence/structure representations and mechanisms are not automatically required; none are newly qualified.
+
+### Causal mechanism evidence
+
+graph: not_applicable. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_28694.
+
+No causal graph or molecular mechanism is asserted by this YAML; graph validation does not constitute mechanism evidence.
+
+### Requirement scope and scientific status
+
+scope: supported. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_28694.
+
+The target remains SEEDED, and no protein example, native review status or curation-history event is promoted by this observation.
+
+### Neutral copper atom versus ionic alias
+
+identity: concern. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_28694.
+
+Cu is a valid neutral-atom source alias, but the imported copper_ion token suggests ionic scope while the grounded chemical is explicitly charge 0. The record requires chemical-state adjudication; this is not a different-element or different-connectivity collision, and no Cu(I)/Cu(II) replacement is assumed.
+
+### Copper state-specific requirement evidence
+
+evidence: unknown. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_28694.
+
+The source micronutrient/metabolite roles and maintained alignment are candidate context. They do not establish a neutral-atom protein cofactor requirement or justify borrowing protein evidence for a charged copper species. No claim that copper can never have cofactor roles is made.
+
+### Alignment category token in synonyms
+
+nomenclature: concern. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_28694.
+
+The source grouping token metals is emitted as RELATED_SYNONYM, although it is not an alternate label for this individual requirement class. Source grouping provenance should remain traceable.
+
+### Definition and maintained-source provenance
+
+provenance: supported. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_28694.
+
+The target definition is an alignment-generated requirement wrapper; current official ChEBI has no prose definition for this chemical. The local crosswalk and actual emitter establish candidate provenance, not a direct ChEBI cofactor-role claim. Licence and current OLS comparison release are documented, while the exact seed release remains unknown.
+
+### Requirement-parent and source-relation scope
+
+consistency: concern. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_28694.
+
+The captured cofactor requirement parent is an alignment default, not proof of a direct source cofactor role or correct chemical-state scope.
+
+### Protein requirement representation
+
+representation: unknown. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_28694.
+
+The record proposes a reusable FUNCTION/FUNC_COFACTOR_REQUIREMENT class. The exact activity-relative, non-substrate protein requirement remains unqualified; source chemical-role assertions or alignment labels alone do not supply that evidence. No optional example, mechanism or native status is promoted.
+
+### Chemical denotation versus protein-trait equivalence
+
+grounding: concern. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_28694.
+
+The ChEBI chemical referent differs from the protein-requirement class, while xrefs asserts true own-source equivalence. A chemical association requires typed grounding after chemical-state and activity-relative role adjudication.
+
+## Findings
+
+### F1: Neutral copper grounding conflicts with an ionic alias
+
+major / open / confirmed; issue key: chebi.cofactor-requirement.CHEBI-28694.neutral-atom-ionic-alias.
+
+The official identifier and Cu label denote neutral copper atom, while copper_ion is emitted as an alternate label from the maintained alignment. Charged copper states and a neutral atom are not the same chemical scope. The intended requirement state is unresolved, although the exact record and element are clear.
+
+### F2: Alignment category is emitted as a trait synonym
+
+minor / open / confirmed; issue key: chebi.cofactor-requirement.CHEBI-28694.category-token-synonym.
+
+The metals RELATED_SYNONYM comes from the alignment category column. That broad grouping is not an alternate label for this specific requirement class.
+
+### F3: Chemical referent is asserted equivalent to a protein requirement
+
+major / open / confirmed; issue key: chebi.cofactor-requirement.CHEBI-28694.chemical-entity-equivalence.
+
+The xref denotes a chemical entity while the local record denotes a protein functional requirement. Correct chemical identity or a source cofactor/prosthetic-group role would not establish equality of these classes. This semantic repair depends on first resolving the neutral-atom/ionic-alias scope conflict.
+
+## Recommended Actions And Acceptance Checks
+
+### A1
+
+Adjudicate the intended copper requirement state in the maintained alignment input/override and build_aligned before repairing its chemical grounding. Reconcile label, aliases, definition and identifier with positive state evidence; retain the original mapping as provenance. Do not automatically replace the ID with Cu(I), Cu(II) or generic copper cation, merge states, or transfer their protein evidence. Audit any identifier/path lifecycle and existing-record reconciliation.
+
+- The intended neutral or ionic scope is explicit and all identity fields agree with it. A focused fixture distinguishes copper atom from copper cation and defined charged species; no unreviewed ID substitution occurs.
+- For maintained writer changes run just audit-writers, just lint and just test with a focused source-transform fixture. Run just validate data/traits/function/cofactor_requirement/chebi/cu-chebi28694.yaml, just validate-all data/traits/function/cofactor_requirement/chebi/cu-chebi28694.yaml and just audit-graphs data/traits/function/cofactor_requirement/chebi/cu-chebi28694.yaml. Run full just validate-all before merging record changes. Capture changed inputs and save a fresh validated review; do not overwrite this observation.
+
+### A2
+
+Retain metals as source grouping provenance rather than an alternate trait label in build_aligned. Preserve genuine reviewed aliases and any separately adjudicated chemical-state scope.
+
+- The category token is absent from alternate-label output and its provenance remains traceable; a focused fixture separates grouping values from actual aliases.
+- For maintained writer changes run just audit-writers, just lint and just test with a focused source-transform fixture. Run just validate data/traits/function/cofactor_requirement/chebi/cu-chebi28694.yaml, just validate-all data/traits/function/cofactor_requirement/chebi/cu-chebi28694.yaml and just audit-graphs data/traits/function/cofactor_requirement/chebi/cu-chebi28694.yaml. Run full just validate-all before merging record changes. Capture changed inputs and save a fresh validated review; do not overwrite this observation.
+
+### A3
+
+After the copper state-scope conflict is adjudicated, change build_aligned and its maintained input/override to replace chemical-to-trait equality with an accurately typed chemical_participants association. Do not automatically preserve the neutral atom as a participant for an ionic requirement. ChemicalParticipant.role is required: adjudicate the activity-relative role, including the category's non-substrate scope, rather than treating an alignment label as independently verified COFACTOR. Keep candidate provenance distinct from new protein qualification, and do not simply move equality to mapped_xrefs.
+
+- The source chemical association no longer asserts chemical-to-protein-trait equivalence; exact state and candidate source provenance remain auditable.
+- A focused source-transform fixture verifies identity and required role adjudication. Regeneration follows an audited route explicitly selecting existing records. The alignment missing-only selection is not bypassed by --force alone. No protein/status promotion or silent conjugate merge occurs.
+- For maintained writer changes run just audit-writers, just lint and just test with a focused source-transform fixture. Run just validate data/traits/function/cofactor_requirement/chebi/cu-chebi28694.yaml, just validate-all data/traits/function/cofactor_requirement/chebi/cu-chebi28694.yaml and just audit-graphs data/traits/function/cofactor_requirement/chebi/cu-chebi28694.yaml. Run full just validate-all before merging record changes. Capture changed inputs and save a fresh validated review; do not overwrite this observation.
+
+## Category Boundaries
+
+
+## Evidence
+
+| Evidence | Reference / locator | Support | Observation |
+| --- | --- | --- | --- |
+| record | data/traits/function/cofactor_requirement/chebi/cu-chebi28694.yaml; Entire target YAML | supports | Entire target YAML inspected, including its requires-label, alignment-only requirement definition, mixed ChEBI/MicroGrowAgents attribution, FUNCTION/FUNC_COFACTOR_REQUIREMENT, CLASS/SEEDED status, root parent, RELATED_SYNONYM tokens, chemical xref and licence. No optional protein examples, mechanisms or chemical_participants occur in this YAML. |
+| schema | src/proteintraitsmech/schema/proteintraitsmech.yaml; ProteinTraitRecord xrefs, parent_traits, chemical_participants; ChemicalParticipant/ChemicalRoleEnum; FUNC_COFACTOR_REQUIREMENT | supports | FUNC_COFACTOR_REQUIREMENT describes a non-substrate small molecule required for activity. xrefs asserts true own-source equivalence; chemical_participants represents chemical entities with typed roles. parent_traits asserts a broader class. Optional examples and causal graphs are not mandatory class representations. |
+| owner | scripts/seed_chebi_cofactor.py; load_relations, load_names, build, main | supports | The ChEBI seeder supplies imported chemical-name/definition and formatting helpers; this target is emitted by seed_cofactor_alignment.py, not selected solely through ChEBI cofactor-role ancestry. |
+| registry | download.yaml; ChEBI source entry | supports | ChEBI is declared CC-BY 4.0 with seed_chebi_cofactor.py, enrichment status/role and chemistry as a typed per-trait attribute. This identifies maintained source provenance; it does not establish a particular protein requirement. |
+| local-parent-1 | data/traits/function/cofactor_requirement/chebi/cofactor-chebi23357.yaml; Entire local parent YAML | supports | Entire local parent YAML inspected: local requirement identifier, definition, category, hierarchy, source chemical-role xref and SEEDED status. Parent resolution does not establish that its own xrefs have equivalent-class semantics. |
+| alignment-owner | scripts/seed_cofactor_alignment.py; load_mg_cofactors, build_aligned, main | supports | build_aligned combines source labels/categories with a ChEBI identifier, synthesizes a cofactor requirement and copies cofactor_id/category into RELATED_SYNONYM. main selects only missing IDs, so --force alone does not select existing targets. |
+| crosswalk | data/mappings/cofactor_crosswalk.tsv; Header and exact CHEBI:28694 row | supports | The captured row maps CHEBI:28694 to Cu, copper_ion and metals. This establishes the local alignment assertion, not correct chemical-state scope. |
+| licence | https://www.ebi.ac.uk/chebi/about/; Chemical scope and Licensing section | supports | The inspected official ChEBI About and Licensing sections support chemical-entity/role scope and CC BY 4.0 attribution; they do not assert chemical-to-protein-trait equivalence. |
+| current-release | https://www.ebi.ac.uk/ols4/api/ontologies/chebi; Inspected source response captured at the recorded UTC time | supports | Reused OLS metadata records comparison ontology version 256; the original access UTC and digest are retained. It does not establish the seed release. |
+| chemical | https://www.ebi.ac.uk/chebi/backend/api/public/compound/28694/; Complete identity, names, chemical_data/default_structure, source origins and outgoing relations | supports | CHEBI:28694 is copper atom, formula Cu, charge 0, SMILES [Cu] and InChI=1S/Cu. Cu is an official source alias and the prose definition is null. Direct roles are micronutrient and Escherichia coli metabolite; chemical parents are copper group element atom and metal allergen. This neutral atomic referent is not an unspecified charged copper ion. |
+| chemical-ontology | https://www.ebi.ac.uk/ols4/api/ontologies/chebi/terms?obo_id=CHEBI:28694; Inspected source response captured at the recorded UTC time | supports | OLS resolves the same nonobsolete identifier, empty prose definition, names and exact chemical annotations. |
+| cofactor-role | https://www.ebi.ac.uk/chebi/backend/api/public/compound/23357/; Inspected source response captured at the recorded UTC time | supports | CHEBI:23357 is the abstract cofactor biochemical role, not a molecular entity or a protein requirement; its outgoing parent is biochemical role CHEBI:52206. |
+| context-27027 | https://www.ebi.ac.uk/chebi/backend/api/public/compound/27027/; Complete definition, chemical data/structure and outgoing relations | supports | Micronutrient CHEBI:27027 is a nutrient required in small amounts by organisms. Organism-level nutritional context does not establish a protein's exact copper-state requirement. |
+| context-76971 | https://www.ebi.ac.uk/chebi/backend/api/public/compound/76971/; Complete definition, chemical data/structure and outgoing relations | supports | Escherichia coli metabolite CHEBI:76971 is a biological role concerning metabolites produced in E. coli, not an assertion of a particular protein cofactor requirement. |
+| context-33366 | https://www.ebi.ac.uk/chebi/backend/api/public/compound/33366/; Complete definition, chemical data/structure and outgoing relations | supports | Copper group element atom CHEBI:33366 resolves under transition element atom and d-block element atom, without a specific formula or prose definition in this response. |
+| context-88184 | https://www.ebi.ac.uk/chebi/backend/api/public/compound/88184/; Complete definition, chemical data/structure and outgoing relations | supports | Metal allergen CHEBI:88184 denotes a metal causing allergic response and is-a metal atom. It is chemical classification context, not evidence that neutral copper is a required protein cofactor. |
+| origin-ec | https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:21988831%20AND%20SRC:MED&amp;format=json&amp;resultType=core; Verified PMID/DOI and complete indexed abstract; full paper not inspected | context_only | PMID:21988831; DOI:10.1038/msb.2011.65. The source-origin reference describes an E. coli genome-scale metabolic reconstruction. Its complete abstract does not independently qualify this exact chemical-state protein requirement. |
+| cation-comparison | https://www.ebi.ac.uk/chebi/backend/api/public/compound/23378/; Inspected source response captured at the recorded UTC time | supports | CHEBI:23378 denotes the copper cation class, with unspecified numerical charge and no default structure, direct cofactor role and transition-element-cation/elemental-copper parents. It is a charged-state class, distinct from the neutral atom CHEBI:28694; it is not automatically the intended replacement. |
+| validation-1 | just validate data/traits/function/cofactor_requirement/chebi/cu-chebi28694.yaml; Executed 2026-10-21T10:57:38Z through 2026-10-21T10:57:38Z; exit 0 | supports | === validate-strict summary ===<br>  files scanned:      1<br>  files with ERROR:   0<br>  total ERROR rows:   0<br>  TSV:                reports/instance_validation_failures.tsv |
+| validation-2 | just validate-all data/traits/function/cofactor_requirement/chebi/copper-1-chebi49552.yaml data/traits/function/cofactor_requirement/chebi/copper-2-chebi29036.yaml data/traits/function/cofactor_requirement/chebi/copper-cation-chebi23378.yaml data/traits/function/cofactor_requirement/chebi/corrin-chebi33221.yaml data/traits/function/cofactor_requirement/chebi/corrinoid-chebi33913.yaml data/traits/function/cofactor_requirement/chebi/ctp-chebi17677.yaml data/traits/function/cofactor_requirement/chebi/cu-chebi28694.yaml data/traits/function/cofactor_requirement/chebi/d-pantetheine-4-phosphate-2-chebi61723.yaml data/traits/function/cofactor_requirement/chebi/d-pantetheine-4-phosphate-chebi4222.yaml data/traits/function/cofactor_requirement/chebi/decylplastoquinone-chebi72953.yaml; Executed 2026-10-21T10:55:55Z through 2026-10-21T10:57:11Z; exit 0 | supports | === validate-strict summary ===<br>  files scanned:      10<br>  files with ERROR:   0<br>  total ERROR rows:   0<br>  TSV:                reports/instance_validation_failures.tsv<br>files scanned: 10<br>registry proteins: 12700<br>source evidence objects: 21048<br>qualified record bindings: 21048<br>UniProt membership objects: 431<br>hierarchy records: 0<br>semantic findings: 0<br>TSV: /private/tmp/ptm-record-reviews-20261021/repo/reports/uniprot-grounding/validation.tsv |
+| validation-3 | just audit-graphs data/traits/function/cofactor_requirement/chebi/cu-chebi28694.yaml; Executed 2026-10-21T10:57:38Z through 2026-10-21T10:57:38Z; exit 0 | supports | causal-graph audit: 0 records, 0 graphs, 0 nodes, 0 edges &#124; grounded nodes 0/0, snippet-cited edges 0/0 &#124; 0 errors, 0 warnings |
+| validation-4 | just validate-history; Executed 2026-10-21T10:57:11Z through 2026-10-21T10:57:12Z; exit 0 | supports | No issues found |
+
+## Limits And Additional Notes
+
+- The reviewed record does not identify the exact ChEBI source release used for the seed. Current official responses are comparison snapshots, not proof of the original release.
+- MicroGrowAgents alignment supplies candidate provenance, not a direct ChEBI cofactor-role assertion or proof of a particular protein requirement. The original upstream alignment table and release remain uninspected.
+- External sources were inspected and SHA256-captured in session scratch. This bundle retains URLs, access times, digests and bounded observations rather than full response bodies.
+- This one-record review does not certify its source cohort or parents. iModulonDB is not applicable to this generic chemical requirement class without a gene, organism or expression dataset.
+
+## Complete Structured Record
+
+The sibling review.yaml is authoritative.
+
+```yaml
+schema_version: 1.0.0
+review_id: 20261021T110203Z-cu-chebi28694
+kind: record
+repository: CultureBotAI/proteintraitsmech
+title: Review of requires Cu
+started_at: '2026-10-21T10:55:38Z'
+finished_at: '2026-10-21T11:02:03Z'
+reviewer:
+  identity: Codex
+  kind: agent
+  independence: unknown
+  independence_basis: Unchanged target bytes assessed against inspected primary sources
+    and repository rules, with independent source-acquisition and scope checks. Prior
+    authorship independence is not established; this is not human sign-off.
+skill: .claude/skills/review-yaml-record/SKILL.md
+completion: completed
+verdict: needs_curation
+scientific_review: true
+summary: CHEBI:28694 identifies neutral copper atom, while the imported copper_ion
+  alias creates a major state-scope conflict. A separate major chemical-to-trait equivalence
+  finding requires state adjudication first; the metals category synonym is a minor
+  defect. No charged-state replacement or protein qualification is automatic.
+source:
+  git_revision: 6cbcac34bb17f44ea7516dd3308d890367014e2b
+  state: working_tree
+  inputs:
+  - path: .claude/skills/curate-yaml-record/references/review-checklist.md
+    sha256: 59f39fad3e6447e7be30da72667befd3d2e383b68bea5f497952f2ab080da90d
+    role: context
+  - path: .claude/skills/review-yaml-record/SKILL.md
+    sha256: ac1094d8aef512845dbe56ee041e62e62aeeed32326578ff3f7dd8455495f303
+    role: context
+  - path: CLAUDE.md
+    sha256: 0fe3358571b7e3fc0016a94bd514719202ddfb6b8ea020df4431348ed518bc42
+    role: context
+  - path: LICENSE
+    sha256: d920683ada4ab4646467cbe49944e08172d8f10c92ce3e631d6f3460b4b40a52
+    role: context
+  - path: LICENSE-DATA
+    sha256: 9e5f1b3c610b9c2da5c313bf81d577a7d1acec686bdb0384edefa6df0f90cd94
+    role: context
+  - path: conf/record_review.yaml
+    sha256: d3fd2e272546bf2505ded4ef86f7340753c4e422c691bd69f8e79f577b2c5f59
+    role: context
+  - path: data/mappings/cofactor_crosswalk.tsv
+    sha256: a1ebb2af5d9e39ae072efb1a0d6a4774272d6e0e881b3c792faae53b4fc748ba
+    role: context
+  - path: data/traits/function/cofactor_requirement/chebi/cofactor-chebi23357.yaml
+    sha256: d5a2579eae56a7b94424792e5694c0d1c58765e388630b1ab7807be0c8ded909
+    role: context
+  - path: data/traits/function/cofactor_requirement/chebi/cu-chebi28694.yaml
+    sha256: 58070efb2f938e712ac1a049fc4a6ddc7132edfdeed752f21ca141942690f06b
+    role: target
+  - path: docs/fetch-migration.md
+    sha256: 11718531ccc1346002cfafbe62e8cfdc3859271ded178c34a17e26dabc70b55c
+    role: context
+  - path: docs/record-review-profile.md
+    sha256: 06cec6693ded193231a378bba04e7c1ad3e295f88903ee8b7c30b3238daab9df
+    role: context
+  - path: docs/record-reviews.md
+    sha256: 452a19ab688276747b7c4308523a14d4d99c1c39ef6909ae8a90b85b7a9b3e9b
+    role: context
+  - path: download.yaml
+    sha256: 63a62092f919dc534d7b5d9087ada35dea39ed88579f3fd281f8f0ffe6ef4417
+    role: context
+  - path: history/README.md
+    sha256: db3db1da49f08244c863689856f31bc764aadb6e629b25aff45b3b4598dbef2c
+    role: context
+  - path: justfile
+    sha256: 090b16ab565dbc137f589ab913e57efac5cb37bb7511547391267ba6ea96dd5b
+    role: context
+  - path: schema/record_review.yaml
+    sha256: 229baf9b69118a1fe318e4c31085c0820e4e3d1365e7b04d6ace451b7c35f9bb
+    role: context
+  - path: scripts/build_docs_index.py
+    sha256: 926f593f6d3c81b16ff72148f1777d0b6d81cabe5fe806f4667c5745f28bb818
+    role: context
+  - path: scripts/seed_chebi_cofactor.py
+    sha256: c94f89132779ded0393c70a67ea35da9bc1d1d5a5adbc5212aeac144a124c802
+    role: context
+  - path: scripts/seed_cofactor_alignment.py
+    sha256: b93c398484e659617770bc99f2116757bf0d9b25f731fd31c6e7c1e9c65536cf
+    role: context
+  - path: src/proteintraitsmech/schema/proteintraitsmech.yaml
+    sha256: 7d29139f696497dffa018b8d68b3f72d4e1adbadd4f67f7904ddbb4b12275418
+    role: context
+scope:
+  description: Field-by-field scientific review of one complete ProteinTraitRecord.
+  selection: Path-order position 7 in batch 017. Fresh main inventory has 429359 records;
+    union with validated published review heads (batch-001 at b36c4b5ad6c1ee1f31f1cc8c4da5cad94651719d;
+    batch-002 at 357a22ff037976ab142a6bf2267191b5f4a98d21; batch-003 at cc32a8c59ea04af980930b521773705380a9d85a;
+    batch-004 at 23d5cee9fdad2ee701ca7d5cadfc76b54df242ca; batch-005 at 678797be94bf7bcf5673a5c9dcd2e779ec1c76cc;
+    batch-006 at 1696e53c414be3be3641f470a8eade2ec004b6b1; batch-007 at ecd1ed5f09754b6cee1695d813f62f9b23b6ccf5;
+    batch-008 at 914248190c8fd158835c16572946efde3dd87af4; batch-009 at 12d47e9145517b395c6ffdacd172003af66f5618;
+    batch-010 at d51f823a5de8645ec50586992dc9e2e27fdef83f; batch-011 at 3f0697b8989b56af606b2eee7248b55fa21cd4f5;
+    batch-012 at 86f94d00a00a8b0fbaa16d5301a35ff03fa8abc0; batch-013 at ef73f3abddbb3786a9d95cc0e4616aeaea5ca3fb;
+    batch-014 at dc70a3cb9267c42c78bc4c356ec28109fb45114f; batch-015 at 10d0148878b3b2e203d2f368ac3b3fd48c8b0e50;
+    batch-016 at 8a2bb4c2441c87fb0eeda6e7623c87c0e0a6c1fd) covers 158 record paths,
+    leaving 429201 before this batch. 17 inventories were combined. Published branch
+    coverage is not described as merged main. Snapshot-row context paths are excluded.
+  coverage: full
+  population_size: 1
+  reviewed_target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_28694
+targets:
+- kind: generated
+  label: requires Cu
+  owner_paths:
+  - path: scripts/seed_cofactor_alignment.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Maintained alignment table reader and build_aligned requirement-class emitter
+  - path: scripts/seed_chebi_cofactor.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Imported ChEBI chemical-name/definition and formatting dependency
+  path: data/traits/function/cofactor_requirement/chebi/cu-chebi28694.yaml
+  record_class: ProteinTraitRecord
+  target_id: proteintraitsmech:COFACTOR_REQ_CHEBI_28694
+checks:
+- check_id: gate-1
+  name: Closed schema
+  command: just validate data/traits/function/cofactor_requirement/chebi/cu-chebi28694.yaml
+  exit_code: 0
+  status: passed
+  required: true
+  summary: Single target validated in closed mode.
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_28694
+  evidence_ids:
+  - validation-1
+- check_id: gate-2
+  name: Closed schema and applicable source semantics
+  command: just validate-all data/traits/function/cofactor_requirement/chebi/copper-1-chebi49552.yaml
+    data/traits/function/cofactor_requirement/chebi/copper-2-chebi29036.yaml data/traits/function/cofactor_requirement/chebi/copper-cation-chebi23378.yaml
+    data/traits/function/cofactor_requirement/chebi/corrin-chebi33221.yaml data/traits/function/cofactor_requirement/chebi/corrinoid-chebi33913.yaml
+    data/traits/function/cofactor_requirement/chebi/ctp-chebi17677.yaml data/traits/function/cofactor_requirement/chebi/cu-chebi28694.yaml
+    data/traits/function/cofactor_requirement/chebi/d-pantetheine-4-phosphate-2-chebi61723.yaml
+    data/traits/function/cofactor_requirement/chebi/d-pantetheine-4-phosphate-chebi4222.yaml
+    data/traits/function/cofactor_requirement/chebi/decylplastoquinone-chebi72953.yaml
+  exit_code: 0
+  status: passed
+  required: true
+  summary: One shared invocation scanned all ten listed batch targets; target SHA256
+    matches before and after execution. Source-specific checks apply where implemented;
+    this gate does not qualify a protein requirement or prove semantic equivalence.
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_28694
+  evidence_ids:
+  - validation-2
+- check_id: gate-3
+  name: Causal graph integrity
+  command: just audit-graphs data/traits/function/cofactor_requirement/chebi/cu-chebi28694.yaml
+  exit_code: 0
+  status: passed
+  required: true
+  summary: No graphs in target; no molecular-mechanism coverage is inferred.
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_28694
+  evidence_ids:
+  - validation-3
+- check_id: gate-4
+  name: Curation history validity
+  command: just validate-history
+  exit_code: 0
+  status: passed
+  required: true
+  summary: Full curation-history gate; this review adds no history event.
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_28694
+  evidence_ids:
+  - validation-4
+- check_id: source-resolution
+  name: Source reference inspection
+  status: passed
+  required: true
+  summary: Official structured ChEBI and OLS resolve CHEBI:28694 and the inspected
+    chemical/role context. The neutral-atom identity resolves but conflicts in state
+    scope with the imported ionic alias; resolution is not state-adjudication approval.
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_28694
+  evidence_ids:
+  - chemical
+  - chemical-ontology
+  - licence
+  - current-release
+  - cofactor-role
+  - context-27027
+  - context-76971
+  - context-33366
+  - context-88184
+  - cation-comparison
+evidence:
+- evidence_id: record
+  kind: record_content
+  reference: data/traits/function/cofactor_requirement/chebi/cu-chebi28694.yaml
+  locator: Entire target YAML
+  accessed_at: '2026-10-21T10:55:38Z'
+  snapshot_sha256: 58070efb2f938e712ac1a049fc4a6ddc7132edfdeed752f21ca141942690f06b
+  support: supports
+  summary: Entire target YAML inspected, including its requires-label, alignment-only
+    requirement definition, mixed ChEBI/MicroGrowAgents attribution, FUNCTION/FUNC_COFACTOR_REQUIREMENT,
+    CLASS/SEEDED status, root parent, RELATED_SYNONYM tokens, chemical xref and licence.
+    No optional protein examples, mechanisms or chemical_participants occur in this
+    YAML.
+- evidence_id: schema
+  kind: record_content
+  reference: src/proteintraitsmech/schema/proteintraitsmech.yaml
+  locator: ProteinTraitRecord xrefs, parent_traits, chemical_participants; ChemicalParticipant/ChemicalRoleEnum;
+    FUNC_COFACTOR_REQUIREMENT
+  accessed_at: '2026-10-21T10:55:38Z'
+  snapshot_sha256: 7d29139f696497dffa018b8d68b3f72d4e1adbadd4f67f7904ddbb4b12275418
+  support: supports
+  summary: FUNC_COFACTOR_REQUIREMENT describes a non-substrate small molecule required
+    for activity. xrefs asserts true own-source equivalence; chemical_participants
+    represents chemical entities with typed roles. parent_traits asserts a broader
+    class. Optional examples and causal graphs are not mandatory class representations.
+- evidence_id: owner
+  kind: record_content
+  reference: scripts/seed_chebi_cofactor.py
+  locator: load_relations, load_names, build, main
+  accessed_at: '2026-10-21T10:55:38Z'
+  snapshot_sha256: c94f89132779ded0393c70a67ea35da9bc1d1d5a5adbc5212aeac144a124c802
+  support: supports
+  summary: The ChEBI seeder supplies imported chemical-name/definition and formatting
+    helpers; this target is emitted by seed_cofactor_alignment.py, not selected solely
+    through ChEBI cofactor-role ancestry.
+- evidence_id: registry
+  kind: record_content
+  reference: download.yaml
+  locator: ChEBI source entry
+  accessed_at: '2026-10-21T10:55:38Z'
+  snapshot_sha256: 63a62092f919dc534d7b5d9087ada35dea39ed88579f3fd281f8f0ffe6ef4417
+  support: supports
+  summary: ChEBI is declared CC-BY 4.0 with seed_chebi_cofactor.py, enrichment status/role
+    and chemistry as a typed per-trait attribute. This identifies maintained source
+    provenance; it does not establish a particular protein requirement.
+- evidence_id: local-parent-1
+  kind: record_content
+  reference: data/traits/function/cofactor_requirement/chebi/cofactor-chebi23357.yaml
+  locator: Entire local parent YAML
+  accessed_at: '2026-10-21T10:55:38Z'
+  snapshot_sha256: d5a2579eae56a7b94424792e5694c0d1c58765e388630b1ab7807be0c8ded909
+  support: supports
+  summary: 'Entire local parent YAML inspected: local requirement identifier, definition,
+    category, hierarchy, source chemical-role xref and SEEDED status. Parent resolution
+    does not establish that its own xrefs have equivalent-class semantics.'
+- evidence_id: alignment-owner
+  kind: record_content
+  reference: scripts/seed_cofactor_alignment.py
+  locator: load_mg_cofactors, build_aligned, main
+  accessed_at: '2026-10-21T10:55:38Z'
+  snapshot_sha256: b93c398484e659617770bc99f2116757bf0d9b25f731fd31c6e7c1e9c65536cf
+  support: supports
+  summary: build_aligned combines source labels/categories with a ChEBI identifier,
+    synthesizes a cofactor requirement and copies cofactor_id/category into RELATED_SYNONYM.
+    main selects only missing IDs, so --force alone does not select existing targets.
+- evidence_id: crosswalk
+  kind: record_content
+  reference: data/mappings/cofactor_crosswalk.tsv
+  locator: Header and exact CHEBI:28694 row
+  accessed_at: '2026-10-21T10:55:38Z'
+  snapshot_sha256: a1ebb2af5d9e39ae072efb1a0d6a4774272d6e0e881b3c792faae53b4fc748ba
+  support: supports
+  summary: The captured row maps CHEBI:28694 to Cu, copper_ion and metals. This establishes
+    the local alignment assertion, not correct chemical-state scope.
+- evidence_id: licence
+  kind: authority
+  reference: https://www.ebi.ac.uk/chebi/about/
+  accessed_at: '2026-10-21T08:48:05.571149Z'
+  snapshot_sha256: f541592fc56a6bda901699cf4a970e5129a18cdbd780e642ad5c36a5ad55251b
+  support: supports
+  locator: Chemical scope and Licensing section
+  summary: The inspected official ChEBI About and Licensing sections support chemical-entity/role
+    scope and CC BY 4.0 attribution; they do not assert chemical-to-protein-trait
+    equivalence.
+- evidence_id: current-release
+  kind: database
+  reference: https://www.ebi.ac.uk/ols4/api/ontologies/chebi
+  accessed_at: '2026-10-21T08:47:19.026327Z'
+  snapshot_sha256: ec4c86fcec2d75393b2fd28d66fafbed591ab17b0a1cd58fbbf1bceb8bcefa22
+  support: supports
+  locator: Inspected source response captured at the recorded UTC time
+  summary: Reused OLS metadata records comparison ontology version 256; the original
+    access UTC and digest are retained. It does not establish the seed release.
+- evidence_id: chemical
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/28694/
+  accessed_at: '2026-10-21T10:56:20.197327Z'
+  snapshot_sha256: ef039ff685c10db7ee6b0dcc93e887a1d9ad6a83d566eda434534d169cc4b1c1
+  support: supports
+  locator: Complete identity, names, chemical_data/default_structure, source origins
+    and outgoing relations
+  summary: CHEBI:28694 is copper atom, formula Cu, charge 0, SMILES [Cu] and InChI=1S/Cu.
+    Cu is an official source alias and the prose definition is null. Direct roles
+    are micronutrient and Escherichia coli metabolite; chemical parents are copper
+    group element atom and metal allergen. This neutral atomic referent is not an
+    unspecified charged copper ion.
+- evidence_id: chemical-ontology
+  kind: database
+  reference: https://www.ebi.ac.uk/ols4/api/ontologies/chebi/terms?obo_id=CHEBI:28694
+  accessed_at: '2026-10-21T10:56:19.573818Z'
+  snapshot_sha256: 6fe3e8ff78c70619e34ef24c1f526ccea1b5b44a1d0ddd1e0ed19f160dae0506
+  support: supports
+  locator: Inspected source response captured at the recorded UTC time
+  summary: OLS resolves the same nonobsolete identifier, empty prose definition, names
+    and exact chemical annotations.
+- evidence_id: cofactor-role
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/23357/
+  accessed_at: '2026-10-21T10:41:31.355972Z'
+  snapshot_sha256: 4c04bfdbe6bd7fe5edd952eef8fbf70b950df6ab9693d629e1c6a1a7c00917a7
+  support: supports
+  locator: Inspected source response captured at the recorded UTC time
+  summary: CHEBI:23357 is the abstract cofactor biochemical role, not a molecular
+    entity or a protein requirement; its outgoing parent is biochemical role CHEBI:52206.
+- evidence_id: context-27027
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/27027/
+  accessed_at: '2026-10-21T10:57:06.878065Z'
+  snapshot_sha256: 897b6a0cfa9329e434bddcbedc1130d5c1d8477fcad9218f6f1cd8e48013db84
+  support: supports
+  locator: Complete definition, chemical data/structure and outgoing relations
+  summary: Micronutrient CHEBI:27027 is a nutrient required in small amounts by organisms.
+    Organism-level nutritional context does not establish a protein's exact copper-state
+    requirement.
+- evidence_id: context-76971
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/76971/
+  accessed_at: '2026-10-21T10:57:06.206622Z'
+  snapshot_sha256: 7fc404f615d575d34db7d66cd3ab536694e7ae482367720c36a5002a09d3171d
+  support: supports
+  locator: Complete definition, chemical data/structure and outgoing relations
+  summary: Escherichia coli metabolite CHEBI:76971 is a biological role concerning
+    metabolites produced in E. coli, not an assertion of a particular protein cofactor
+    requirement.
+- evidence_id: context-33366
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/33366/
+  accessed_at: '2026-10-21T10:57:06.887084Z'
+  snapshot_sha256: 1da0c5acf6507143016ba0311c6fecf6e43e9c79857b6989489c4750cd0cfc49
+  support: supports
+  locator: Complete definition, chemical data/structure and outgoing relations
+  summary: Copper group element atom CHEBI:33366 resolves under transition element
+    atom and d-block element atom, without a specific formula or prose definition
+    in this response.
+- evidence_id: context-88184
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/88184/
+  accessed_at: '2026-10-21T10:57:06.887230Z'
+  snapshot_sha256: 049a90c63b2621b5b04b8bbbd2563c49bbc82dac952105993c30be785ab927df
+  support: supports
+  locator: Complete definition, chemical data/structure and outgoing relations
+  summary: Metal allergen CHEBI:88184 denotes a metal causing allergic response and
+    is-a metal atom. It is chemical classification context, not evidence that neutral
+    copper is a required protein cofactor.
+- evidence_id: origin-ec
+  kind: primary_source
+  reference: https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:21988831%20AND%20SRC:MED&format=json&resultType=core
+  accessed_at: '2026-10-21T10:42:21.020587Z'
+  snapshot_sha256: 0ebbf8de08667b7e1b8a031bf6ce448082df73a6034674211258cc756dac906f
+  support: context_only
+  locator: Verified PMID/DOI and complete indexed abstract; full paper not inspected
+  summary: PMID:21988831; DOI:10.1038/msb.2011.65. The source-origin reference describes
+    an E. coli genome-scale metabolic reconstruction. Its complete abstract does not
+    independently qualify this exact chemical-state protein requirement.
+- evidence_id: cation-comparison
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/23378/
+  accessed_at: '2026-10-21T10:56:02.922283Z'
+  snapshot_sha256: 15deb0026cea3f1689d6628218ef50a4c01145d0300416a107044400c0a200d4
+  support: supports
+  locator: Inspected source response captured at the recorded UTC time
+  summary: CHEBI:23378 denotes the copper cation class, with unspecified numerical
+    charge and no default structure, direct cofactor role and transition-element-cation/elemental-copper
+    parents. It is a charged-state class, distinct from the neutral atom CHEBI:28694;
+    it is not automatically the intended replacement.
+- evidence_id: validation-1
+  kind: validation
+  reference: just validate data/traits/function/cofactor_requirement/chebi/cu-chebi28694.yaml
+  locator: Executed 2026-10-21T10:57:38Z through 2026-10-21T10:57:38Z; exit 0
+  accessed_at: '2026-10-21T10:57:38Z'
+  support: supports
+  summary: "=== validate-strict summary ===\n  files scanned:      1\n  files with\
+    \ ERROR:   0\n  total ERROR rows:   0\n  TSV:                reports/instance_validation_failures.tsv"
+- evidence_id: validation-2
+  kind: validation
+  reference: just validate-all data/traits/function/cofactor_requirement/chebi/copper-1-chebi49552.yaml
+    data/traits/function/cofactor_requirement/chebi/copper-2-chebi29036.yaml data/traits/function/cofactor_requirement/chebi/copper-cation-chebi23378.yaml
+    data/traits/function/cofactor_requirement/chebi/corrin-chebi33221.yaml data/traits/function/cofactor_requirement/chebi/corrinoid-chebi33913.yaml
+    data/traits/function/cofactor_requirement/chebi/ctp-chebi17677.yaml data/traits/function/cofactor_requirement/chebi/cu-chebi28694.yaml
+    data/traits/function/cofactor_requirement/chebi/d-pantetheine-4-phosphate-2-chebi61723.yaml
+    data/traits/function/cofactor_requirement/chebi/d-pantetheine-4-phosphate-chebi4222.yaml
+    data/traits/function/cofactor_requirement/chebi/decylplastoquinone-chebi72953.yaml
+  locator: Executed 2026-10-21T10:55:55Z through 2026-10-21T10:57:11Z; exit 0
+  accessed_at: '2026-10-21T10:57:11Z'
+  support: supports
+  summary: "=== validate-strict summary ===\n  files scanned:      10\n  files with\
+    \ ERROR:   0\n  total ERROR rows:   0\n  TSV:                reports/instance_validation_failures.tsv\n\
+    files scanned: 10\nregistry proteins: 12700\nsource evidence objects: 21048\n\
+    qualified record bindings: 21048\nUniProt membership objects: 431\nhierarchy records:\
+    \ 0\nsemantic findings: 0\nTSV: /private/tmp/ptm-record-reviews-20261021/repo/reports/uniprot-grounding/validation.tsv"
+- evidence_id: validation-3
+  kind: validation
+  reference: just audit-graphs data/traits/function/cofactor_requirement/chebi/cu-chebi28694.yaml
+  locator: Executed 2026-10-21T10:57:38Z through 2026-10-21T10:57:38Z; exit 0
+  accessed_at: '2026-10-21T10:57:38Z'
+  support: supports
+  summary: 'causal-graph audit: 0 records, 0 graphs, 0 nodes, 0 edges | grounded nodes
+    0/0, snippet-cited edges 0/0 | 0 errors, 0 warnings'
+- evidence_id: validation-4
+  kind: validation
+  reference: just validate-history
+  locator: Executed 2026-10-21T10:57:11Z through 2026-10-21T10:57:12Z; exit 0
+  accessed_at: '2026-10-21T10:57:12Z'
+  support: supports
+  summary: No issues found
+assessments:
+- area: ownership
+  outcome: supported
+  summary: seed_cofactor_alignment.py owns this generated target, with the captured
+    ChEBI helper and local crosswalk. The original upstream alignment table/release
+    is not inspected and no sibling checkout is accessed.
+  evidence_ids:
+  - owner
+  - alignment-owner
+  - crosswalk
+  - registry
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_28694
+  assessment_id: assessment-1
+  topic: Maintained cofactor requirement emitter
+- area: completeness
+  outcome: supported
+  summary: The local identifier and requires-label denote a proposed reusable requirement
+    class rather than a protein instance. Optional examples, sequence/structure representations
+    and mechanisms are not automatically required; none are newly qualified.
+  evidence_ids:
+  - record
+  - schema
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_28694
+  assessment_id: assessment-2
+  topic: Protein trait class completeness
+- area: graph
+  outcome: not_applicable
+  summary: No causal graph or molecular mechanism is asserted by this YAML; graph
+    validation does not constitute mechanism evidence.
+  evidence_ids:
+  - record
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_28694
+  assessment_id: assessment-3
+  topic: Causal mechanism evidence
+- area: scope
+  outcome: supported
+  summary: The target remains SEEDED, and no protein example, native review status
+    or curation-history event is promoted by this observation.
+  evidence_ids:
+  - record
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_28694
+  assessment_id: assessment-4
+  topic: Requirement scope and scientific status
+- area: identity
+  outcome: concern
+  summary: Cu is a valid neutral-atom source alias, but the imported copper_ion token
+    suggests ionic scope while the grounded chemical is explicitly charge 0. The record
+    requires chemical-state adjudication; this is not a different-element or different-connectivity
+    collision, and no Cu(I)/Cu(II) replacement is assumed.
+  evidence_ids:
+  - record
+  - chemical
+  - chemical-ontology
+  - cation-comparison
+  - crosswalk
+  topic: Neutral copper atom versus ionic alias
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_28694
+  assessment_id: assessment-5
+- area: evidence
+  outcome: unknown
+  summary: The source micronutrient/metabolite roles and maintained alignment are
+    candidate context. They do not establish a neutral-atom protein cofactor requirement
+    or justify borrowing protein evidence for a charged copper species. No claim that
+    copper can never have cofactor roles is made.
+  evidence_ids:
+  - chemical
+  - context-27027
+  - context-76971
+  - origin-ec
+  - cation-comparison
+  - crosswalk
+  topic: Copper state-specific requirement evidence
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_28694
+  assessment_id: assessment-6
+- area: nomenclature
+  outcome: concern
+  summary: The source grouping token metals is emitted as RELATED_SYNONYM, although
+    it is not an alternate label for this individual requirement class. Source grouping
+    provenance should remain traceable.
+  evidence_ids:
+  - record
+  - schema
+  - alignment-owner
+  - crosswalk
+  topic: Alignment category token in synonyms
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_28694
+  assessment_id: assessment-7
+- area: provenance
+  outcome: supported
+  summary: The target definition is an alignment-generated requirement wrapper; current
+    official ChEBI has no prose definition for this chemical. The local crosswalk
+    and actual emitter establish candidate provenance, not a direct ChEBI cofactor-role
+    claim. Licence and current OLS comparison release are documented, while the exact
+    seed release remains unknown.
+  evidence_ids:
+  - record
+  - chemical
+  - chemical-ontology
+  - licence
+  - current-release
+  - registry
+  - owner
+  - alignment-owner
+  - crosswalk
+  topic: Definition and maintained-source provenance
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_28694
+  assessment_id: assessment-8
+- area: consistency
+  outcome: concern
+  summary: The captured cofactor requirement parent is an alignment default, not proof
+    of a direct source cofactor role or correct chemical-state scope.
+  evidence_ids:
+  - record
+  - local-parent-1
+  - chemical
+  - cofactor-role
+  - schema
+  - alignment-owner
+  topic: Requirement-parent and source-relation scope
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_28694
+  assessment_id: assessment-9
+- area: representation
+  outcome: unknown
+  summary: The record proposes a reusable FUNCTION/FUNC_COFACTOR_REQUIREMENT class.
+    The exact activity-relative, non-substrate protein requirement remains unqualified;
+    source chemical-role assertions or alignment labels alone do not supply that evidence.
+    No optional example, mechanism or native status is promoted.
+  evidence_ids:
+  - record
+  - schema
+  - chemical
+  - owner
+  - alignment-owner
+  - crosswalk
+  topic: Protein requirement representation
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_28694
+  assessment_id: assessment-10
+- area: grounding
+  outcome: concern
+  summary: The ChEBI chemical referent differs from the protein-requirement class,
+    while xrefs asserts true own-source equivalence. A chemical association requires
+    typed grounding after chemical-state and activity-relative role adjudication.
+  evidence_ids:
+  - record
+  - chemical
+  - schema
+  - owner
+  - alignment-owner
+  - crosswalk
+  topic: Chemical denotation versus protein-trait equivalence
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_28694
+  assessment_id: assessment-11
+findings:
+- issue_key: chebi.cofactor-requirement.CHEBI-28694.neutral-atom-ionic-alias
+  category: consistency
+  severity: major
+  title: Neutral copper grounding conflicts with an ionic alias
+  description: The official identifier and Cu label denote neutral copper atom, while
+    copper_ion is emitted as an alternate label from the maintained alignment. Charged
+    copper states and a neutral atom are not the same chemical scope. The intended
+    requirement state is unresolved, although the exact record and element are clear.
+  evidence_ids:
+  - record
+  - chemical
+  - chemical-ontology
+  - cation-comparison
+  - alignment-owner
+  - crosswalk
+  certainty: confirmed
+  field_paths:
+  - synonyms
+  - definition
+  - xrefs
+  normalization_reason: The contradictory chemical-state scope materially affects
+    grounding; the element and exact local record remain resolved, so this is major
+    rather than an unrelated-molecule blocker.
+  finding_id: F1
+  status: open
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_28694
+  owner_paths:
+  - path: scripts/seed_cofactor_alignment.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Maintained alignment table reader and build_aligned requirement-class emitter
+  - path: scripts/seed_chebi_cofactor.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Imported ChEBI chemical-name/definition and formatting dependency
+  rule_id: ProteinTraitRecord field checklist
+  native_severity: major
+- issue_key: chebi.cofactor-requirement.CHEBI-28694.category-token-synonym
+  category: nomenclature
+  severity: minor
+  title: Alignment category is emitted as a trait synonym
+  description: The metals RELATED_SYNONYM comes from the alignment category column.
+    That broad grouping is not an alternate label for this specific requirement class.
+  evidence_ids:
+  - record
+  - schema
+  - alignment-owner
+  - crosswalk
+  certainty: confirmed
+  field_paths:
+  - synonyms
+  normalization_reason: This is bounded alternate-label metadata noise, distinct from
+    chemical identity and chemical-to-trait equivalence.
+  finding_id: F2
+  status: open
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_28694
+  owner_paths:
+  - path: scripts/seed_cofactor_alignment.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Maintained alignment table reader and build_aligned requirement-class emitter
+  - path: scripts/seed_chebi_cofactor.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Imported ChEBI chemical-name/definition and formatting dependency
+  rule_id: ProteinTraitRecord field checklist
+  native_severity: minor
+- issue_key: chebi.cofactor-requirement.CHEBI-28694.chemical-entity-equivalence
+  category: grounding
+  severity: major
+  title: Chemical referent is asserted equivalent to a protein requirement
+  description: The xref denotes a chemical entity while the local record denotes a
+    protein functional requirement. Correct chemical identity or a source cofactor/prosthetic-group
+    role would not establish equality of these classes. This semantic repair depends
+    on first resolving the neutral-atom/ionic-alias scope conflict.
+  evidence_ids:
+  - record
+  - chemical
+  - schema
+  - owner
+  - alignment-owner
+  - crosswalk
+  certainty: confirmed
+  field_paths:
+  - xrefs
+  - chemical_participants
+  normalization_reason: Chemical denotation and protein-requirement denotation differ.
+    Copper-state adjudication is a prerequisite to this separate grounding repair.
+  finding_id: F3
+  status: open
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_28694
+  owner_paths:
+  - path: scripts/seed_cofactor_alignment.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Maintained alignment table reader and build_aligned requirement-class emitter
+  - path: scripts/seed_chebi_cofactor.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Imported ChEBI chemical-name/definition and formatting dependency
+  rule_id: ProteinTraitRecord field checklist
+  native_severity: major
+actions:
+- action_id: A1
+  description: Adjudicate the intended copper requirement state in the maintained
+    alignment input/override and build_aligned before repairing its chemical grounding.
+    Reconcile label, aliases, definition and identifier with positive state evidence;
+    retain the original mapping as provenance. Do not automatically replace the ID
+    with Cu(I), Cu(II) or generic copper cation, merge states, or transfer their protein
+    evidence. Audit any identifier/path lifecycle and existing-record reconciliation.
+  finding_ids:
+  - F1
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_28694
+  owner_paths:
+  - path: scripts/seed_cofactor_alignment.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Maintained alignment table reader and build_aligned requirement-class emitter
+  - path: scripts/seed_chebi_cofactor.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Imported ChEBI chemical-name/definition and formatting dependency
+  acceptance_checks:
+  - The intended neutral or ionic scope is explicit and all identity fields agree
+    with it. A focused fixture distinguishes copper atom from copper cation and defined
+    charged species; no unreviewed ID substitution occurs.
+  - For maintained writer changes run just audit-writers, just lint and just test
+    with a focused source-transform fixture. Run just validate data/traits/function/cofactor_requirement/chebi/cu-chebi28694.yaml,
+    just validate-all data/traits/function/cofactor_requirement/chebi/cu-chebi28694.yaml
+    and just audit-graphs data/traits/function/cofactor_requirement/chebi/cu-chebi28694.yaml.
+    Run full just validate-all before merging record changes. Capture changed inputs
+    and save a fresh validated review; do not overwrite this observation.
+- action_id: A2
+  description: Retain metals as source grouping provenance rather than an alternate
+    trait label in build_aligned. Preserve genuine reviewed aliases and any separately
+    adjudicated chemical-state scope.
+  finding_ids:
+  - F2
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_28694
+  owner_paths:
+  - path: scripts/seed_cofactor_alignment.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Maintained alignment table reader and build_aligned requirement-class emitter
+  - path: scripts/seed_chebi_cofactor.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Imported ChEBI chemical-name/definition and formatting dependency
+  acceptance_checks:
+  - The category token is absent from alternate-label output and its provenance remains
+    traceable; a focused fixture separates grouping values from actual aliases.
+  - For maintained writer changes run just audit-writers, just lint and just test
+    with a focused source-transform fixture. Run just validate data/traits/function/cofactor_requirement/chebi/cu-chebi28694.yaml,
+    just validate-all data/traits/function/cofactor_requirement/chebi/cu-chebi28694.yaml
+    and just audit-graphs data/traits/function/cofactor_requirement/chebi/cu-chebi28694.yaml.
+    Run full just validate-all before merging record changes. Capture changed inputs
+    and save a fresh validated review; do not overwrite this observation.
+- action_id: A3
+  description: 'After the copper state-scope conflict is adjudicated, change build_aligned
+    and its maintained input/override to replace chemical-to-trait equality with an
+    accurately typed chemical_participants association. Do not automatically preserve
+    the neutral atom as a participant for an ionic requirement. ChemicalParticipant.role
+    is required: adjudicate the activity-relative role, including the category''s
+    non-substrate scope, rather than treating an alignment label as independently
+    verified COFACTOR. Keep candidate provenance distinct from new protein qualification,
+    and do not simply move equality to mapped_xrefs.'
+  finding_ids:
+  - F3
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_28694
+  owner_paths:
+  - path: scripts/seed_cofactor_alignment.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Maintained alignment table reader and build_aligned requirement-class emitter
+  - path: scripts/seed_chebi_cofactor.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Imported ChEBI chemical-name/definition and formatting dependency
+  acceptance_checks:
+  - The source chemical association no longer asserts chemical-to-protein-trait equivalence;
+    exact state and candidate source provenance remain auditable.
+  - A focused source-transform fixture verifies identity and required role adjudication.
+    Regeneration follows an audited route explicitly selecting existing records. The
+    alignment missing-only selection is not bypassed by --force alone. No protein/status
+    promotion or silent conjugate merge occurs.
+  - For maintained writer changes run just audit-writers, just lint and just test
+    with a focused source-transform fixture. Run just validate data/traits/function/cofactor_requirement/chebi/cu-chebi28694.yaml,
+    just validate-all data/traits/function/cofactor_requirement/chebi/cu-chebi28694.yaml
+    and just audit-graphs data/traits/function/cofactor_requirement/chebi/cu-chebi28694.yaml.
+    Run full just validate-all before merging record changes. Capture changed inputs
+    and save a fresh validated review; do not overwrite this observation.
+limitations:
+- The reviewed record does not identify the exact ChEBI source release used for the
+  seed. Current official responses are comparison snapshots, not proof of the original
+  release.
+- MicroGrowAgents alignment supplies candidate provenance, not a direct ChEBI cofactor-role
+  assertion or proof of a particular protein requirement. The original upstream alignment
+  table and release remain uninspected.
+- External sources were inspected and SHA256-captured in session scratch. This bundle
+  retains URLs, access times, digests and bounded observations rather than full response
+  bodies.
+- This one-record review does not certify its source cohort or parents. iModulonDB
+  is not applicable to this generic chemical requirement class without a gene, organism
+  or expression dataset.
+tags:
+- unreviewed-path-order
+- batch-017
+- chebi-cofactor
+```
