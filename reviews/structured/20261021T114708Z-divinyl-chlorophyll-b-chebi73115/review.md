@@ -1,0 +1,933 @@
+# Review of requires divinyl chlorophyll b
+
+- Review: 20261021T114708Z-divinyl-chlorophyll-b-chebi73115
+- Repository: CultureBotAI/proteintraitsmech
+- Started UTC: 2026-10-21T11:35:22Z
+- Finished UTC: 2026-10-21T11:47:08Z
+- Reviewer: Codex (unknown)
+- Completion: completed
+- Verdict: needs_curation
+- Scientific review: true
+
+## Summary
+
+Neutral divinyl chlorophyll b chemistry is supported. One major finding concerns chemical-to-protein-trait equivalence and one minor finding corrects the circular formal-ester precursor name. Pigment evidence remains bounded to the inspected organism/assay contexts.
+
+## Scope And Provenance
+
+Field-by-field scientific review of one complete ProteinTraitRecord.
+
+Selection: Path-order position 1 in batch 020. Fresh main inventory has 429359 records; union with validated published review heads (batch-001 at b36c4b5ad6c1ee1f31f1cc8c4da5cad94651719d; batch-002 at 357a22ff037976ab142a6bf2267191b5f4a98d21; batch-003 at cc32a8c59ea04af980930b521773705380a9d85a; batch-004 at 23d5cee9fdad2ee701ca7d5cadfc76b54df242ca; batch-005 at 678797be94bf7bcf5673a5c9dcd2e779ec1c76cc; batch-006 at 1696e53c414be3be3641f470a8eade2ec004b6b1; batch-007 at ecd1ed5f09754b6cee1695d813f62f9b23b6ccf5; batch-008 at 914248190c8fd158835c16572946efde3dd87af4; batch-009 at 12d47e9145517b395c6ffdacd172003af66f5618; batch-010 at d51f823a5de8645ec50586992dc9e2e27fdef83f; batch-011 at 3f0697b8989b56af606b2eee7248b55fa21cd4f5; batch-012 at 86f94d00a00a8b0fbaa16d5301a35ff03fa8abc0; batch-013 at ef73f3abddbb3786a9d95cc0e4616aeaea5ca3fb; batch-014 at dc70a3cb9267c42c78bc4c356ec28109fb45114f; batch-015 at 10d0148878b3b2e203d2f368ac3b3fd48c8b0e50; batch-016 at 8a2bb4c2441c87fb0eeda6e7623c87c0e0a6c1fd; batch-017 at 952d4d2227f24b9d7a96481536971328f8c9e7c9; batch-018 at 63c8c7d6546a6e5e23c634b191f7dbb9791c6a3c; batch-019 at a14da7a2c18c5f53a33fb69c8556ca6de9526a87) covers 188 record paths, leaving 429171 before this batch. 20 inventories were combined. Published branch coverage is not described as merged main. Snapshot-row context paths are excluded.
+Coverage: full; 1 reviewed / 1 in the declared population.
+Source: working_tree at Git base 6cbcac34bb17f44ea7516dd3308d890367014e2b.
+Working-tree hashes do not imply those bytes were committed.
+
+| Target | Path / selector | Kind | Label |
+| --- | --- | --- | --- |
+| proteintraitsmech:COFACTOR_REQ_CHEBI_73115 | data/traits/function/cofactor_requirement/chebi/divinyl-chlorophyll-b-chebi73115.yaml | generated | requires divinyl chlorophyll b |
+
+## Validation
+
+| Check | Status | Required | Targets | Result |
+| --- | --- | --- | --- | --- |
+| Closed schema | passed | True | proteintraitsmech:COFACTOR_REQ_CHEBI_73115 | Single target validated in closed mode. |
+| Closed schema and applicable source semantics | passed | True | proteintraitsmech:COFACTOR_REQ_CHEBI_73115 | One shared invocation scanned all ten listed batch targets; target SHA256 matches before and after execution. Source-specific checks apply where implemented; this gate does not qualify a protein requirement or prove semantic equivalence. |
+| Causal graph integrity | passed | True | proteintraitsmech:COFACTOR_REQ_CHEBI_73115 | No graphs in target; no molecular-mechanism coverage is inferred. |
+| Curation history validity | passed | True | proteintraitsmech:COFACTOR_REQ_CHEBI_73115 | Full curation-history gate; this review adds no history event. |
+| Source reference inspection | passed | True | proteintraitsmech:COFACTOR_REQ_CHEBI_73115 | CHEBI:73115 resolves nonobsolete. Exact structure, names, definition, cofactor role, structural parents and external monoanion/phytol comparisons were inspected. Source-linked abstracts and general IUBMB ester reaction were read. No source functional-parent relation to a divinyl-b chlorophyllide is asserted; the precursor correction rests on the actual ester connectivity. |
+
+## Scientific And Domain Assessments
+
+### Maintained cofactor requirement emitter
+
+ownership: supported. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_73115.
+
+scripts/seed_chebi_cofactor.py owns generated target changes. Its source transformation is inspected; no emitted record has been edited.
+
+### Protein trait class completeness
+
+completeness: supported. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_73115.
+
+The local identifier and requires-label denote a proposed reusable requirement class rather than a protein instance. Optional examples, sequence/structure representations and mechanisms are not automatically required; none are newly qualified.
+
+### Causal mechanism evidence
+
+graph: not_applicable. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_73115.
+
+No causal graph or molecular mechanism is asserted by this YAML; graph validation does not constitute mechanism evidence.
+
+### Requirement scope and scientific status
+
+scope: supported. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_73115.
+
+The target remains SEEDED, and no protein example, native review status or curation-history event is promoted by this observation.
+
+### Chemical identity and protein requirement scope
+
+identity: supported. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_73115.
+
+The complete local record proposes a reusable protein requirement for divinyl chlorophyll b. CHEBI:73115 resolves the chemical referent, not an equivalent protein-requirement class.
+
+### ChEBI attribution and release provenance
+
+provenance: supported. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_73115.
+
+The maintained ChEBI role seeder selects chemical-role descendants, generates the requirement wrapper and appends source chemistry. Source licensing is supported. Current snapshots do not establish the seed release.
+
+### Chemical-role and protein-trait hierarchy
+
+consistency: supported. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_73115.
+
+The inspected direct source role explains the selected local broader requirement parent. Role taxonomy does not itself prove protein-level non-substrate dependence, and this review does not certify the parent.
+
+### Chemical association versus trait equivalence
+
+grounding: concern. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_73115.
+
+CHEBI:73115 denotes a chemical whereas the local class denotes a functional protein requirement. The schema xrefs field requires true source-direct equivalence, not a chemical association.
+
+### Neutral divinyl b pigment structure and stereochemistry
+
+evidence: supported. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_73115.
+
+CHEBI:73115 is neutral C55H68MgN4O6, a fixed divinyl b pigment with Mg, two vinyl groups, formyl substituent, methyl ester and stereospecified phytyl ester. Source phorbine (3S,4S,21R) and phytyl (2E,7R,11R) stereochemistry are retained. Both carboxy groups are esterified; the completed molecule is not its own free carboxylic-acid precursor. Formal [Mg−2] SMILES bookkeeping is not Mg oxidation state−II.
+
+### Circular formal-ester precursor wording
+
+nomenclature: concern. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_73115.
+
+The copied source definition circularly names divinyl chlorophyll b itself as the acid precursor of its phytyl ester. The actual structure instead requires the corresponding dephytylated carboxylic acid (divinyl chlorophyllide b). This follows the ester connectivity, not a claim of an observed biosynthetic reaction with free phytol. No exact ChEBI precursor ID is assigned here.
+
+### Bounds of divinyl b pigment evidence
+
+evidence: supported. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_73115.
+
+Source-linked primary abstracts support divinyl b occurrence and bounded photosynthetic-antenna context. Arabidopsis/rice accumulation and phylogenetic antenna descriptions are kept distinct from a direct requirement assay. The directly tested rice reductase substrate is the a pigment, not b.
+
+### Exact activity-relative pigment requirement
+
+representation: unknown. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_73115.
+
+The source cofactor role and pigment context support candidate relevance but do not qualify a particular protein, exact bound protonation, residue geometry or universal dependence. The neutral b pigment, corresponding monoanion, a pigment and Mg-free derivatives remain distinct.
+
+## Findings
+
+### F1: Chemical entity is encoded as equivalent to a protein requirement
+
+major / open / confirmed; issue key: chebi.cofactor-requirement.CHEBI-73115.chemical-entity-equivalence.
+
+The local class denotes a protein requirement for divinyl chlorophyll b, whereas CHEBI:73115 denotes the specific neutral Mg-containing phytyl ester. xrefs equates the chemical and functional predicate.
+
+### F2: Ester definition names the product as its own acid precursor
+
+minor / open / confirmed; issue key: chebi.cofactor-requirement.CHEBI-73115.ester-precursor-name.
+
+The source-inherited definition calls divinyl chlorophyll b the carboxylic-acid precursor of divinyl chlorophyll b. Its actual structure already contains the phytyl ester and no free carboxy group. The intended formal precursor is the corresponding dephytylated acid, commonly named divinyl chlorophyllide b; this correction does not change the target identity.
+
+## Recommended Actions And Acceptance Checks
+
+### A1
+
+Update build() in scripts/seed_chebi_cofactor.py to remove CHEBI:73115 from trait-equivalence xrefs and preserve chemical provenance through supported grounding. Adjudicate the activity-relative role and exact state before assigning a COFACTOR chemical_participant; if not supported, retain explicit uncertainty and chemical provenance without inventing a participant. Do not move this equality into mapped_xrefs, merge related chemical states or qualify proteins from role membership alone.
+
+- Preserve neutral73115, formyl substituent, both vinyl groups, Mg and stereochemistry. Do not transfer a-pigment reductase evidence to b or replace the ester with its precursor/monoanion.
+- The regenerated target preserves the exact chemical scope without asserting chemical/protein-class equality. Any participant has an adjudicated activity-relative role; no automatic example or status promotion occurs.
+- After repair run just validate data/traits/function/cofactor_requirement/chebi/divinyl-chlorophyll-b-chebi73115.yaml; just validate-all data/traits/function/cofactor_requirement/chebi/divinyl-chlorophyll-b-chebi73115.yaml; and just audit-graphs data/traits/function/cofactor_requirement/chebi/divinyl-chlorophyll-b-chebi73115.yaml. If identity resolution requires an audited replacement path, validate that exact replacement and the retained/deprecated target disposition too.
+- For maintained writer changes add focused pytest coverage, run just audit-writers, just lint and just test. Regenerate the scoped existing target through an audited route. Run full just validate-all before merging record changes and save a fresh structured review of changed bytes.
+
+### A2
+
+Correct the maintained source-text transform or a registered provenance-bearing override to identify the corresponding dephytylated carboxylic acid rather than the completed pigment as formal precursor. Verify any chosen precursor label/identifier against its exact structure before grounding it. Preserve CHEBI:73115 and source provenance, and distinguish formal free-alcohol condensation from an enzyme reaction using an activated donor.
+
+- The regenerated definition no longer uses the completed ester as its own acid precursor; exact target formula/connectivity, Mg and stereochemistry remain intact.
+- No unsupported precursor ID, free-phytol enzyme substrate claim or replacement of the target chemical is introduced.
+- After repair run just validate data/traits/function/cofactor_requirement/chebi/divinyl-chlorophyll-b-chebi73115.yaml; just validate-all data/traits/function/cofactor_requirement/chebi/divinyl-chlorophyll-b-chebi73115.yaml; and just audit-graphs data/traits/function/cofactor_requirement/chebi/divinyl-chlorophyll-b-chebi73115.yaml. If identity resolution requires an audited replacement path, validate that exact replacement and the retained/deprecated target disposition too.
+- For maintained writer changes add focused pytest coverage, run just audit-writers, just lint and just test. Regenerate the scoped existing target through an audited route. Run full just validate-all before merging record changes and save a fresh structured review of changed bytes.
+
+## Category Boundaries
+
+
+## Evidence
+
+| Evidence | Reference / locator | Support | Observation |
+| --- | --- | --- | --- |
+| record | data/traits/function/cofactor_requirement/chebi/divinyl-chlorophyll-b-chebi73115.yaml; Entire target YAML | supports | Complete YAML inspected, including local protein-requirement identifier and label, synthesized definition, ChEBI attribution, FUNCTION/FUNC_COFACTOR_REQUIREMENT, CLASS/SEEDED status, local parent, chemical xref and stated CC-BY 4.0 licence. No optional examples, causal graphs, qualified protein assertions or chemical_participants occur in this target YAML. |
+| schema | src/proteintraitsmech/schema/proteintraitsmech.yaml; ProteinTraitRecord xrefs, parent_traits, chemical_participants; ChemicalParticipant/ChemicalRoleEnum; FUNC_COFACTOR_REQUIREMENT | supports | FUNC_COFACTOR_REQUIREMENT describes a non-substrate small molecule required for activity. xrefs asserts true own-source equivalence; chemical_participants represents chemical entities with typed roles. parent_traits asserts a broader class. Optional examples and causal graphs are not mandatory class representations. |
+| owner | scripts/seed_chebi_cofactor.py; load_relations, load_names, build, main | supports | load_relations selects cofactor-role descendants and molecules with has_role; build synthesizes a protein-requirement label/definition, appends chemical source text, attributes the composite to ChEBI and emits CHEBI as xrefs. main selects one role-parent. The source chemical class and the synthesized requirement trait have different denotations. |
+| registry | download.yaml; ChEBI source entry | supports | ChEBI is declared CC-BY 4.0 with seed_chebi_cofactor.py, enrichment status/role and chemistry as a typed per-trait attribute. This identifies maintained source provenance; it does not establish a particular protein requirement. |
+| local-parent-1 | data/traits/function/cofactor_requirement/chebi/cofactor-chebi23357.yaml; Entire local parent YAML | supports | Entire local parent YAML inspected: local requirement identifier, definition, category, hierarchy, source chemical-role xref and SEEDED status. Parent resolution does not establish that its own xrefs have equivalent-class semantics. |
+| licence | https://www.ebi.ac.uk/chebi/about/; Introduction and Licensing | supports | The official ChEBI Introduction and Licensing sections describe chemical entities/classes and CC BY4.0. This supports chemical-source attribution, not a synthesized protein requirement. |
+| release | https://www.ebi.ac.uk/ols4/api/ontologies/chebi; Inspected source response captured at the recorded UTC time | supports | Verified reused OLS metadata reports ChEBI version256 loaded2026-10-16, with original actual access timestamp retained. It does not assign a release to live backend responses or the original seed. |
+| chemical | https://www.ebi.ac.uk/ols4/api/ontologies/chebi/terms?obo_id=CHEBI:73115; Inspected source response captured at the recorded UTC time | supports | OLS resolves CHEBI:73115 to its nonobsolete chemical term. Names, source description or explicit absence, and chemical annotations were inspected. |
+| chemical-role | https://www.ebi.ac.uk/chebi/backend/api/public/compound/73115/; Actual identifier/name/definition field, names, formula/charge, structure and ontology relations | supports | The complete official response was inspected: exact chemical identity, formula, charge, structure, aliases, outgoing/incoming relations and chemical definition. |
+| cofactor-role | https://www.ebi.ac.uk/chebi/backend/api/public/compound/23357/; Actual identifier/name/definition field, names, formula/charge, structure and ontology relations | supports | Cofactor is a biochemical role for an organic molecule or ion required by an enzyme, with biochemical-role parent. It is not a protein-requirement class. |
+| conjugate | https://www.ebi.ac.uk/chebi/backend/api/public/compound/73096/; Actual identifier/name/definition field, names, formula/charge, structure and ontology relations | supports | The exact external monoanion comparison is C55H67MgN4O6,−1, with peripheral beta-keto-ester carbon deprotonation in the source phorbine numbering. Mg and phytyl/methyl esters remain. It is not a Mg-free pigment or a nitrogen deprotonation assertion. |
+| phytol | https://www.ebi.ac.uk/chebi/backend/api/public/compound/17327/; Actual identifier/name/definition field, names, formula/charge, structure and ontology relations | supports | Phytol is C20H40O with the exact (2E,7R,11R)-3,7,11,15-tetramethylhexadec-2-en-1-ol name and structure. It supplies the alcohol part of a formal ester comparison, not proof that free phytol is the enzymatic donor. |
+| methyl-ester | https://www.ebi.ac.uk/chebi/backend/api/public/compound/25248/; Actual identifier/name/definition field, names, formula/charge, structure and ontology relations | supports | The methyl-ester parent defines formal condensation of a carboxy group with methanol; it is distinct from the target pigment and its additional phytyl ester. |
+| chlorophyll-class | https://www.ebi.ac.uk/chebi/backend/api/public/compound/28966/; Actual identifier/name/definition field, names, formula/charge, structure and ontology relations | supports | The source class describes magnesium porphyrins with a fifth ring and variable substituents. Its R-group drawing is not a fixed formula for every chlorophyll. |
+| mutant-primary | https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID%3A15695432%20AND%20SRC%3AMED&amp;format=json&amp;resultType=core; PMID15695432; DOI10.1093/pcp/pci053; complete indexed abstract | supports | The complete primary abstract reports divinyl a/b accumulation in Arabidopsis pcb2, a nonsense mutation and genetic complementation. The reductase assignment is presented as a suggestion, not direct qualification of every pigment/protein. |
+| antenna-primary | https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID%3A9452521+AND+SRC%3AMED&amp;format=json&amp;resultType=core; PMID9452521; DOI10.1007/pl00006294; complete indexed abstract | supports | The complete primary abstract reports phylogenetic analysis of marine Prochlorococcus/Synechococcus isolates and describes lineages with divinyl chlorophyll b versus phycobilisome antennae. It supplies bounded antenna/organism context, not a direct biochemical assay of exact-state pigment dependence. |
+| rice-primary | https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID%3A20484022%20AND%20SRC%3AMED&amp;format=json&amp;resultType=core; PMID20484022; DOI10.1104/pp.110.158477; complete indexed abstract | supports | The complete primary abstract reports rice mutant accumulation of divinyl chlorophyll a/b, but recombinant OsDVR conversion is directly tested for divinyl chlorophyll(ide) a. That a-substrate result is not transferred to b. |
+| ester-authority | https://iubmb.qmul.ac.uk/enzyme/EC2/5/1/62.html; EC2.5.1.62 reaction and comments | supports | The complete official EC2.5.1.62 entry distinguishes chlorophyllide a from its chlorophyll a ester and uses phytyl diphosphate as donor. This is general ester/biosynthesis context, not an exact divinyl-b substrate assay. |
+| validation-1 | just validate data/traits/function/cofactor_requirement/chebi/divinyl-chlorophyll-b-chebi73115.yaml; Executed 2026-10-21T11:36:19Z through 2026-10-21T11:36:22Z; exit 0 | supports | === validate-strict summary ===<br>  files scanned:      1<br>  files with ERROR:   0<br>  total ERROR rows:   0<br>  TSV:                reports/instance_validation_failures.tsv |
+| validation-2 | just validate-all data/traits/function/cofactor_requirement/chebi/divinyl-chlorophyll-b-chebi73115.yaml data/traits/function/cofactor_requirement/chebi/dy-chebi33373.yaml data/traits/function/cofactor_requirement/chebi/echinenone-chebi4746.yaml data/traits/function/cofactor_requirement/chebi/enterobactin-1-chebi77805.yaml data/traits/function/cofactor_requirement/chebi/enterobactin-6-chebi38150.yaml data/traits/function/cofactor_requirement/chebi/enterobactin-chebi28855.yaml data/traits/function/cofactor_requirement/chebi/er-chebi33379.yaml data/traits/function/cofactor_requirement/chebi/eu-chebi33375.yaml data/traits/function/cofactor_requirement/chebi/f420-chebi28343.yaml data/traits/function/cofactor_requirement/chebi/fad-3-chebi57692.yaml; Executed 2026-10-21T11:36:19Z through 2026-10-21T11:38:17Z; exit 0 | supports | === validate-strict summary ===<br>  files scanned:      10<br>  files with ERROR:   0<br>  total ERROR rows:   0<br>  TSV:                reports/instance_validation_failures.tsv<br>files scanned: 10<br>registry proteins: 12700<br>source evidence objects: 21048<br>qualified record bindings: 21048<br>UniProt membership objects: 431<br>hierarchy records: 0<br>semantic findings: 0<br>TSV: /private/tmp/ptm-record-reviews-20261021/repo/reports/uniprot-grounding/validation.tsv |
+| validation-3 | just audit-graphs data/traits/function/cofactor_requirement/chebi/divinyl-chlorophyll-b-chebi73115.yaml; Executed 2026-10-21T11:36:22Z through 2026-10-21T11:36:22Z; exit 0 | supports | causal-graph audit: 0 records, 0 graphs, 0 nodes, 0 edges &#124; grounded nodes 0/0, snippet-cited edges 0/0 &#124; 0 errors, 0 warnings |
+| validation-4 | just validate-history; Executed 2026-10-21T11:38:17Z through 2026-10-21T11:38:18Z; exit 0 | supports | No issues found |
+
+## Limits And Additional Notes
+
+- The reviewed record does not identify the exact ChEBI source release used for the seed. Current official responses are comparison snapshots, not proof of the original release.
+- A ChEBI chemical-role assertion supplies candidate class context, not evidence that a particular protein requires that chemical, that every related protein does, or that the chemical is an obligatory physiological cofactor. No such per-protein qualification is claimed.
+- External sources were inspected and SHA256-captured in session scratch. This bundle retains URLs, access times, digests and bounded observations rather than full response bodies.
+- This one-record review does not certify its source cohort or parents. iModulonDB is not applicable to this generic chemical requirement class without a gene, organism or expression dataset.
+- Primary papers were inspected at complete indexed-abstract level. An exact OLS search for divinyl chlorophyllide b returned no result in that bounded query; this is not a global absence claim and no precursor ID is proposed. General chlorophyll-synthase chemistry is not direct divinyl-b substrate qualification.
+
+## Complete Structured Record
+
+The sibling review.yaml is authoritative.
+
+```yaml
+schema_version: 1.0.0
+review_id: 20261021T114708Z-divinyl-chlorophyll-b-chebi73115
+kind: record
+repository: CultureBotAI/proteintraitsmech
+title: Review of requires divinyl chlorophyll b
+started_at: '2026-10-21T11:35:22Z'
+finished_at: '2026-10-21T11:47:08Z'
+reviewer:
+  identity: Codex
+  kind: agent
+  independence: unknown
+  independence_basis: Unchanged target bytes assessed against inspected primary sources
+    and repository rules, with independent source-acquisition and scope checks. Prior
+    authorship independence is not established; this is not human sign-off.
+skill: .claude/skills/review-yaml-record/SKILL.md
+completion: completed
+verdict: needs_curation
+scientific_review: true
+summary: Neutral divinyl chlorophyll b chemistry is supported. One major finding concerns
+  chemical-to-protein-trait equivalence and one minor finding corrects the circular
+  formal-ester precursor name. Pigment evidence remains bounded to the inspected organism/assay
+  contexts.
+source:
+  git_revision: 6cbcac34bb17f44ea7516dd3308d890367014e2b
+  state: working_tree
+  inputs:
+  - path: .claude/skills/curate-yaml-record/references/review-checklist.md
+    sha256: 59f39fad3e6447e7be30da72667befd3d2e383b68bea5f497952f2ab080da90d
+    role: context
+  - path: .claude/skills/review-yaml-record/SKILL.md
+    sha256: ac1094d8aef512845dbe56ee041e62e62aeeed32326578ff3f7dd8455495f303
+    role: context
+  - path: CLAUDE.md
+    sha256: 0fe3358571b7e3fc0016a94bd514719202ddfb6b8ea020df4431348ed518bc42
+    role: context
+  - path: LICENSE
+    sha256: d920683ada4ab4646467cbe49944e08172d8f10c92ce3e631d6f3460b4b40a52
+    role: context
+  - path: LICENSE-DATA
+    sha256: 9e5f1b3c610b9c2da5c313bf81d577a7d1acec686bdb0384edefa6df0f90cd94
+    role: context
+  - path: conf/record_review.yaml
+    sha256: d3fd2e272546bf2505ded4ef86f7340753c4e422c691bd69f8e79f577b2c5f59
+    role: context
+  - path: data/traits/function/cofactor_requirement/chebi/cofactor-chebi23357.yaml
+    sha256: d5a2579eae56a7b94424792e5694c0d1c58765e388630b1ab7807be0c8ded909
+    role: context
+  - path: data/traits/function/cofactor_requirement/chebi/divinyl-chlorophyll-b-chebi73115.yaml
+    sha256: df0a030ba117835265e87e4fa46954055f88c00317f1b737d7facb147e595271
+    role: target
+  - path: docs/fetch-migration.md
+    sha256: 11718531ccc1346002cfafbe62e8cfdc3859271ded178c34a17e26dabc70b55c
+    role: context
+  - path: docs/record-review-profile.md
+    sha256: 06cec6693ded193231a378bba04e7c1ad3e295f88903ee8b7c30b3238daab9df
+    role: context
+  - path: docs/record-reviews.md
+    sha256: 452a19ab688276747b7c4308523a14d4d99c1c39ef6909ae8a90b85b7a9b3e9b
+    role: context
+  - path: download.yaml
+    sha256: 63a62092f919dc534d7b5d9087ada35dea39ed88579f3fd281f8f0ffe6ef4417
+    role: context
+  - path: history/README.md
+    sha256: db3db1da49f08244c863689856f31bc764aadb6e629b25aff45b3b4598dbef2c
+    role: context
+  - path: justfile
+    sha256: 090b16ab565dbc137f589ab913e57efac5cb37bb7511547391267ba6ea96dd5b
+    role: context
+  - path: schema/record_review.yaml
+    sha256: 229baf9b69118a1fe318e4c31085c0820e4e3d1365e7b04d6ace451b7c35f9bb
+    role: context
+  - path: scripts/build_docs_index.py
+    sha256: 926f593f6d3c81b16ff72148f1777d0b6d81cabe5fe806f4667c5745f28bb818
+    role: context
+  - path: scripts/seed_chebi_cofactor.py
+    sha256: c94f89132779ded0393c70a67ea35da9bc1d1d5a5adbc5212aeac144a124c802
+    role: context
+  - path: src/proteintraitsmech/schema/proteintraitsmech.yaml
+    sha256: 7d29139f696497dffa018b8d68b3f72d4e1adbadd4f67f7904ddbb4b12275418
+    role: context
+scope:
+  description: Field-by-field scientific review of one complete ProteinTraitRecord.
+  selection: Path-order position 1 in batch 020. Fresh main inventory has 429359 records;
+    union with validated published review heads (batch-001 at b36c4b5ad6c1ee1f31f1cc8c4da5cad94651719d;
+    batch-002 at 357a22ff037976ab142a6bf2267191b5f4a98d21; batch-003 at cc32a8c59ea04af980930b521773705380a9d85a;
+    batch-004 at 23d5cee9fdad2ee701ca7d5cadfc76b54df242ca; batch-005 at 678797be94bf7bcf5673a5c9dcd2e779ec1c76cc;
+    batch-006 at 1696e53c414be3be3641f470a8eade2ec004b6b1; batch-007 at ecd1ed5f09754b6cee1695d813f62f9b23b6ccf5;
+    batch-008 at 914248190c8fd158835c16572946efde3dd87af4; batch-009 at 12d47e9145517b395c6ffdacd172003af66f5618;
+    batch-010 at d51f823a5de8645ec50586992dc9e2e27fdef83f; batch-011 at 3f0697b8989b56af606b2eee7248b55fa21cd4f5;
+    batch-012 at 86f94d00a00a8b0fbaa16d5301a35ff03fa8abc0; batch-013 at ef73f3abddbb3786a9d95cc0e4616aeaea5ca3fb;
+    batch-014 at dc70a3cb9267c42c78bc4c356ec28109fb45114f; batch-015 at 10d0148878b3b2e203d2f368ac3b3fd48c8b0e50;
+    batch-016 at 8a2bb4c2441c87fb0eeda6e7623c87c0e0a6c1fd; batch-017 at 952d4d2227f24b9d7a96481536971328f8c9e7c9;
+    batch-018 at 63c8c7d6546a6e5e23c634b191f7dbb9791c6a3c; batch-019 at a14da7a2c18c5f53a33fb69c8556ca6de9526a87)
+    covers 188 record paths, leaving 429171 before this batch. 20 inventories were
+    combined. Published branch coverage is not described as merged main. Snapshot-row
+    context paths are excluded.
+  coverage: full
+  population_size: 1
+  reviewed_target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_73115
+targets:
+- kind: generated
+  label: requires divinyl chlorophyll b
+  owner_paths:
+  - path: scripts/seed_chebi_cofactor.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Maintained ChEBI role parser, requirement-class synthesis, hierarchy selection
+      and YAML emitter
+  path: data/traits/function/cofactor_requirement/chebi/divinyl-chlorophyll-b-chebi73115.yaml
+  record_class: ProteinTraitRecord
+  target_id: proteintraitsmech:COFACTOR_REQ_CHEBI_73115
+checks:
+- check_id: gate-1
+  name: Closed schema
+  command: just validate data/traits/function/cofactor_requirement/chebi/divinyl-chlorophyll-b-chebi73115.yaml
+  exit_code: 0
+  status: passed
+  required: true
+  summary: Single target validated in closed mode.
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_73115
+  evidence_ids:
+  - validation-1
+- check_id: gate-2
+  name: Closed schema and applicable source semantics
+  command: just validate-all data/traits/function/cofactor_requirement/chebi/divinyl-chlorophyll-b-chebi73115.yaml
+    data/traits/function/cofactor_requirement/chebi/dy-chebi33373.yaml data/traits/function/cofactor_requirement/chebi/echinenone-chebi4746.yaml
+    data/traits/function/cofactor_requirement/chebi/enterobactin-1-chebi77805.yaml
+    data/traits/function/cofactor_requirement/chebi/enterobactin-6-chebi38150.yaml
+    data/traits/function/cofactor_requirement/chebi/enterobactin-chebi28855.yaml data/traits/function/cofactor_requirement/chebi/er-chebi33379.yaml
+    data/traits/function/cofactor_requirement/chebi/eu-chebi33375.yaml data/traits/function/cofactor_requirement/chebi/f420-chebi28343.yaml
+    data/traits/function/cofactor_requirement/chebi/fad-3-chebi57692.yaml
+  exit_code: 0
+  status: passed
+  required: true
+  summary: One shared invocation scanned all ten listed batch targets; target SHA256
+    matches before and after execution. Source-specific checks apply where implemented;
+    this gate does not qualify a protein requirement or prove semantic equivalence.
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_73115
+  evidence_ids:
+  - validation-2
+- check_id: gate-3
+  name: Causal graph integrity
+  command: just audit-graphs data/traits/function/cofactor_requirement/chebi/divinyl-chlorophyll-b-chebi73115.yaml
+  exit_code: 0
+  status: passed
+  required: true
+  summary: No graphs in target; no molecular-mechanism coverage is inferred.
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_73115
+  evidence_ids:
+  - validation-3
+- check_id: gate-4
+  name: Curation history validity
+  command: just validate-history
+  exit_code: 0
+  status: passed
+  required: true
+  summary: Full curation-history gate; this review adds no history event.
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_73115
+  evidence_ids:
+  - validation-4
+- check_id: source-resolution
+  name: Source reference inspection
+  status: passed
+  required: true
+  summary: CHEBI:73115 resolves nonobsolete. Exact structure, names, definition, cofactor
+    role, structural parents and external monoanion/phytol comparisons were inspected.
+    Source-linked abstracts and general IUBMB ester reaction were read. No source
+    functional-parent relation to a divinyl-b chlorophyllide is asserted; the precursor
+    correction rests on the actual ester connectivity.
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_73115
+  evidence_ids:
+  - chemical
+  - chemical-role
+  - cofactor-role
+  - licence
+  - release
+  - conjugate
+  - phytol
+  - methyl-ester
+  - chlorophyll-class
+  - mutant-primary
+  - antenna-primary
+  - rice-primary
+  - ester-authority
+evidence:
+- evidence_id: record
+  kind: record_content
+  reference: data/traits/function/cofactor_requirement/chebi/divinyl-chlorophyll-b-chebi73115.yaml
+  locator: Entire target YAML
+  accessed_at: '2026-10-21T11:35:22Z'
+  snapshot_sha256: df0a030ba117835265e87e4fa46954055f88c00317f1b737d7facb147e595271
+  support: supports
+  summary: Complete YAML inspected, including local protein-requirement identifier
+    and label, synthesized definition, ChEBI attribution, FUNCTION/FUNC_COFACTOR_REQUIREMENT,
+    CLASS/SEEDED status, local parent, chemical xref and stated CC-BY 4.0 licence.
+    No optional examples, causal graphs, qualified protein assertions or chemical_participants
+    occur in this target YAML.
+- evidence_id: schema
+  kind: record_content
+  reference: src/proteintraitsmech/schema/proteintraitsmech.yaml
+  locator: ProteinTraitRecord xrefs, parent_traits, chemical_participants; ChemicalParticipant/ChemicalRoleEnum;
+    FUNC_COFACTOR_REQUIREMENT
+  accessed_at: '2026-10-21T11:35:22Z'
+  snapshot_sha256: 7d29139f696497dffa018b8d68b3f72d4e1adbadd4f67f7904ddbb4b12275418
+  support: supports
+  summary: FUNC_COFACTOR_REQUIREMENT describes a non-substrate small molecule required
+    for activity. xrefs asserts true own-source equivalence; chemical_participants
+    represents chemical entities with typed roles. parent_traits asserts a broader
+    class. Optional examples and causal graphs are not mandatory class representations.
+- evidence_id: owner
+  kind: record_content
+  reference: scripts/seed_chebi_cofactor.py
+  locator: load_relations, load_names, build, main
+  accessed_at: '2026-10-21T11:35:22Z'
+  snapshot_sha256: c94f89132779ded0393c70a67ea35da9bc1d1d5a5adbc5212aeac144a124c802
+  support: supports
+  summary: load_relations selects cofactor-role descendants and molecules with has_role;
+    build synthesizes a protein-requirement label/definition, appends chemical source
+    text, attributes the composite to ChEBI and emits CHEBI as xrefs. main selects
+    one role-parent. The source chemical class and the synthesized requirement trait
+    have different denotations.
+- evidence_id: registry
+  kind: record_content
+  reference: download.yaml
+  locator: ChEBI source entry
+  accessed_at: '2026-10-21T11:35:22Z'
+  snapshot_sha256: 63a62092f919dc534d7b5d9087ada35dea39ed88579f3fd281f8f0ffe6ef4417
+  support: supports
+  summary: ChEBI is declared CC-BY 4.0 with seed_chebi_cofactor.py, enrichment status/role
+    and chemistry as a typed per-trait attribute. This identifies maintained source
+    provenance; it does not establish a particular protein requirement.
+- evidence_id: local-parent-1
+  kind: record_content
+  reference: data/traits/function/cofactor_requirement/chebi/cofactor-chebi23357.yaml
+  locator: Entire local parent YAML
+  accessed_at: '2026-10-21T11:35:22Z'
+  snapshot_sha256: d5a2579eae56a7b94424792e5694c0d1c58765e388630b1ab7807be0c8ded909
+  support: supports
+  summary: 'Entire local parent YAML inspected: local requirement identifier, definition,
+    category, hierarchy, source chemical-role xref and SEEDED status. Parent resolution
+    does not establish that its own xrefs have equivalent-class semantics.'
+- evidence_id: licence
+  kind: authority
+  reference: https://www.ebi.ac.uk/chebi/about/
+  accessed_at: '2026-10-21T08:48:05.571149Z'
+  snapshot_sha256: f541592fc56a6bda901699cf4a970e5129a18cdbd780e642ad5c36a5ad55251b
+  support: supports
+  locator: Introduction and Licensing
+  summary: The official ChEBI Introduction and Licensing sections describe chemical
+    entities/classes and CC BY4.0. This supports chemical-source attribution, not
+    a synthesized protein requirement.
+- evidence_id: release
+  kind: database
+  reference: https://www.ebi.ac.uk/ols4/api/ontologies/chebi
+  accessed_at: '2026-10-21T08:47:19.026327Z'
+  snapshot_sha256: ec4c86fcec2d75393b2fd28d66fafbed591ab17b0a1cd58fbbf1bceb8bcefa22
+  support: supports
+  locator: Inspected source response captured at the recorded UTC time
+  summary: Verified reused OLS metadata reports ChEBI version256 loaded2026-10-16,
+    with original actual access timestamp retained. It does not assign a release to
+    live backend responses or the original seed.
+- evidence_id: chemical
+  kind: database
+  reference: https://www.ebi.ac.uk/ols4/api/ontologies/chebi/terms?obo_id=CHEBI:73115
+  accessed_at: '2026-10-21T11:36:34.585302Z'
+  snapshot_sha256: b47e5ca3deaa6c453a20075d957d0df214894407d05981ee6ba562c48f66f8df
+  support: supports
+  locator: Inspected source response captured at the recorded UTC time
+  summary: OLS resolves CHEBI:73115 to its nonobsolete chemical term. Names, source
+    description or explicit absence, and chemical annotations were inspected.
+- evidence_id: chemical-role
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/73115/
+  accessed_at: '2026-10-21T11:36:34.643446Z'
+  snapshot_sha256: 92822af88e9f4aa8b054e4e980850a82e9fc5898f20d70494c018d0cfbf7eeab
+  support: supports
+  locator: Actual identifier/name/definition field, names, formula/charge, structure
+    and ontology relations
+  summary: 'The complete official response was inspected: exact chemical identity,
+    formula, charge, structure, aliases, outgoing/incoming relations and chemical
+    definition.'
+- evidence_id: cofactor-role
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/23357/
+  accessed_at: '2026-10-21T10:41:31.355972Z'
+  snapshot_sha256: 4c04bfdbe6bd7fe5edd952eef8fbf70b950df6ab9693d629e1c6a1a7c00917a7
+  support: supports
+  locator: Actual identifier/name/definition field, names, formula/charge, structure
+    and ontology relations
+  summary: Cofactor is a biochemical role for an organic molecule or ion required
+    by an enzyme, with biochemical-role parent. It is not a protein-requirement class.
+- evidence_id: conjugate
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/73096/
+  accessed_at: '2026-10-21T11:22:45.024203Z'
+  snapshot_sha256: d07426afec5d200ae1ac6f8b8a68b0128a610993d90b0110c626557c8f760933
+  support: supports
+  locator: Actual identifier/name/definition field, names, formula/charge, structure
+    and ontology relations
+  summary: The exact external monoanion comparison is C55H67MgN4O6,−1, with peripheral
+    beta-keto-ester carbon deprotonation in the source phorbine numbering. Mg and
+    phytyl/methyl esters remain. It is not a Mg-free pigment or a nitrogen deprotonation
+    assertion.
+- evidence_id: phytol
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/17327/
+  accessed_at: '2026-10-21T11:23:55.289008Z'
+  snapshot_sha256: ed045484e326043a06b8f00ed63f325f91a7cf96cf1e1cb54625a815ea62f059
+  support: supports
+  locator: Actual identifier/name/definition field, names, formula/charge, structure
+    and ontology relations
+  summary: Phytol is C20H40O with the exact (2E,7R,11R)-3,7,11,15-tetramethylhexadec-2-en-1-ol
+    name and structure. It supplies the alcohol part of a formal ester comparison,
+    not proof that free phytol is the enzymatic donor.
+- evidence_id: methyl-ester
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/25248/
+  accessed_at: '2026-10-21T11:23:16.268998Z'
+  snapshot_sha256: c14bd82431a77fb8195daeb8cc70ed6d618c0f727f8faccf9db58e70c39b73bc
+  support: supports
+  locator: Actual identifier/name/definition field, names, formula/charge, structure
+    and ontology relations
+  summary: The methyl-ester parent defines formal condensation of a carboxy group
+    with methanol; it is distinct from the target pigment and its additional phytyl
+    ester.
+- evidence_id: chlorophyll-class
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/28966/
+  accessed_at: '2026-10-21T11:23:16.268816Z'
+  snapshot_sha256: 6969ca55fd6678cedfa7765fc24fadcc4547376ad693f2c32b78d813070cab27
+  support: supports
+  locator: Actual identifier/name/definition field, names, formula/charge, structure
+    and ontology relations
+  summary: The source class describes magnesium porphyrins with a fifth ring and variable
+    substituents. Its R-group drawing is not a fixed formula for every chlorophyll.
+- evidence_id: mutant-primary
+  kind: primary_source
+  reference: https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID%3A15695432%20AND%20SRC%3AMED&format=json&resultType=core
+  accessed_at: '2026-10-21T11:23:17.232181Z'
+  snapshot_sha256: 66c02da5c60ac27694292dd299b23b6ac5bf6449f30d0a35d1a5a27f42806393
+  support: supports
+  locator: PMID15695432; DOI10.1093/pcp/pci053; complete indexed abstract
+  summary: The complete primary abstract reports divinyl a/b accumulation in Arabidopsis
+    pcb2, a nonsense mutation and genetic complementation. The reductase assignment
+    is presented as a suggestion, not direct qualification of every pigment/protein.
+- evidence_id: antenna-primary
+  kind: primary_source
+  reference: https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID%3A9452521+AND+SRC%3AMED&format=json&resultType=core
+  accessed_at: '2026-10-21T11:37:40.020650Z'
+  snapshot_sha256: 91b15b3a904c880075502c9a3e660f3d1882fc46718718ea268a7023d6f01530
+  support: supports
+  locator: PMID9452521; DOI10.1007/pl00006294; complete indexed abstract
+  summary: The complete primary abstract reports phylogenetic analysis of marine Prochlorococcus/Synechococcus
+    isolates and describes lineages with divinyl chlorophyll b versus phycobilisome
+    antennae. It supplies bounded antenna/organism context, not a direct biochemical
+    assay of exact-state pigment dependence.
+- evidence_id: rice-primary
+  kind: primary_source
+  reference: https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID%3A20484022%20AND%20SRC%3AMED&format=json&resultType=core
+  accessed_at: '2026-10-21T11:23:16.475116Z'
+  snapshot_sha256: 586a9aaebb31d106d7b6fb801c794f64b6d2da0171dc9acd6b88b6e491608a23
+  support: supports
+  locator: PMID20484022; DOI10.1104/pp.110.158477; complete indexed abstract
+  summary: The complete primary abstract reports rice mutant accumulation of divinyl
+    chlorophyll a/b, but recombinant OsDVR conversion is directly tested for divinyl
+    chlorophyll(ide) a. That a-substrate result is not transferred to b.
+- evidence_id: ester-authority
+  kind: authority
+  reference: https://iubmb.qmul.ac.uk/enzyme/EC2/5/1/62.html
+  accessed_at: '2026-10-21T11:23:55.289822Z'
+  snapshot_sha256: 0c1caca0de7c0594ab528601b53f5534b07bfa86667cf0a31df9f50f036b77db
+  support: supports
+  locator: EC2.5.1.62 reaction and comments
+  summary: The complete official EC2.5.1.62 entry distinguishes chlorophyllide a from
+    its chlorophyll a ester and uses phytyl diphosphate as donor. This is general
+    ester/biosynthesis context, not an exact divinyl-b substrate assay.
+- evidence_id: validation-1
+  kind: validation
+  reference: just validate data/traits/function/cofactor_requirement/chebi/divinyl-chlorophyll-b-chebi73115.yaml
+  locator: Executed 2026-10-21T11:36:19Z through 2026-10-21T11:36:22Z; exit 0
+  accessed_at: '2026-10-21T11:36:22Z'
+  support: supports
+  summary: "=== validate-strict summary ===\n  files scanned:      1\n  files with\
+    \ ERROR:   0\n  total ERROR rows:   0\n  TSV:                reports/instance_validation_failures.tsv"
+- evidence_id: validation-2
+  kind: validation
+  reference: just validate-all data/traits/function/cofactor_requirement/chebi/divinyl-chlorophyll-b-chebi73115.yaml
+    data/traits/function/cofactor_requirement/chebi/dy-chebi33373.yaml data/traits/function/cofactor_requirement/chebi/echinenone-chebi4746.yaml
+    data/traits/function/cofactor_requirement/chebi/enterobactin-1-chebi77805.yaml
+    data/traits/function/cofactor_requirement/chebi/enterobactin-6-chebi38150.yaml
+    data/traits/function/cofactor_requirement/chebi/enterobactin-chebi28855.yaml data/traits/function/cofactor_requirement/chebi/er-chebi33379.yaml
+    data/traits/function/cofactor_requirement/chebi/eu-chebi33375.yaml data/traits/function/cofactor_requirement/chebi/f420-chebi28343.yaml
+    data/traits/function/cofactor_requirement/chebi/fad-3-chebi57692.yaml
+  locator: Executed 2026-10-21T11:36:19Z through 2026-10-21T11:38:17Z; exit 0
+  accessed_at: '2026-10-21T11:38:17Z'
+  support: supports
+  summary: "=== validate-strict summary ===\n  files scanned:      10\n  files with\
+    \ ERROR:   0\n  total ERROR rows:   0\n  TSV:                reports/instance_validation_failures.tsv\n\
+    files scanned: 10\nregistry proteins: 12700\nsource evidence objects: 21048\n\
+    qualified record bindings: 21048\nUniProt membership objects: 431\nhierarchy records:\
+    \ 0\nsemantic findings: 0\nTSV: /private/tmp/ptm-record-reviews-20261021/repo/reports/uniprot-grounding/validation.tsv"
+- evidence_id: validation-3
+  kind: validation
+  reference: just audit-graphs data/traits/function/cofactor_requirement/chebi/divinyl-chlorophyll-b-chebi73115.yaml
+  locator: Executed 2026-10-21T11:36:22Z through 2026-10-21T11:36:22Z; exit 0
+  accessed_at: '2026-10-21T11:36:22Z'
+  support: supports
+  summary: 'causal-graph audit: 0 records, 0 graphs, 0 nodes, 0 edges | grounded nodes
+    0/0, snippet-cited edges 0/0 | 0 errors, 0 warnings'
+- evidence_id: validation-4
+  kind: validation
+  reference: just validate-history
+  locator: Executed 2026-10-21T11:38:17Z through 2026-10-21T11:38:18Z; exit 0
+  accessed_at: '2026-10-21T11:38:18Z'
+  support: supports
+  summary: No issues found
+assessments:
+- area: ownership
+  outcome: supported
+  summary: scripts/seed_chebi_cofactor.py owns generated target changes. Its source
+    transformation is inspected; no emitted record has been edited.
+  evidence_ids:
+  - owner
+  - registry
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_73115
+  assessment_id: assessment-1
+  topic: Maintained cofactor requirement emitter
+- area: completeness
+  outcome: supported
+  summary: The local identifier and requires-label denote a proposed reusable requirement
+    class rather than a protein instance. Optional examples, sequence/structure representations
+    and mechanisms are not automatically required; none are newly qualified.
+  evidence_ids:
+  - record
+  - schema
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_73115
+  assessment_id: assessment-2
+  topic: Protein trait class completeness
+- area: graph
+  outcome: not_applicable
+  summary: No causal graph or molecular mechanism is asserted by this YAML; graph
+    validation does not constitute mechanism evidence.
+  evidence_ids:
+  - record
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_73115
+  assessment_id: assessment-3
+  topic: Causal mechanism evidence
+- area: scope
+  outcome: supported
+  summary: The target remains SEEDED, and no protein example, native review status
+    or curation-history event is promoted by this observation.
+  evidence_ids:
+  - record
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_73115
+  assessment_id: assessment-4
+  topic: Requirement scope and scientific status
+- area: identity
+  outcome: supported
+  summary: The complete local record proposes a reusable protein requirement for divinyl
+    chlorophyll b. CHEBI:73115 resolves the chemical referent, not an equivalent protein-requirement
+    class.
+  evidence_ids:
+  - record
+  - chemical
+  - chemical-role
+  - owner
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_73115
+  assessment_id: assessment-5
+  topic: Chemical identity and protein requirement scope
+- area: provenance
+  outcome: supported
+  summary: The maintained ChEBI role seeder selects chemical-role descendants, generates
+    the requirement wrapper and appends source chemistry. Source licensing is supported.
+    Current snapshots do not establish the seed release.
+  evidence_ids:
+  - record
+  - owner
+  - registry
+  - chemical-role
+  - licence
+  - release
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_73115
+  assessment_id: assessment-6
+  topic: ChEBI attribution and release provenance
+- area: consistency
+  outcome: supported
+  summary: The inspected direct source role explains the selected local broader requirement
+    parent. Role taxonomy does not itself prove protein-level non-substrate dependence,
+    and this review does not certify the parent.
+  evidence_ids:
+  - record
+  - owner
+  - local-parent-1
+  - chemical-role
+  - cofactor-role
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_73115
+  assessment_id: assessment-7
+  topic: Chemical-role and protein-trait hierarchy
+- area: grounding
+  outcome: concern
+  summary: CHEBI:73115 denotes a chemical whereas the local class denotes a functional
+    protein requirement. The schema xrefs field requires true source-direct equivalence,
+    not a chemical association.
+  evidence_ids:
+  - record
+  - schema
+  - chemical
+  - chemical-role
+  - owner
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_73115
+  assessment_id: assessment-8
+  topic: Chemical association versus trait equivalence
+- area: evidence
+  outcome: supported
+  summary: CHEBI:73115 is neutral C55H68MgN4O6, a fixed divinyl b pigment with Mg,
+    two vinyl groups, formyl substituent, methyl ester and stereospecified phytyl
+    ester. Source phorbine (3S,4S,21R) and phytyl (2E,7R,11R) stereochemistry are
+    retained. Both carboxy groups are esterified; the completed molecule is not its
+    own free carboxylic-acid precursor. Formal [Mg−2] SMILES bookkeeping is not Mg
+    oxidation state−II.
+  evidence_ids:
+  - chemical
+  - chemical-role
+  - conjugate
+  - phytol
+  - methyl-ester
+  - chlorophyll-class
+  topic: Neutral divinyl b pigment structure and stereochemistry
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_73115
+  assessment_id: assessment-9
+- area: nomenclature
+  outcome: concern
+  summary: The copied source definition circularly names divinyl chlorophyll b itself
+    as the acid precursor of its phytyl ester. The actual structure instead requires
+    the corresponding dephytylated carboxylic acid (divinyl chlorophyllide b). This
+    follows the ester connectivity, not a claim of an observed biosynthetic reaction
+    with free phytol. No exact ChEBI precursor ID is assigned here.
+  evidence_ids:
+  - record
+  - chemical-role
+  - phytol
+  - methyl-ester
+  - ester-authority
+  topic: Circular formal-ester precursor wording
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_73115
+  assessment_id: assessment-10
+- area: evidence
+  outcome: supported
+  summary: Source-linked primary abstracts support divinyl b occurrence and bounded
+    photosynthetic-antenna context. Arabidopsis/rice accumulation and phylogenetic
+    antenna descriptions are kept distinct from a direct requirement assay. The directly
+    tested rice reductase substrate is the a pigment, not b.
+  evidence_ids:
+  - mutant-primary
+  - antenna-primary
+  - rice-primary
+  topic: Bounds of divinyl b pigment evidence
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_73115
+  assessment_id: assessment-11
+- area: representation
+  outcome: unknown
+  summary: The source cofactor role and pigment context support candidate relevance
+    but do not qualify a particular protein, exact bound protonation, residue geometry
+    or universal dependence. The neutral b pigment, corresponding monoanion, a pigment
+    and Mg-free derivatives remain distinct.
+  evidence_ids:
+  - record
+  - schema
+  - chemical-role
+  - conjugate
+  - mutant-primary
+  - antenna-primary
+  - rice-primary
+  topic: Exact activity-relative pigment requirement
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_73115
+  assessment_id: assessment-12
+findings:
+- issue_key: chebi.cofactor-requirement.CHEBI-73115.chemical-entity-equivalence
+  category: grounding
+  severity: major
+  title: Chemical entity is encoded as equivalent to a protein requirement
+  description: The local class denotes a protein requirement for divinyl chlorophyll
+    b, whereas CHEBI:73115 denotes the specific neutral Mg-containing phytyl ester.
+    xrefs equates the chemical and functional predicate.
+  evidence_ids:
+  - record
+  - schema
+  - chemical
+  - chemical-role
+  - owner
+  certainty: confirmed
+  field_paths:
+  - xrefs
+  - chemical_participants
+  normalization_reason: The exact candidate chemical is recognizable, but a chemical
+    and a protein requirement for it have different denotations. Correctly typed grounding
+    can preserve the candidate without false equivalence.
+  finding_id: F1
+  status: open
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_73115
+  owner_paths:
+  - path: scripts/seed_chebi_cofactor.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Maintained ChEBI role parser, requirement-class synthesis, hierarchy selection
+      and YAML emitter
+  rule_id: ProteinTraitRecord field checklist
+  native_severity: major
+- issue_key: chebi.cofactor-requirement.CHEBI-73115.ester-precursor-name
+  category: nomenclature
+  severity: minor
+  title: Ester definition names the product as its own acid precursor
+  description: The source-inherited definition calls divinyl chlorophyll b the carboxylic-acid
+    precursor of divinyl chlorophyll b. Its actual structure already contains the
+    phytyl ester and no free carboxy group. The intended formal precursor is the corresponding
+    dephytylated acid, commonly named divinyl chlorophyllide b; this correction does
+    not change the target identity.
+  evidence_ids:
+  - record
+  - chemical-role
+  - phytol
+  - methyl-ester
+  - ester-authority
+  certainty: confirmed
+  field_paths:
+  - definition
+  normalization_reason: The target ID and exact pigment structure remain supported.
+    This is a bounded source-inherited precursor-name error, distinct from the major
+    class-equivalence defect.
+  finding_id: F2
+  status: open
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_73115
+  owner_paths:
+  - path: scripts/seed_chebi_cofactor.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Maintained ChEBI role parser, requirement-class synthesis, hierarchy selection
+      and YAML emitter
+  rule_id: ProteinTraitRecord field checklist
+  native_severity: minor
+actions:
+- action_id: A1
+  description: Update build() in scripts/seed_chebi_cofactor.py to remove CHEBI:73115
+    from trait-equivalence xrefs and preserve chemical provenance through supported
+    grounding. Adjudicate the activity-relative role and exact state before assigning
+    a COFACTOR chemical_participant; if not supported, retain explicit uncertainty
+    and chemical provenance without inventing a participant. Do not move this equality
+    into mapped_xrefs, merge related chemical states or qualify proteins from role
+    membership alone.
+  finding_ids:
+  - F1
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_73115
+  owner_paths:
+  - path: scripts/seed_chebi_cofactor.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Maintained ChEBI role parser, requirement-class synthesis, hierarchy selection
+      and YAML emitter
+  acceptance_checks:
+  - Preserve neutral73115, formyl substituent, both vinyl groups, Mg and stereochemistry.
+    Do not transfer a-pigment reductase evidence to b or replace the ester with its
+    precursor/monoanion.
+  - The regenerated target preserves the exact chemical scope without asserting chemical/protein-class
+    equality. Any participant has an adjudicated activity-relative role; no automatic
+    example or status promotion occurs.
+  - After repair run just validate data/traits/function/cofactor_requirement/chebi/divinyl-chlorophyll-b-chebi73115.yaml;
+    just validate-all data/traits/function/cofactor_requirement/chebi/divinyl-chlorophyll-b-chebi73115.yaml;
+    and just audit-graphs data/traits/function/cofactor_requirement/chebi/divinyl-chlorophyll-b-chebi73115.yaml.
+    If identity resolution requires an audited replacement path, validate that exact
+    replacement and the retained/deprecated target disposition too.
+  - For maintained writer changes add focused pytest coverage, run just audit-writers,
+    just lint and just test. Regenerate the scoped existing target through an audited
+    route. Run full just validate-all before merging record changes and save a fresh
+    structured review of changed bytes.
+- action_id: A2
+  description: Correct the maintained source-text transform or a registered provenance-bearing
+    override to identify the corresponding dephytylated carboxylic acid rather than
+    the completed pigment as formal precursor. Verify any chosen precursor label/identifier
+    against its exact structure before grounding it. Preserve CHEBI:73115 and source
+    provenance, and distinguish formal free-alcohol condensation from an enzyme reaction
+    using an activated donor.
+  finding_ids:
+  - F2
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_73115
+  owner_paths:
+  - path: scripts/seed_chebi_cofactor.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Maintained ChEBI role parser, requirement-class synthesis, hierarchy selection
+      and YAML emitter
+  acceptance_checks:
+  - The regenerated definition no longer uses the completed ester as its own acid
+    precursor; exact target formula/connectivity, Mg and stereochemistry remain intact.
+  - No unsupported precursor ID, free-phytol enzyme substrate claim or replacement
+    of the target chemical is introduced.
+  - After repair run just validate data/traits/function/cofactor_requirement/chebi/divinyl-chlorophyll-b-chebi73115.yaml;
+    just validate-all data/traits/function/cofactor_requirement/chebi/divinyl-chlorophyll-b-chebi73115.yaml;
+    and just audit-graphs data/traits/function/cofactor_requirement/chebi/divinyl-chlorophyll-b-chebi73115.yaml.
+    If identity resolution requires an audited replacement path, validate that exact
+    replacement and the retained/deprecated target disposition too.
+  - For maintained writer changes add focused pytest coverage, run just audit-writers,
+    just lint and just test. Regenerate the scoped existing target through an audited
+    route. Run full just validate-all before merging record changes and save a fresh
+    structured review of changed bytes.
+limitations:
+- The reviewed record does not identify the exact ChEBI source release used for the
+  seed. Current official responses are comparison snapshots, not proof of the original
+  release.
+- A ChEBI chemical-role assertion supplies candidate class context, not evidence that
+  a particular protein requires that chemical, that every related protein does, or
+  that the chemical is an obligatory physiological cofactor. No such per-protein qualification
+  is claimed.
+- External sources were inspected and SHA256-captured in session scratch. This bundle
+  retains URLs, access times, digests and bounded observations rather than full response
+  bodies.
+- This one-record review does not certify its source cohort or parents. iModulonDB
+  is not applicable to this generic chemical requirement class without a gene, organism
+  or expression dataset.
+- Primary papers were inspected at complete indexed-abstract level. An exact OLS search
+  for divinyl chlorophyllide b returned no result in that bounded query; this is not
+  a global absence claim and no precursor ID is proposed. General chlorophyll-synthase
+  chemistry is not direct divinyl-b substrate qualification.
+tags:
+- unreviewed-path-order
+- batch-020
+- chebi-cofactor
+```

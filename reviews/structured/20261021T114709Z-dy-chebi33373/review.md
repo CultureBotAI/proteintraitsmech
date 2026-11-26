@@ -1,0 +1,943 @@
+# Review of requires Dy
+
+- Review: 20261021T114709Z-dy-chebi33373
+- Repository: CultureBotAI/proteintraitsmech
+- Started UTC: 2026-10-21T11:35:23Z
+- Finished UTC: 2026-10-21T11:47:09Z
+- Reviewer: Codex (unknown)
+- Completion: completed
+- Verdict: needs_curation
+- Scientific review: true
+
+## Summary
+
+The resolved local target has a confirmed elemental identity collision: Dy/dysprosium is mapped to promethium CHEBI:33373. One blocker requires maintained alignment reconciliation. A separate confirmed major chemical-to-protein-trait equivalence defect has a dependent identity-first repair; no automatic replacement or wrong-Pm participant is justified.
+
+## Scope And Provenance
+
+Field-by-field scientific review of one complete ProteinTraitRecord.
+
+Selection: Path-order position 2 in batch 020. Fresh main inventory has 429359 records; union with validated published review heads (batch-001 at b36c4b5ad6c1ee1f31f1cc8c4da5cad94651719d; batch-002 at 357a22ff037976ab142a6bf2267191b5f4a98d21; batch-003 at cc32a8c59ea04af980930b521773705380a9d85a; batch-004 at 23d5cee9fdad2ee701ca7d5cadfc76b54df242ca; batch-005 at 678797be94bf7bcf5673a5c9dcd2e779ec1c76cc; batch-006 at 1696e53c414be3be3641f470a8eade2ec004b6b1; batch-007 at ecd1ed5f09754b6cee1695d813f62f9b23b6ccf5; batch-008 at 914248190c8fd158835c16572946efde3dd87af4; batch-009 at 12d47e9145517b395c6ffdacd172003af66f5618; batch-010 at d51f823a5de8645ec50586992dc9e2e27fdef83f; batch-011 at 3f0697b8989b56af606b2eee7248b55fa21cd4f5; batch-012 at 86f94d00a00a8b0fbaa16d5301a35ff03fa8abc0; batch-013 at ef73f3abddbb3786a9d95cc0e4616aeaea5ca3fb; batch-014 at dc70a3cb9267c42c78bc4c356ec28109fb45114f; batch-015 at 10d0148878b3b2e203d2f368ac3b3fd48c8b0e50; batch-016 at 8a2bb4c2441c87fb0eeda6e7623c87c0e0a6c1fd; batch-017 at 952d4d2227f24b9d7a96481536971328f8c9e7c9; batch-018 at 63c8c7d6546a6e5e23c634b191f7dbb9791c6a3c; batch-019 at a14da7a2c18c5f53a33fb69c8556ca6de9526a87) covers 188 record paths, leaving 429171 before this batch. 20 inventories were combined. Published branch coverage is not described as merged main. Snapshot-row context paths are excluded.
+Coverage: full; 1 reviewed / 1 in the declared population.
+Source: working_tree at Git base 6cbcac34bb17f44ea7516dd3308d890367014e2b.
+Working-tree hashes do not imply those bytes were committed.
+
+| Target | Path / selector | Kind | Label |
+| --- | --- | --- | --- |
+| proteintraitsmech:COFACTOR_REQ_CHEBI_33373 | data/traits/function/cofactor_requirement/chebi/dy-chebi33373.yaml | generated | requires Dy |
+
+## Validation
+
+| Check | Status | Required | Targets | Result |
+| --- | --- | --- | --- | --- |
+| Closed schema | passed | True | proteintraitsmech:COFACTOR_REQ_CHEBI_33373 | Single target validated in closed mode. |
+| Closed schema and applicable source semantics | passed | True | proteintraitsmech:COFACTOR_REQ_CHEBI_33373 | One shared invocation scanned all ten listed batch targets; target SHA256 matches before and after execution. Source-specific checks apply where implemented; this gate does not qualify a protein requirement or prove semantic equivalence. |
+| Causal graph integrity | passed | True | proteintraitsmech:COFACTOR_REQ_CHEBI_33373 | No graphs in target; no molecular-mechanism coverage is inferred. |
+| Curation history validity | passed | True | proteintraitsmech:COFACTOR_REQ_CHEBI_33373 | Full curation-history gate; this review adds no history event. |
+| Source reference inspection | passed | True | proteintraitsmech:COFACTOR_REQ_CHEBI_33373 | Source reference inspection succeeded and exposed the collision:33373 is nonobsolete promethium atom, not Dy. Official33377 and RSC element61/66 comparisons distinguish the elements. The captured exact alignment row and both maintained owner/dependency scripts were read. This is not a successful Dy identity match. |
+
+## Scientific And Domain Assessments
+
+### Maintained cofactor requirement emitter
+
+ownership: supported. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_33373.
+
+scripts/seed_cofactor_alignment.py owns this aligned requirement, with the captured ChEBI helper dependency and crosswalk provenance. No emitted record has been edited.
+
+### Protein trait class completeness
+
+completeness: concern. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_33373.
+
+The exact target path is resolved, but its Dy/dysprosium name and chemical identifier do not denote a coherent requirement. Optional representation absence is not the defect; the elemental identity must be reconciled first.
+
+### Causal mechanism evidence
+
+graph: not_applicable. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_33373.
+
+No causal graph or molecular mechanism is asserted by this YAML; graph validation does not constitute mechanism evidence.
+
+### Requirement scope and scientific status
+
+scope: supported. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_33373.
+
+The target remains SEEDED, and no protein example, native review status or curation-history event is promoted by this observation.
+
+### Dy/Pm elemental identity collision
+
+identity: concern. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_33373.
+
+CHEBI:33373 resolves to neutral promethium atom (Pm), whereas the local label/definition and RELATED_SYNONYM say Dy/dysprosium. Official chemical structures and independent elemental authority establish different elements. The target file is unambiguous, but its intended biological/chemical denotation is internally inconsistent.
+
+### Alignment provenance and unresolved external release
+
+provenance: supported. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_33373.
+
+The captured alignment crosswalk row138 persists CHEBI:33373, Dy, dysprosium and metals. build_aligned trusts the upstream display name/category, emits the supplied chemical ID and imports ChEBI helper utilities. This supports the source of the local collision, not independent verification of the upstream release or a correctly grounded Dy cofactor.
+
+### Related labels and broad category provenance
+
+nomenclature: concern. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_33373.
+
+Dy and dysprosium agree with each other but disagree with the encoded Pm identity. The broad metals value is explicitly RELATED_SYNONYM copied from a curation category, not an exact equivalence claim. It is provenance context to revisit after identity repair; no separate duplicate category-synonym finding is forced.
+
+### Alignment parent versus source structural taxonomy
+
+consistency: unknown. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_33373.
+
+The local cofactor-requirement parent is supplied by the alignment emitter, not selected from a direct cofactor role of33373. Current33373 has only lanthanoid/f-block structural parents and no direct role in the inspected outgoing array. This does not itself disprove a candidate role; the wrong-element collision prevents coherent role adjudication.
+
+### Intended elemental state and protein-role scope
+
+representation: unknown. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_33373.
+
+The intended element and atomic/ionic or compound scope must be decided from maintained curation evidence. Neither a general lanthanide category nor a neutral Dy comparison qualifies a protein or settles the required species. Do not infer universal nonmembership from broad elemental reference pages.
+
+### Identity-first grounding repair
+
+grounding: concern. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_33373.
+
+The chemical identifier is wrong for the displayed element, and the emitter separately asserts chemical-to-protein-class equality through xrefs. Correcting the identity alone would leave that entity-type defect. The independent major semantic repair depends on resolving the identity blocker first; moving the wrong Pm identifier into a Dy participant remains invalid.
+
+## Findings
+
+### F1: Dy requirement is grounded to promethium
+
+blocker / open / confirmed; issue key: chebi.cofactor-requirement.CHEBI-33373.element-identity-collision.
+
+The local label/definition identify Dy and the RELATED_SYNONYM identifies dysprosium, but CHEBI:33373 is promethium atom Pm. The local alignment crosswalk contains the same mismatched mapping. This is a wrong-element identity collision, not merely an unresolved Dy oxidation state or a lack of optional examples.
+
+### F2: Chemical entity is encoded as equivalent to a protein requirement
+
+major / open / confirmed; issue key: chebi.cofactor-requirement.CHEBI-33373.chemical-entity-equivalence.
+
+The alignment emitter places a chemical identifier in xrefs, whose schema meaning is true own-source trait equivalence. A chemical entity and a protein functional requirement have different denotations. This semantic defect is independently repairable from the wrong-element collision: a corrected Dy identifier would still not be equal to a protein-requirement class. Its repair is dependent on resolving the identity blocker first.
+
+## Recommended Actions And Acceptance Checks
+
+### A1
+
+Reconcile the intended element and exact chemical state in the maintained alignment input/transform before repairing the emitted record. Trace the source row/release or introduce an audited provenance-bearing correction, then add an identity-consistency guard to load_mg_cofactors/build_aligned. Decide explicitly whether the existing name or chemical ID is wrong; do not automatically rename to promethium or replace33373 with neutral33377. Preserve the disposition of the existing target and crosswalk. Do not conceal the identity collision by moving the wrong Pm ID into a Dy participant. The separate semantic-equivalence repair must follow identity adjudication.
+
+- The regenerated target and maintained crosswalk agree on one curator-adjudicated element and chemical state, with external source release/correction provenance. No mixed Dy/Pm identity remains.
+- A focused writer fixture rejects conflicting element names/IDs. An audited existing-target route is used: main selects only missing IDs before --force, so an ordinary rerun or --force alone will not select this already existing target.
+- The identity repair explicitly preserves the audited disposition of the existing target, path and crosswalk, without automatic protein qualification, unsupported charge replacement or status promotion.
+- After repair run just validate data/traits/function/cofactor_requirement/chebi/dy-chebi33373.yaml; just validate-all data/traits/function/cofactor_requirement/chebi/dy-chebi33373.yaml; and just audit-graphs data/traits/function/cofactor_requirement/chebi/dy-chebi33373.yaml. If identity resolution requires an audited replacement path, validate that exact replacement and the retained/deprecated target disposition too.
+- For maintained writer changes add focused pytest coverage, run just audit-writers, just lint and just test. Regenerate the scoped existing target through an audited route. Run full just validate-all before merging record changes and save a fresh structured review of changed bytes.
+
+### A2
+
+After resolving the identity blocker and explicitly adjudicating the intended element and chemical state, update build_aligned and the maintained input or registered override to remove chemical-to-protein-trait equality. Preserve supported chemical provenance without moving the wrong Pm identifier into a Dy participant. Adjudicate the activity-relative ChemicalParticipant.role before adding any COFACTOR participant; if unsupported, retain explicit uncertainty and provenance without inventing one. Do not relocate equality to mapped_xrefs, automatically select neutral Dy, merge chemical states or qualify proteins from alignment metadata alone.
+
+- The identity blocker is resolved first. The regenerated xrefs no longer assert equality between the resolved chemical entity and protein requirement; exact candidate provenance remains auditable.
+- Any participant uses the curator-adjudicated chemical state and activity-relative role; otherwise uncertainty remains explicit. An existing-target route and focused writer fixture are used because alignment main selects missing IDs before --force. No wrong-Pm participant, automatic protein qualification or status promotion occurs.
+- After repair run just validate data/traits/function/cofactor_requirement/chebi/dy-chebi33373.yaml; just validate-all data/traits/function/cofactor_requirement/chebi/dy-chebi33373.yaml; and just audit-graphs data/traits/function/cofactor_requirement/chebi/dy-chebi33373.yaml. If identity resolution requires an audited replacement path, validate that exact replacement and the retained/deprecated target disposition too.
+- For maintained writer changes add focused pytest coverage, run just audit-writers, just lint and just test. Regenerate the scoped existing target through an audited route. Run full just validate-all before merging record changes and save a fresh structured review of changed bytes.
+
+## Category Boundaries
+
+
+## Evidence
+
+| Evidence | Reference / locator | Support | Observation |
+| --- | --- | --- | --- |
+| record | data/traits/function/cofactor_requirement/chebi/dy-chebi33373.yaml; Entire target YAML | supports | The complete local record labels the requirement Dy, gives dysprosium and metals as MicroGrowAgents RELATED_SYNONYM, and embeds CHEBI:33373 in its identifier/definition/xrefs. It is an alignment-derived CLASS/SEEDED requirement with no optional protein examples, causal graph or participants. The chemical identity encoded by that ID contradicts its elemental name. |
+| schema | src/proteintraitsmech/schema/proteintraitsmech.yaml; ProteinTraitRecord xrefs, parent_traits, chemical_participants; ChemicalParticipant/ChemicalRoleEnum; FUNC_COFACTOR_REQUIREMENT | supports | FUNC_COFACTOR_REQUIREMENT describes a non-substrate small molecule required for activity. xrefs asserts true own-source equivalence; chemical_participants represents chemical entities with typed roles. parent_traits asserts a broader class. Optional examples and causal graphs are not mandatory class representations. |
+| registry | download.yaml; ChEBI source entry | supports | ChEBI is declared CC-BY 4.0 with seed_chebi_cofactor.py, enrichment status/role and chemistry as a typed per-trait attribute. This identifies maintained source provenance; it does not establish a particular protein requirement. |
+| owner | scripts/seed_cofactor_alignment.py; load_mg_cofactors, build_aligned, main | supports | load_mg_cofactors reads sibling reference-table metadata; build_aligned synthesizes the protein requirement, attaches the broad cofactor parent, emits the chemical xref, and copies cofactor_id/category as RELATED_SYNONYM. main selects only missing chemical IDs before considering force, so an existing-record repair requires an audited scoped route. This local review does not access the sibling checkout. |
+| chebi-dependency | scripts/seed_chebi_cofactor.py; load_names, rid, clean, LICENSE and imported helpers | supports | The alignment emitter imports ChEBI chemical-name/definition loading, identifiers, formatting, output location and ChEBI licensing from this module. This dependency does not itself establish a role for an alignment-selected chemical. |
+| alignment-crosswalk | data/mappings/cofactor_crosswalk.tsv; Exact target CHEBI identifier row and header | supports | The exact chemical-ID row records the locally persisted alignment name, cofactor identifier and category. It is curation provenance, not an independently verified protein requirement or a release-pinned external source table. |
+| local-parent-1 | data/traits/function/cofactor_requirement/chebi/cofactor-chebi23357.yaml; Entire local parent YAML | supports | Entire local parent YAML inspected: local requirement identifier, definition, category, hierarchy, source chemical-role xref and SEEDED status. Parent resolution does not establish that its own xrefs have equivalent-class semantics. |
+| licence | https://www.ebi.ac.uk/chebi/about/; Introduction and Licensing | supports | The official ChEBI Introduction and Licensing sections describe chemical entities/classes and CC BY4.0. This supports chemical-source attribution, not a synthesized protein requirement. |
+| release | https://www.ebi.ac.uk/ols4/api/ontologies/chebi; Inspected source response captured at the recorded UTC time | supports | Verified reused OLS metadata reports ChEBI version256 loaded2026-10-16, with original actual access timestamp retained. It does not assign a release to live backend responses or the original seed. |
+| chemical | https://www.ebi.ac.uk/ols4/api/ontologies/chebi/terms?obo_id=CHEBI:33373; Inspected source response captured at the recorded UTC time | supports | OLS resolves CHEBI:33373 to its nonobsolete chemical term. The actual term is promethium atom, contradicting the local Dy/dysprosium name. |
+| chemical-role | https://www.ebi.ac.uk/chebi/backend/api/public/compound/33373/; Actual identifier/name/definition field, names, formula/charge, structure and ontology relations | supports | The complete official response was inspected: exact chemical identity, formula, charge, structure, aliases, outgoing/incoming relations and null definition field. |
+| cofactor-role | https://www.ebi.ac.uk/chebi/backend/api/public/compound/23357/; Actual identifier/name/definition field, names, formula/charge, structure and ontology relations | supports | Cofactor is a biochemical role for an organic molecule or ion required by an enzyme, with biochemical-role parent. It is not a protein-requirement class. |
+| dy-comparison | https://www.ebi.ac.uk/chebi/backend/api/public/compound/33377/; Actual identifier/name/definition field, names, formula/charge, structure and ontology relations | supports | The independently inspected comparison identifies dysprosium atom: Dy, charge0, [Dy], InChI=1S/Dy, with Dy/dysprosium aliases. This establishes a different element from33373Pm; it is not an automatic replacement for an unresolved physiological requirement. |
+| dy-ontology | https://www.ebi.ac.uk/ols4/api/ontologies/chebi/terms?obo_id=CHEBI:33377; Inspected source response captured at the recorded UTC time | supports | OLS independently resolves the comparison33377 to nonobsolete dysprosium atom with formulaDy and charge0. |
+| lanthanoid-parent | https://www.ebi.ac.uk/chebi/backend/api/public/compound/33319/; Actual identifier/name/definition field, names, formula/charge, structure and ontology relations | supports | The source lanthanoid-atom class has null definition/structure and a rare-earth-metal-atom parent. Shared classification does not make different elements equivalent. |
+| fblock-parent | https://www.ebi.ac.uk/chebi/backend/api/public/compound/33562/; Actual identifier/name/definition field, names, formula/charge, structure and ontology relations | supports | The source f-block-element-atom class has null definition/structure and a transition-element-atom parent. It is structural taxonomy, not cofactor evidence. |
+| pm-authority | https://periodic-table.rsc.org/element/61/Promethium; Page title, element identity and Fact box | supports | The inspected RSC element identity/fact box identifies promethium as Pm, atomic number61 and CAS7440-12-2. Only elemental identity is used; broad biological statements are not treated as universal role-exclusion evidence. |
+| dy-authority | https://periodic-table.rsc.org/element/66/Dysprosium; Page title, element identity and Fact box | supports | The inspected RSC element identity/fact box identifies dysprosium as Dy, atomic number66 and CAS7429-91-6. This independently establishes that Dy and Pm are different elements, not alternative ionic states of one element. |
+| validation-1 | just validate data/traits/function/cofactor_requirement/chebi/dy-chebi33373.yaml; Executed 2026-10-21T11:36:22Z through 2026-10-21T11:36:26Z; exit 0 | supports | === validate-strict summary ===<br>  files scanned:      1<br>  files with ERROR:   0<br>  total ERROR rows:   0<br>  TSV:                reports/instance_validation_failures.tsv |
+| validation-2 | just validate-all data/traits/function/cofactor_requirement/chebi/divinyl-chlorophyll-b-chebi73115.yaml data/traits/function/cofactor_requirement/chebi/dy-chebi33373.yaml data/traits/function/cofactor_requirement/chebi/echinenone-chebi4746.yaml data/traits/function/cofactor_requirement/chebi/enterobactin-1-chebi77805.yaml data/traits/function/cofactor_requirement/chebi/enterobactin-6-chebi38150.yaml data/traits/function/cofactor_requirement/chebi/enterobactin-chebi28855.yaml data/traits/function/cofactor_requirement/chebi/er-chebi33379.yaml data/traits/function/cofactor_requirement/chebi/eu-chebi33375.yaml data/traits/function/cofactor_requirement/chebi/f420-chebi28343.yaml data/traits/function/cofactor_requirement/chebi/fad-3-chebi57692.yaml; Executed 2026-10-21T11:36:19Z through 2026-10-21T11:38:17Z; exit 0 | supports | === validate-strict summary ===<br>  files scanned:      10<br>  files with ERROR:   0<br>  total ERROR rows:   0<br>  TSV:                reports/instance_validation_failures.tsv<br>files scanned: 10<br>registry proteins: 12700<br>source evidence objects: 21048<br>qualified record bindings: 21048<br>UniProt membership objects: 431<br>hierarchy records: 0<br>semantic findings: 0<br>TSV: /private/tmp/ptm-record-reviews-20261021/repo/reports/uniprot-grounding/validation.tsv |
+| validation-3 | just audit-graphs data/traits/function/cofactor_requirement/chebi/dy-chebi33373.yaml; Executed 2026-10-21T11:36:26Z through 2026-10-21T11:36:27Z; exit 0 | supports | causal-graph audit: 0 records, 0 graphs, 0 nodes, 0 edges &#124; grounded nodes 0/0, snippet-cited edges 0/0 &#124; 0 errors, 0 warnings |
+| validation-4 | just validate-history; Executed 2026-10-21T11:38:17Z through 2026-10-21T11:38:18Z; exit 0 | supports | No issues found |
+
+## Limits And Additional Notes
+
+- The reviewed record does not identify the exact ChEBI source release used for the seed. Current official responses are comparison snapshots, not proof of the original release.
+- The local alignment crosswalk and emitter corroborate persisted MGA name/category provenance, not the exact external MGA table release or a protein requirement. No sibling checkout was accessed. Absence of a direct ChEBI cofactor role is not used as proof of absence of all possible biological use.
+- External sources were inspected and SHA256-captured in session scratch. This bundle retains URLs, access times, digests and bounded observations rather than full response bodies.
+- This one-record review does not certify its source cohort or parents. iModulonDB is not applicable to this generic chemical requirement class without a gene, organism or expression dataset.
+- The exact external MGA table version and intended correction direction are not independently established; only the captured local crosswalk/emitter provenance is verified. The neutral Dy comparison is evidence of a different element, not a recommended physiological species or automatically authorized replacement.
+
+## Complete Structured Record
+
+The sibling review.yaml is authoritative.
+
+```yaml
+schema_version: 1.0.0
+review_id: 20261021T114709Z-dy-chebi33373
+kind: record
+repository: CultureBotAI/proteintraitsmech
+title: Review of requires Dy
+started_at: '2026-10-21T11:35:23Z'
+finished_at: '2026-10-21T11:47:09Z'
+reviewer:
+  identity: Codex
+  kind: agent
+  independence: unknown
+  independence_basis: Unchanged target bytes assessed against inspected primary sources
+    and repository rules, with independent source-acquisition and scope checks. Prior
+    authorship independence is not established; this is not human sign-off.
+skill: .claude/skills/review-yaml-record/SKILL.md
+completion: completed
+verdict: needs_curation
+scientific_review: true
+summary: 'The resolved local target has a confirmed elemental identity collision:
+  Dy/dysprosium is mapped to promethium CHEBI:33373. One blocker requires maintained
+  alignment reconciliation. A separate confirmed major chemical-to-protein-trait equivalence
+  defect has a dependent identity-first repair; no automatic replacement or wrong-Pm
+  participant is justified.'
+source:
+  git_revision: 6cbcac34bb17f44ea7516dd3308d890367014e2b
+  state: working_tree
+  inputs:
+  - path: .claude/skills/curate-yaml-record/references/review-checklist.md
+    sha256: 59f39fad3e6447e7be30da72667befd3d2e383b68bea5f497952f2ab080da90d
+    role: context
+  - path: .claude/skills/review-yaml-record/SKILL.md
+    sha256: ac1094d8aef512845dbe56ee041e62e62aeeed32326578ff3f7dd8455495f303
+    role: context
+  - path: CLAUDE.md
+    sha256: 0fe3358571b7e3fc0016a94bd514719202ddfb6b8ea020df4431348ed518bc42
+    role: context
+  - path: LICENSE
+    sha256: d920683ada4ab4646467cbe49944e08172d8f10c92ce3e631d6f3460b4b40a52
+    role: context
+  - path: LICENSE-DATA
+    sha256: 9e5f1b3c610b9c2da5c313bf81d577a7d1acec686bdb0384edefa6df0f90cd94
+    role: context
+  - path: conf/record_review.yaml
+    sha256: d3fd2e272546bf2505ded4ef86f7340753c4e422c691bd69f8e79f577b2c5f59
+    role: context
+  - path: data/mappings/cofactor_crosswalk.tsv
+    sha256: a1ebb2af5d9e39ae072efb1a0d6a4774272d6e0e881b3c792faae53b4fc748ba
+    role: context
+  - path: data/traits/function/cofactor_requirement/chebi/cofactor-chebi23357.yaml
+    sha256: d5a2579eae56a7b94424792e5694c0d1c58765e388630b1ab7807be0c8ded909
+    role: context
+  - path: data/traits/function/cofactor_requirement/chebi/dy-chebi33373.yaml
+    sha256: e289e71aa980a1b4715b5d55b3919f001b69e08cf116738fd927a3c75ba6e8d8
+    role: target
+  - path: docs/fetch-migration.md
+    sha256: 11718531ccc1346002cfafbe62e8cfdc3859271ded178c34a17e26dabc70b55c
+    role: context
+  - path: docs/record-review-profile.md
+    sha256: 06cec6693ded193231a378bba04e7c1ad3e295f88903ee8b7c30b3238daab9df
+    role: context
+  - path: docs/record-reviews.md
+    sha256: 452a19ab688276747b7c4308523a14d4d99c1c39ef6909ae8a90b85b7a9b3e9b
+    role: context
+  - path: download.yaml
+    sha256: 63a62092f919dc534d7b5d9087ada35dea39ed88579f3fd281f8f0ffe6ef4417
+    role: context
+  - path: history/README.md
+    sha256: db3db1da49f08244c863689856f31bc764aadb6e629b25aff45b3b4598dbef2c
+    role: context
+  - path: justfile
+    sha256: 090b16ab565dbc137f589ab913e57efac5cb37bb7511547391267ba6ea96dd5b
+    role: context
+  - path: schema/record_review.yaml
+    sha256: 229baf9b69118a1fe318e4c31085c0820e4e3d1365e7b04d6ace451b7c35f9bb
+    role: context
+  - path: scripts/build_docs_index.py
+    sha256: 926f593f6d3c81b16ff72148f1777d0b6d81cabe5fe806f4667c5745f28bb818
+    role: context
+  - path: scripts/seed_chebi_cofactor.py
+    sha256: c94f89132779ded0393c70a67ea35da9bc1d1d5a5adbc5212aeac144a124c802
+    role: context
+  - path: scripts/seed_cofactor_alignment.py
+    sha256: b93c398484e659617770bc99f2116757bf0d9b25f731fd31c6e7c1e9c65536cf
+    role: context
+  - path: src/proteintraitsmech/schema/proteintraitsmech.yaml
+    sha256: 7d29139f696497dffa018b8d68b3f72d4e1adbadd4f67f7904ddbb4b12275418
+    role: context
+scope:
+  description: Field-by-field scientific review of one complete ProteinTraitRecord.
+  selection: Path-order position 2 in batch 020. Fresh main inventory has 429359 records;
+    union with validated published review heads (batch-001 at b36c4b5ad6c1ee1f31f1cc8c4da5cad94651719d;
+    batch-002 at 357a22ff037976ab142a6bf2267191b5f4a98d21; batch-003 at cc32a8c59ea04af980930b521773705380a9d85a;
+    batch-004 at 23d5cee9fdad2ee701ca7d5cadfc76b54df242ca; batch-005 at 678797be94bf7bcf5673a5c9dcd2e779ec1c76cc;
+    batch-006 at 1696e53c414be3be3641f470a8eade2ec004b6b1; batch-007 at ecd1ed5f09754b6cee1695d813f62f9b23b6ccf5;
+    batch-008 at 914248190c8fd158835c16572946efde3dd87af4; batch-009 at 12d47e9145517b395c6ffdacd172003af66f5618;
+    batch-010 at d51f823a5de8645ec50586992dc9e2e27fdef83f; batch-011 at 3f0697b8989b56af606b2eee7248b55fa21cd4f5;
+    batch-012 at 86f94d00a00a8b0fbaa16d5301a35ff03fa8abc0; batch-013 at ef73f3abddbb3786a9d95cc0e4616aeaea5ca3fb;
+    batch-014 at dc70a3cb9267c42c78bc4c356ec28109fb45114f; batch-015 at 10d0148878b3b2e203d2f368ac3b3fd48c8b0e50;
+    batch-016 at 8a2bb4c2441c87fb0eeda6e7623c87c0e0a6c1fd; batch-017 at 952d4d2227f24b9d7a96481536971328f8c9e7c9;
+    batch-018 at 63c8c7d6546a6e5e23c634b191f7dbb9791c6a3c; batch-019 at a14da7a2c18c5f53a33fb69c8556ca6de9526a87)
+    covers 188 record paths, leaving 429171 before this batch. 20 inventories were
+    combined. Published branch coverage is not described as merged main. Snapshot-row
+    context paths are excluded.
+  coverage: full
+  population_size: 1
+  reviewed_target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_33373
+targets:
+- kind: generated
+  label: requires Dy
+  owner_paths:
+  - path: scripts/seed_cofactor_alignment.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Maintained alignment table reader and build_aligned requirement-class emitter
+  - path: scripts/seed_chebi_cofactor.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Imported ChEBI chemical-name/definition and formatting dependency
+  path: data/traits/function/cofactor_requirement/chebi/dy-chebi33373.yaml
+  record_class: ProteinTraitRecord
+  target_id: proteintraitsmech:COFACTOR_REQ_CHEBI_33373
+checks:
+- check_id: gate-1
+  name: Closed schema
+  command: just validate data/traits/function/cofactor_requirement/chebi/dy-chebi33373.yaml
+  exit_code: 0
+  status: passed
+  required: true
+  summary: Single target validated in closed mode.
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_33373
+  evidence_ids:
+  - validation-1
+- check_id: gate-2
+  name: Closed schema and applicable source semantics
+  command: just validate-all data/traits/function/cofactor_requirement/chebi/divinyl-chlorophyll-b-chebi73115.yaml
+    data/traits/function/cofactor_requirement/chebi/dy-chebi33373.yaml data/traits/function/cofactor_requirement/chebi/echinenone-chebi4746.yaml
+    data/traits/function/cofactor_requirement/chebi/enterobactin-1-chebi77805.yaml
+    data/traits/function/cofactor_requirement/chebi/enterobactin-6-chebi38150.yaml
+    data/traits/function/cofactor_requirement/chebi/enterobactin-chebi28855.yaml data/traits/function/cofactor_requirement/chebi/er-chebi33379.yaml
+    data/traits/function/cofactor_requirement/chebi/eu-chebi33375.yaml data/traits/function/cofactor_requirement/chebi/f420-chebi28343.yaml
+    data/traits/function/cofactor_requirement/chebi/fad-3-chebi57692.yaml
+  exit_code: 0
+  status: passed
+  required: true
+  summary: One shared invocation scanned all ten listed batch targets; target SHA256
+    matches before and after execution. Source-specific checks apply where implemented;
+    this gate does not qualify a protein requirement or prove semantic equivalence.
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_33373
+  evidence_ids:
+  - validation-2
+- check_id: gate-3
+  name: Causal graph integrity
+  command: just audit-graphs data/traits/function/cofactor_requirement/chebi/dy-chebi33373.yaml
+  exit_code: 0
+  status: passed
+  required: true
+  summary: No graphs in target; no molecular-mechanism coverage is inferred.
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_33373
+  evidence_ids:
+  - validation-3
+- check_id: gate-4
+  name: Curation history validity
+  command: just validate-history
+  exit_code: 0
+  status: passed
+  required: true
+  summary: Full curation-history gate; this review adds no history event.
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_33373
+  evidence_ids:
+  - validation-4
+- check_id: source-resolution
+  name: Source reference inspection
+  status: passed
+  required: true
+  summary: Source reference inspection succeeded and exposed the collision:33373 is
+    nonobsolete promethium atom, not Dy. Official33377 and RSC element61/66 comparisons
+    distinguish the elements. The captured exact alignment row and both maintained
+    owner/dependency scripts were read. This is not a successful Dy identity match.
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_33373
+  evidence_ids:
+  - chemical
+  - chemical-role
+  - cofactor-role
+  - licence
+  - release
+  - dy-comparison
+  - dy-ontology
+  - lanthanoid-parent
+  - fblock-parent
+  - pm-authority
+  - dy-authority
+  - alignment-crosswalk
+  - chebi-dependency
+evidence:
+- evidence_id: record
+  kind: record_content
+  reference: data/traits/function/cofactor_requirement/chebi/dy-chebi33373.yaml
+  locator: Entire target YAML
+  accessed_at: '2026-10-21T11:35:23Z'
+  snapshot_sha256: e289e71aa980a1b4715b5d55b3919f001b69e08cf116738fd927a3c75ba6e8d8
+  support: supports
+  summary: The complete local record labels the requirement Dy, gives dysprosium and
+    metals as MicroGrowAgents RELATED_SYNONYM, and embeds CHEBI:33373 in its identifier/definition/xrefs.
+    It is an alignment-derived CLASS/SEEDED requirement with no optional protein examples,
+    causal graph or participants. The chemical identity encoded by that ID contradicts
+    its elemental name.
+- evidence_id: schema
+  kind: record_content
+  reference: src/proteintraitsmech/schema/proteintraitsmech.yaml
+  locator: ProteinTraitRecord xrefs, parent_traits, chemical_participants; ChemicalParticipant/ChemicalRoleEnum;
+    FUNC_COFACTOR_REQUIREMENT
+  accessed_at: '2026-10-21T11:35:23Z'
+  snapshot_sha256: 7d29139f696497dffa018b8d68b3f72d4e1adbadd4f67f7904ddbb4b12275418
+  support: supports
+  summary: FUNC_COFACTOR_REQUIREMENT describes a non-substrate small molecule required
+    for activity. xrefs asserts true own-source equivalence; chemical_participants
+    represents chemical entities with typed roles. parent_traits asserts a broader
+    class. Optional examples and causal graphs are not mandatory class representations.
+- evidence_id: registry
+  kind: record_content
+  reference: download.yaml
+  locator: ChEBI source entry
+  accessed_at: '2026-10-21T11:35:23Z'
+  snapshot_sha256: 63a62092f919dc534d7b5d9087ada35dea39ed88579f3fd281f8f0ffe6ef4417
+  support: supports
+  summary: ChEBI is declared CC-BY 4.0 with seed_chebi_cofactor.py, enrichment status/role
+    and chemistry as a typed per-trait attribute. This identifies maintained source
+    provenance; it does not establish a particular protein requirement.
+- evidence_id: owner
+  kind: record_content
+  reference: scripts/seed_cofactor_alignment.py
+  locator: load_mg_cofactors, build_aligned, main
+  accessed_at: '2026-10-21T11:35:23Z'
+  snapshot_sha256: b93c398484e659617770bc99f2116757bf0d9b25f731fd31c6e7c1e9c65536cf
+  support: supports
+  summary: load_mg_cofactors reads sibling reference-table metadata; build_aligned
+    synthesizes the protein requirement, attaches the broad cofactor parent, emits
+    the chemical xref, and copies cofactor_id/category as RELATED_SYNONYM. main selects
+    only missing chemical IDs before considering force, so an existing-record repair
+    requires an audited scoped route. This local review does not access the sibling
+    checkout.
+- evidence_id: chebi-dependency
+  kind: record_content
+  reference: scripts/seed_chebi_cofactor.py
+  locator: load_names, rid, clean, LICENSE and imported helpers
+  accessed_at: '2026-10-21T11:35:23Z'
+  snapshot_sha256: c94f89132779ded0393c70a67ea35da9bc1d1d5a5adbc5212aeac144a124c802
+  support: supports
+  summary: The alignment emitter imports ChEBI chemical-name/definition loading, identifiers,
+    formatting, output location and ChEBI licensing from this module. This dependency
+    does not itself establish a role for an alignment-selected chemical.
+- evidence_id: alignment-crosswalk
+  kind: record_content
+  reference: data/mappings/cofactor_crosswalk.tsv
+  locator: Exact target CHEBI identifier row and header
+  accessed_at: '2026-10-21T11:35:23Z'
+  snapshot_sha256: a1ebb2af5d9e39ae072efb1a0d6a4774272d6e0e881b3c792faae53b4fc748ba
+  support: supports
+  summary: The exact chemical-ID row records the locally persisted alignment name,
+    cofactor identifier and category. It is curation provenance, not an independently
+    verified protein requirement or a release-pinned external source table.
+- evidence_id: local-parent-1
+  kind: record_content
+  reference: data/traits/function/cofactor_requirement/chebi/cofactor-chebi23357.yaml
+  locator: Entire local parent YAML
+  accessed_at: '2026-10-21T11:35:23Z'
+  snapshot_sha256: d5a2579eae56a7b94424792e5694c0d1c58765e388630b1ab7807be0c8ded909
+  support: supports
+  summary: 'Entire local parent YAML inspected: local requirement identifier, definition,
+    category, hierarchy, source chemical-role xref and SEEDED status. Parent resolution
+    does not establish that its own xrefs have equivalent-class semantics.'
+- evidence_id: licence
+  kind: authority
+  reference: https://www.ebi.ac.uk/chebi/about/
+  accessed_at: '2026-10-21T08:48:05.571149Z'
+  snapshot_sha256: f541592fc56a6bda901699cf4a970e5129a18cdbd780e642ad5c36a5ad55251b
+  support: supports
+  locator: Introduction and Licensing
+  summary: The official ChEBI Introduction and Licensing sections describe chemical
+    entities/classes and CC BY4.0. This supports chemical-source attribution, not
+    a synthesized protein requirement.
+- evidence_id: release
+  kind: database
+  reference: https://www.ebi.ac.uk/ols4/api/ontologies/chebi
+  accessed_at: '2026-10-21T08:47:19.026327Z'
+  snapshot_sha256: ec4c86fcec2d75393b2fd28d66fafbed591ab17b0a1cd58fbbf1bceb8bcefa22
+  support: supports
+  locator: Inspected source response captured at the recorded UTC time
+  summary: Verified reused OLS metadata reports ChEBI version256 loaded2026-10-16,
+    with original actual access timestamp retained. It does not assign a release to
+    live backend responses or the original seed.
+- evidence_id: chemical
+  kind: database
+  reference: https://www.ebi.ac.uk/ols4/api/ontologies/chebi/terms?obo_id=CHEBI:33373
+  accessed_at: '2026-10-21T11:36:34.554443Z'
+  snapshot_sha256: 34351e589e1c6d128758b30a10b9e2304ad951e9aee069fe1c11465d94e8e000
+  support: supports
+  locator: Inspected source response captured at the recorded UTC time
+  summary: OLS resolves CHEBI:33373 to its nonobsolete chemical term. The actual term
+    is promethium atom, contradicting the local Dy/dysprosium name.
+- evidence_id: chemical-role
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/33373/
+  accessed_at: '2026-10-21T11:36:34.620276Z'
+  snapshot_sha256: b369e01aa7896017326e7b1fb5c5dedc940ff264db5c7587f507d22c1bc1adef
+  support: supports
+  locator: Actual identifier/name/definition field, names, formula/charge, structure
+    and ontology relations
+  summary: 'The complete official response was inspected: exact chemical identity,
+    formula, charge, structure, aliases, outgoing/incoming relations and null definition
+    field.'
+- evidence_id: cofactor-role
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/23357/
+  accessed_at: '2026-10-21T10:41:31.355972Z'
+  snapshot_sha256: 4c04bfdbe6bd7fe5edd952eef8fbf70b950df6ab9693d629e1c6a1a7c00917a7
+  support: supports
+  locator: Actual identifier/name/definition field, names, formula/charge, structure
+    and ontology relations
+  summary: Cofactor is a biochemical role for an organic molecule or ion required
+    by an enzyme, with biochemical-role parent. It is not a protein-requirement class.
+- evidence_id: dy-comparison
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/33377/
+  accessed_at: '2026-10-21T11:37:39.284954Z'
+  snapshot_sha256: ee9f97d8dd1a3f4fcf90bd456ccd2deab5c5bbf4ff823ccc8c2243531eba25e6
+  support: supports
+  locator: Actual identifier/name/definition field, names, formula/charge, structure
+    and ontology relations
+  summary: 'The independently inspected comparison identifies dysprosium atom: Dy,
+    charge0, [Dy], InChI=1S/Dy, with Dy/dysprosium aliases. This establishes a different
+    element from33373Pm; it is not an automatic replacement for an unresolved physiological
+    requirement.'
+- evidence_id: dy-ontology
+  kind: database
+  reference: https://www.ebi.ac.uk/ols4/api/ontologies/chebi/terms?obo_id=CHEBI:33377
+  accessed_at: '2026-10-21T11:38:21.244274Z'
+  snapshot_sha256: e10303bf0ee1013488ba509778ba75bdd1de5cbf0f9906e151c2d1cedea19f6c
+  support: supports
+  locator: Inspected source response captured at the recorded UTC time
+  summary: OLS independently resolves the comparison33377 to nonobsolete dysprosium
+    atom with formulaDy and charge0.
+- evidence_id: lanthanoid-parent
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/33319/
+  accessed_at: '2026-10-21T11:37:39.300777Z'
+  snapshot_sha256: dcdb76e4b6843482b687febb7c9b9d39d86bbe25ac53a40a744c9f433467332d
+  support: supports
+  locator: Actual identifier/name/definition field, names, formula/charge, structure
+    and ontology relations
+  summary: The source lanthanoid-atom class has null definition/structure and a rare-earth-metal-atom
+    parent. Shared classification does not make different elements equivalent.
+- evidence_id: fblock-parent
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/33562/
+  accessed_at: '2026-10-21T11:37:39.306962Z'
+  snapshot_sha256: 5e91d035a028a4b18c486bfdebfa98fea090498a216b40b8a33ab956967d7679
+  support: supports
+  locator: Actual identifier/name/definition field, names, formula/charge, structure
+    and ontology relations
+  summary: The source f-block-element-atom class has null definition/structure and
+    a transition-element-atom parent. It is structural taxonomy, not cofactor evidence.
+- evidence_id: pm-authority
+  kind: authority
+  reference: https://periodic-table.rsc.org/element/61/Promethium
+  accessed_at: '2026-10-21T11:37:41.790635Z'
+  snapshot_sha256: 94a699181de28a222ff8f5b90c6e9b8aa2ae475bf863c1e5d5b8d25962930131
+  support: supports
+  locator: Page title, element identity and Fact box
+  summary: The inspected RSC element identity/fact box identifies promethium as Pm,
+    atomic number61 and CAS7440-12-2. Only elemental identity is used; broad biological
+    statements are not treated as universal role-exclusion evidence.
+- evidence_id: dy-authority
+  kind: authority
+  reference: https://periodic-table.rsc.org/element/66/Dysprosium
+  accessed_at: '2026-10-21T11:37:41.757399Z'
+  snapshot_sha256: 0c56fc983819197358bf7f3597069c92bd802b22304ce45829653383991ee345
+  support: supports
+  locator: Page title, element identity and Fact box
+  summary: The inspected RSC element identity/fact box identifies dysprosium as Dy,
+    atomic number66 and CAS7429-91-6. This independently establishes that Dy and Pm
+    are different elements, not alternative ionic states of one element.
+- evidence_id: validation-1
+  kind: validation
+  reference: just validate data/traits/function/cofactor_requirement/chebi/dy-chebi33373.yaml
+  locator: Executed 2026-10-21T11:36:22Z through 2026-10-21T11:36:26Z; exit 0
+  accessed_at: '2026-10-21T11:36:26Z'
+  support: supports
+  summary: "=== validate-strict summary ===\n  files scanned:      1\n  files with\
+    \ ERROR:   0\n  total ERROR rows:   0\n  TSV:                reports/instance_validation_failures.tsv"
+- evidence_id: validation-2
+  kind: validation
+  reference: just validate-all data/traits/function/cofactor_requirement/chebi/divinyl-chlorophyll-b-chebi73115.yaml
+    data/traits/function/cofactor_requirement/chebi/dy-chebi33373.yaml data/traits/function/cofactor_requirement/chebi/echinenone-chebi4746.yaml
+    data/traits/function/cofactor_requirement/chebi/enterobactin-1-chebi77805.yaml
+    data/traits/function/cofactor_requirement/chebi/enterobactin-6-chebi38150.yaml
+    data/traits/function/cofactor_requirement/chebi/enterobactin-chebi28855.yaml data/traits/function/cofactor_requirement/chebi/er-chebi33379.yaml
+    data/traits/function/cofactor_requirement/chebi/eu-chebi33375.yaml data/traits/function/cofactor_requirement/chebi/f420-chebi28343.yaml
+    data/traits/function/cofactor_requirement/chebi/fad-3-chebi57692.yaml
+  locator: Executed 2026-10-21T11:36:19Z through 2026-10-21T11:38:17Z; exit 0
+  accessed_at: '2026-10-21T11:38:17Z'
+  support: supports
+  summary: "=== validate-strict summary ===\n  files scanned:      10\n  files with\
+    \ ERROR:   0\n  total ERROR rows:   0\n  TSV:                reports/instance_validation_failures.tsv\n\
+    files scanned: 10\nregistry proteins: 12700\nsource evidence objects: 21048\n\
+    qualified record bindings: 21048\nUniProt membership objects: 431\nhierarchy records:\
+    \ 0\nsemantic findings: 0\nTSV: /private/tmp/ptm-record-reviews-20261021/repo/reports/uniprot-grounding/validation.tsv"
+- evidence_id: validation-3
+  kind: validation
+  reference: just audit-graphs data/traits/function/cofactor_requirement/chebi/dy-chebi33373.yaml
+  locator: Executed 2026-10-21T11:36:26Z through 2026-10-21T11:36:27Z; exit 0
+  accessed_at: '2026-10-21T11:36:27Z'
+  support: supports
+  summary: 'causal-graph audit: 0 records, 0 graphs, 0 nodes, 0 edges | grounded nodes
+    0/0, snippet-cited edges 0/0 | 0 errors, 0 warnings'
+- evidence_id: validation-4
+  kind: validation
+  reference: just validate-history
+  locator: Executed 2026-10-21T11:38:17Z through 2026-10-21T11:38:18Z; exit 0
+  accessed_at: '2026-10-21T11:38:18Z'
+  support: supports
+  summary: No issues found
+assessments:
+- area: ownership
+  outcome: supported
+  summary: scripts/seed_cofactor_alignment.py owns this aligned requirement, with
+    the captured ChEBI helper dependency and crosswalk provenance. No emitted record
+    has been edited.
+  evidence_ids:
+  - owner
+  - registry
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_33373
+  assessment_id: assessment-1
+  topic: Maintained cofactor requirement emitter
+- area: completeness
+  outcome: concern
+  summary: The exact target path is resolved, but its Dy/dysprosium name and chemical
+    identifier do not denote a coherent requirement. Optional representation absence
+    is not the defect; the elemental identity must be reconciled first.
+  evidence_ids:
+  - record
+  - chemical
+  - chemical-role
+  - owner
+  - alignment-crosswalk
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_33373
+  assessment_id: assessment-2
+  topic: Protein trait class completeness
+- area: graph
+  outcome: not_applicable
+  summary: No causal graph or molecular mechanism is asserted by this YAML; graph
+    validation does not constitute mechanism evidence.
+  evidence_ids:
+  - record
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_33373
+  assessment_id: assessment-3
+  topic: Causal mechanism evidence
+- area: scope
+  outcome: supported
+  summary: The target remains SEEDED, and no protein example, native review status
+    or curation-history event is promoted by this observation.
+  evidence_ids:
+  - record
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_33373
+  assessment_id: assessment-4
+  topic: Requirement scope and scientific status
+- area: identity
+  outcome: concern
+  summary: CHEBI:33373 resolves to neutral promethium atom (Pm), whereas the local
+    label/definition and RELATED_SYNONYM say Dy/dysprosium. Official chemical structures
+    and independent elemental authority establish different elements. The target file
+    is unambiguous, but its intended biological/chemical denotation is internally
+    inconsistent.
+  evidence_ids:
+  - record
+  - chemical
+  - chemical-role
+  - dy-comparison
+  - dy-ontology
+  - pm-authority
+  - dy-authority
+  topic: Dy/Pm elemental identity collision
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_33373
+  assessment_id: assessment-5
+- area: provenance
+  outcome: supported
+  summary: The captured alignment crosswalk row138 persists CHEBI:33373, Dy, dysprosium
+    and metals. build_aligned trusts the upstream display name/category, emits the
+    supplied chemical ID and imports ChEBI helper utilities. This supports the source
+    of the local collision, not independent verification of the upstream release or
+    a correctly grounded Dy cofactor.
+  evidence_ids:
+  - record
+  - owner
+  - chebi-dependency
+  - alignment-crosswalk
+  - registry
+  - licence
+  - release
+  topic: Alignment provenance and unresolved external release
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_33373
+  assessment_id: assessment-6
+- area: nomenclature
+  outcome: concern
+  summary: Dy and dysprosium agree with each other but disagree with the encoded Pm
+    identity. The broad metals value is explicitly RELATED_SYNONYM copied from a curation
+    category, not an exact equivalence claim. It is provenance context to revisit
+    after identity repair; no separate duplicate category-synonym finding is forced.
+  evidence_ids:
+  - record
+  - owner
+  - alignment-crosswalk
+  - chemical-role
+  - dy-comparison
+  topic: Related labels and broad category provenance
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_33373
+  assessment_id: assessment-7
+- area: consistency
+  outcome: unknown
+  summary: The local cofactor-requirement parent is supplied by the alignment emitter,
+    not selected from a direct cofactor role of33373. Current33373 has only lanthanoid/f-block
+    structural parents and no direct role in the inspected outgoing array. This does
+    not itself disprove a candidate role; the wrong-element collision prevents coherent
+    role adjudication.
+  evidence_ids:
+  - record
+  - owner
+  - local-parent-1
+  - chemical-role
+  - cofactor-role
+  - lanthanoid-parent
+  - fblock-parent
+  topic: Alignment parent versus source structural taxonomy
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_33373
+  assessment_id: assessment-8
+- area: representation
+  outcome: unknown
+  summary: The intended element and atomic/ionic or compound scope must be decided
+    from maintained curation evidence. Neither a general lanthanide category nor a
+    neutral Dy comparison qualifies a protein or settles the required species. Do
+    not infer universal nonmembership from broad elemental reference pages.
+  evidence_ids:
+  - record
+  - schema
+  - alignment-crosswalk
+  - chemical-role
+  - dy-comparison
+  - pm-authority
+  - dy-authority
+  topic: Intended elemental state and protein-role scope
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_33373
+  assessment_id: assessment-9
+- area: grounding
+  outcome: concern
+  summary: The chemical identifier is wrong for the displayed element, and the emitter
+    separately asserts chemical-to-protein-class equality through xrefs. Correcting
+    the identity alone would leave that entity-type defect. The independent major
+    semantic repair depends on resolving the identity blocker first; moving the wrong
+    Pm identifier into a Dy participant remains invalid.
+  evidence_ids:
+  - record
+  - schema
+  - chemical
+  - chemical-role
+  - owner
+  topic: Identity-first grounding repair
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_33373
+  assessment_id: assessment-10
+findings:
+- issue_key: chebi.cofactor-requirement.CHEBI-33373.element-identity-collision
+  category: identity
+  severity: blocker
+  title: Dy requirement is grounded to promethium
+  description: The local label/definition identify Dy and the RELATED_SYNONYM identifies
+    dysprosium, but CHEBI:33373 is promethium atom Pm. The local alignment crosswalk
+    contains the same mismatched mapping. This is a wrong-element identity collision,
+    not merely an unresolved Dy oxidation state or a lack of optional examples.
+  evidence_ids:
+  - record
+  - chemical
+  - chemical-role
+  - dy-comparison
+  - pm-authority
+  - dy-authority
+  - owner
+  - chebi-dependency
+  - alignment-crosswalk
+  certainty: confirmed
+  field_paths:
+  - identifier
+  - label
+  - definition
+  - definition_source
+  - synonyms
+  - xrefs
+  - chemical_participants
+  normalization_reason: Different chemical elements are conflated across the defining
+    label and identifier. This identity-consistency blocker must be resolved before
+    the distinct major chemical-versus-protein-class equivalence repair.
+  finding_id: F1
+  status: open
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_33373
+  owner_paths:
+  - path: scripts/seed_cofactor_alignment.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Maintained alignment table reader and build_aligned requirement-class emitter
+  - path: scripts/seed_chebi_cofactor.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Imported ChEBI chemical-name/definition and formatting dependency
+  rule_id: ProteinTraitRecord field checklist
+  native_severity: blocker
+- issue_key: chebi.cofactor-requirement.CHEBI-33373.chemical-entity-equivalence
+  category: grounding
+  severity: major
+  title: Chemical entity is encoded as equivalent to a protein requirement
+  description: 'The alignment emitter places a chemical identifier in xrefs, whose
+    schema meaning is true own-source trait equivalence. A chemical entity and a protein
+    functional requirement have different denotations. This semantic defect is independently
+    repairable from the wrong-element collision: a corrected Dy identifier would still
+    not be equal to a protein-requirement class. Its repair is dependent on resolving
+    the identity blocker first.'
+  evidence_ids:
+  - record
+  - schema
+  - chemical
+  - chemical-role
+  - owner
+  certainty: confirmed
+  field_paths:
+  - xrefs
+  - chemical_participants
+  normalization_reason: Chemical-versus-protein-class equivalence is a distinct major
+    grounding defect that persists even if the element mapping is corrected. Its action
+    depends on the identity blocker and cannot hide that blocker through a participant
+    rewrite.
+  finding_id: F2
+  status: open
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_33373
+  owner_paths:
+  - path: scripts/seed_cofactor_alignment.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Maintained alignment table reader and build_aligned requirement-class emitter
+  - path: scripts/seed_chebi_cofactor.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Imported ChEBI chemical-name/definition and formatting dependency
+  rule_id: ProteinTraitRecord field checklist
+  native_severity: major
+actions:
+- action_id: A1
+  description: Reconcile the intended element and exact chemical state in the maintained
+    alignment input/transform before repairing the emitted record. Trace the source
+    row/release or introduce an audited provenance-bearing correction, then add an
+    identity-consistency guard to load_mg_cofactors/build_aligned. Decide explicitly
+    whether the existing name or chemical ID is wrong; do not automatically rename
+    to promethium or replace33373 with neutral33377. Preserve the disposition of the
+    existing target and crosswalk. Do not conceal the identity collision by moving
+    the wrong Pm ID into a Dy participant. The separate semantic-equivalence repair
+    must follow identity adjudication.
+  finding_ids:
+  - F1
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_33373
+  owner_paths:
+  - path: scripts/seed_cofactor_alignment.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Maintained alignment table reader and build_aligned requirement-class emitter
+  - path: scripts/seed_chebi_cofactor.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Imported ChEBI chemical-name/definition and formatting dependency
+  acceptance_checks:
+  - The regenerated target and maintained crosswalk agree on one curator-adjudicated
+    element and chemical state, with external source release/correction provenance.
+    No mixed Dy/Pm identity remains.
+  - 'A focused writer fixture rejects conflicting element names/IDs. An audited existing-target
+    route is used: main selects only missing IDs before --force, so an ordinary rerun
+    or --force alone will not select this already existing target.'
+  - The identity repair explicitly preserves the audited disposition of the existing
+    target, path and crosswalk, without automatic protein qualification, unsupported
+    charge replacement or status promotion.
+  - After repair run just validate data/traits/function/cofactor_requirement/chebi/dy-chebi33373.yaml;
+    just validate-all data/traits/function/cofactor_requirement/chebi/dy-chebi33373.yaml;
+    and just audit-graphs data/traits/function/cofactor_requirement/chebi/dy-chebi33373.yaml.
+    If identity resolution requires an audited replacement path, validate that exact
+    replacement and the retained/deprecated target disposition too.
+  - For maintained writer changes add focused pytest coverage, run just audit-writers,
+    just lint and just test. Regenerate the scoped existing target through an audited
+    route. Run full just validate-all before merging record changes and save a fresh
+    structured review of changed bytes.
+- action_id: A2
+  description: After resolving the identity blocker and explicitly adjudicating the
+    intended element and chemical state, update build_aligned and the maintained input
+    or registered override to remove chemical-to-protein-trait equality. Preserve
+    supported chemical provenance without moving the wrong Pm identifier into a Dy
+    participant. Adjudicate the activity-relative ChemicalParticipant.role before
+    adding any COFACTOR participant; if unsupported, retain explicit uncertainty and
+    provenance without inventing one. Do not relocate equality to mapped_xrefs, automatically
+    select neutral Dy, merge chemical states or qualify proteins from alignment metadata
+    alone.
+  finding_ids:
+  - F2
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_33373
+  owner_paths:
+  - path: scripts/seed_cofactor_alignment.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Maintained alignment table reader and build_aligned requirement-class emitter
+  - path: scripts/seed_chebi_cofactor.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Imported ChEBI chemical-name/definition and formatting dependency
+  acceptance_checks:
+  - The identity blocker is resolved first. The regenerated xrefs no longer assert
+    equality between the resolved chemical entity and protein requirement; exact candidate
+    provenance remains auditable.
+  - Any participant uses the curator-adjudicated chemical state and activity-relative
+    role; otherwise uncertainty remains explicit. An existing-target route and focused
+    writer fixture are used because alignment main selects missing IDs before --force.
+    No wrong-Pm participant, automatic protein qualification or status promotion occurs.
+  - After repair run just validate data/traits/function/cofactor_requirement/chebi/dy-chebi33373.yaml;
+    just validate-all data/traits/function/cofactor_requirement/chebi/dy-chebi33373.yaml;
+    and just audit-graphs data/traits/function/cofactor_requirement/chebi/dy-chebi33373.yaml.
+    If identity resolution requires an audited replacement path, validate that exact
+    replacement and the retained/deprecated target disposition too.
+  - For maintained writer changes add focused pytest coverage, run just audit-writers,
+    just lint and just test. Regenerate the scoped existing target through an audited
+    route. Run full just validate-all before merging record changes and save a fresh
+    structured review of changed bytes.
+limitations:
+- The reviewed record does not identify the exact ChEBI source release used for the
+  seed. Current official responses are comparison snapshots, not proof of the original
+  release.
+- The local alignment crosswalk and emitter corroborate persisted MGA name/category
+  provenance, not the exact external MGA table release or a protein requirement. No
+  sibling checkout was accessed. Absence of a direct ChEBI cofactor role is not used
+  as proof of absence of all possible biological use.
+- External sources were inspected and SHA256-captured in session scratch. This bundle
+  retains URLs, access times, digests and bounded observations rather than full response
+  bodies.
+- This one-record review does not certify its source cohort or parents. iModulonDB
+  is not applicable to this generic chemical requirement class without a gene, organism
+  or expression dataset.
+- The exact external MGA table version and intended correction direction are not independently
+  established; only the captured local crosswalk/emitter provenance is verified. The
+  neutral Dy comparison is evidence of a different element, not a recommended physiological
+  species or automatically authorized replacement.
+tags:
+- unreviewed-path-order
+- batch-020
+- chebi-cofactor
+```
