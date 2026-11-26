@@ -1,0 +1,1800 @@
+# Review of U6 snRNA m(6)A methyltransferase
+
+- Review: 20261101T074416Z-2-1-1-346-ec2-1-1-346
+- Repository: CultureBotAI/proteintraitsmech
+- Started UTC: 2026-11-01T07:09:05Z
+- Finished UTC: 2026-11-01T07:44:16Z
+- Reviewer: Codex (unknown)
+- Completion: completed
+- Verdict: needs_curation
+- Scientific review: true
+
+## Summary
+
+This class is U6 snRNA adenosine N6-methylation, distinct from methylation of mRNA substrates by the same METTL16 proteins. The base/MECHANISTIC definitions, GO:0120048 and RHEA:52808 agree; the GENERAL layer and EC 2 → EC 2.1 → EC 2.1.1 ancestry are appropriate. Curation is required for the automatic REVIEWED transition and imported-CURATOR provenance.
+
+## Scope And Provenance
+
+Field-by-field scientific review of one complete ProteinTraitRecord.
+
+Selection: Path-order position 9 in batch 291. Fresh main inventory has 429421 records. Main and validated published review heads (batch-001 at b36c4b5ad6c1ee1f31f1cc8c4da5cad94651719d; batch-002 at 357a22ff037976ab142a6bf2267191b5f4a98d21; batch-003 at cc32a8c59ea04af980930b521773705380a9d85a; batch-004 at 23d5cee9fdad2ee701ca7d5cadfc76b54df242ca; batch-005 at 678797be94bf7bcf5673a5c9dcd2e779ec1c76cc; batch-006 at 1696e53c414be3be3641f470a8eade2ec004b6b1; batch-007 at ecd1ed5f09754b6cee1695d813f62f9b23b6ccf5; batch-008 at 914248190c8fd158835c16572946efde3dd87af4; batch-009 at 12d47e9145517b395c6ffdacd172003af66f5618; batch-010 at d51f823a5de8645ec50586992dc9e2e27fdef83f; batch-011 at 3f0697b8989b56af606b2eee7248b55fa21cd4f5; batch-012 at 86f94d00a00a8b0fbaa16d5301a35ff03fa8abc0; batch-013 at ef73f3abddbb3786a9d95cc0e4616aeaea5ca3fb; batch-014 at dc70a3cb9267c42c78bc4c356ec28109fb45114f; batch-015 at 10d0148878b3b2e203d2f368ac3b3fd48c8b0e50; batch-016 at 8a2bb4c2441c87fb0eeda6e7623c87c0e0a6c1fd; batch-017 at 952d4d2227f24b9d7a96481536971328f8c9e7c9; batch-018 at 63c8c7d6546a6e5e23c634b191f7dbb9791c6a3c; batch-019 at a14da7a2c18c5f53a33fb69c8556ca6de9526a87; batch-020 at 58ea13ba743688b992e16e34888a75384d259bc7; batch-021 at 27121a6951a72021e2037a04ee1e1424215a61df; batch-022 at 484164d64a30c3578caabf4600044501f6c73ce5; batch-023 at bf8f281b87817f23531ae0fdd2aefa452f4c9242; batch-024 at 01f60cc4160c18fe3e62768ca960a8c76bb60616; batch-025 at 0246872bdbfd520403011891f03194457ebd2b98) cover 305 record paths. Including validated unpublished local review commit(s) da9c0fc6fbdf249f87d3cceba1b83c6cb2ac975d; 2e4943d62d132241cbbe931c3347abb8e45719bd; f67243be00c3d9c891c24c22a32c932ea7bee099; 55a71f32ee7c35ceb6449d1bd1d85954b9609d18; ac3fcf7c6a5710b240a7aa0db1d09bcb2f09529b; 00702985331951f0990ffdc7b352b5a1657160b7; b6ee361647a739487903ad0d184297a280189333; 94d787f848b7b9a1c123f7ae54f1cacedd7f55eb; c6dacdf0e1f79554d56ebfff47b08d3ef1f4c585; 2713fb4cb42716b649bb40a055bf29cf2138dca4; 756ecaf67cacd45cb5bf9d7b5666b4fbde632e96; 6a22474e153e8283e66d85844806dbc27784eebb; ee9a05771251fd84096ca40cfee30ea23e064f91; c589a5515b45e7337f41a032609859f3a20fb7f9; b87f4bd08683d7d13c943c409fd2fc191918135b; 43b6868b10bbbe28d4030e9eaf0a06a4400f47dd; 95ad98ca67c636454fb543a53f9157b574d64cb6; 538ccd21f618ad8ae64adfe2667af153feae8ff1; 08a4a1d5e2d7457ce4696303db2cb67cf3f5f752; 68138e97c6706d7c0fbb0ab30f58d5fd179b6661; 8f8d7bc536c122a1caa0f9fe02bd19aa3af2e79b; 896749322d48bf0a8efd3b822d34ff9f6ada7ffc; 2d4dd0983f0604f70a485c085e43942b24e520ac; 6f9ec803cc5193aa056ad3e7b42678d05a11e1ad; cad414749af988265991078a351e7bff329f012f; decc32c20475e07ec196d4fb3c930979344ca1f3; 00f14ceee7dff47cc5ebdea68fc434e6433bebba; 19ec1cc7e4b21f351a5cdc2b18611dd7361b088e; e12f670fd4896cdce45b65eab2547ef679ef1cf7; 2af17182bdaaee828e308b030b76a675442fba5c; 18d3c2d4119314ba267f54e08397c1c889f6407c; 028198be440bc2ac7e50245c4444c30425798739; 8130eea18e4e9234bccbc8af19d08f040a3645c8; 0089dcf1bc90bc2737892baa2670dbe64b214810; 91b6b1b722fd89902ef210ed30beda1c94a5bd5f; 99d0578fb48bc77c11102c40e2989aa30b2a0dac; 2ba88a35fdb646bbe295cdad6c62826e0a187f44; 2f4bacaeedd95045a5e15c309d43c033e408e325; ef616d50f93f5715042a1cd3562d34b2d7f9a127; f4cb59c32d03a12ea6736f618de5acf20a4439d6; ff23e5df0c3487e32ffb957c67675c67c16b41c2; 75ad3a291726b092c359f97917a71cfe8e2e6af8; 02b349a5fd82cfb33d9194b5cc7a40ff50f366fd; cfb19dc9d57ec551c66101215d03f6e1d43d0eff; c3d9c57c6538a844da118acc99853d274d0a4806; 8abfd5711bfe4893ca2a72758d6ed38497200e1b; 8dd1ec15880ec4357357dac79943ea67382c19bd; 612a48f9fee6d2a47670d8a9dcba8ba7a4a3ef17; 9b575fbbb6874c6a70f7461b3fce32d06141cf7a; c022030b5e1a201b57819eb42bb559638014fe9e; b1d3cd26d82f923901ad03edbd671c0756d0ecbd; c95fe22c3576a31202663b274ea8ab708796f5b3; 83b626799fbe7a712b670a6cde18587c03c9b642; 67c32e6581cd85d000e501335ed1cea86edb64fd; 544e1d260461741d6e33957881d9397ee07b4159; fbc8060b3f156689ff1c9187c0a4f8fb58f02b54; 162ff91cc410b6d11c2a228a74fa1763d24eec61; f52add53b1d8cc6ce345f604c076223b6534aba3; 751989196f24b1f2a0c1fb0701d8a0812072232f; 5f2e76e40a672c9cff0869bd1603d3696314e210; c2806d7e525fa0f7eb1c525da8c0a811f2a84f4d; 64b8692fe04e57d6de5e8f64d89d69fcf88f5cd6; 156c17ab70a878767ae231ed5f823055993c5a39; eec5f399f735fb4e6cfe372a210a6091b8af2509; 916ca112e82b09cf0741f3bedace363e4c164cdf; 1094e78cebf5eb94d5757d7a36ebdf535cb11704; 403388fd601f7e516781e19472be7d418ef9c678; 83cbeeb06066f2ae99b9e6239078863103e97e85; 4274276609c085aa059b09669b018cb10b7113da; feaa20463c425a3fcdcc782599f5ff3133a19067; fcee8eb7470aeb0738fb65262f7c7bd82cf9a34e; 577ae0e39e5bde0e4da363cf41f9f39a37afb356; 850a910aabc759168f0e749d313e4c21fb2387ec; 3e66545b045adc938bf9b0b1471532cc0ae266c4; 817d5e6fe5d4ca5a9c4cd88ee035c6a3b5de5436; 39e70039bc443da8955862c4a845defe88c5c385; e3e294c90026f72ef87acb583aef9b435dc08d8f; 853e2ca43ae9dc1812a20a68ccecfda15061109d; f99a413f3ac540b5526af7d65c0fea82bb11c881; d03ea4ee80be28aa2fb34602f730170c9541a666; 2618b15c61d1e4061f3674a249db897d257b5a9e; 00a57e8acb204780df68a3d9d8429cbd43086c16; ef0d145e14270698802dd649a9c346bab53ed2ca; aadecba057531eff15d0117aa957d71b6efbdcc7; c2283b6ba39c7f66e7eede2a166c94c4692a3ff9; 2a98cb4271fbe15a6280c3039e86243248b7076f; aade04271813734e76a5f381c5e6aa11c48c4586; 33622742735c62c57d5a2356634b6fc922db6f6f; e9e6f0d1043c65d8302c284f41fda4a27fb7b873; 955219ebb51f49d6efeeaff398883ed6c96834a2; 81a8175da6a3f1e6fb5f4b4935657190723f9aa0; 272c2a8bd759243561d08a515732c631c8a91540; bef507f5b340a81db4212994a8b0b91f37d806d3; 0eb23e8c8f3888995462c1f1b97cbd44694a823a; 42e54e3e2797a3a7b51417dbcebb0b9c4a7b0cf6; 4848fbf8933e623045babe4baed8e4e7c54f6230; 43eb98cf14f2542c7e7f602651ccf204a54da0f6; c6737819b8f5bd1a06ddd6853432cdee1bd1bfe0; 354bfc21667fb534f5eef295984647af689f6447; c38451d06601b7a1197e7a6962fe21ebf96e0fef; aa7698d0ed63abad4280ed1bd0cdcabe114ed3c2; 83fa541c35bbc36c57ba253240b01ff6b5feade1; 036c6b1118d17a5cc3515176f914ef6bb0ec14d7; 40d259197445aa2f47c10bf4058835e362528019; 332dc98b4b9fdbedec00b1c809f18f03a630945c; 3f3d5320fdb0f5dbd33ea70f3d7a164eff403575; 71b0d4586ae89d103ce97b8e4289f07cb66dc249; 40156bc2beacbb7d4f4a88eea25bb8e63fce6fad; f7235e5f4b93a3ef0a4d541180c1f7ef8fea00a3; 20085d9e39447af672fef4875299f6b8a921e34a; e57f7a6fcdc244ee2c841c7bea6816fc21debd01; 2d3659a9e0f4b900b54ed58d6864f4c8c2685a73; 17fab5aa093f688b7742ad179f9c7ff49bbcf01e; 03fe3b878d21da8cf4309a6acfc1c04269daa216; 50e8fbee6f1ac7b66da1f68998cd0edbbed8b876; bdab443a280b4395e8ba21cef021465ae13475cc; f6a810c1fb200ac9437dd7d4384ee11a65b8da34; ce1b420fc27a19254091e1be9e09b0113daa4ee5; b553b959240a1f20c73054385ed1c5c034604b29; d17da9f5c93efb7ed50684364197776fcae59560; 51f60c7644920159d535217eeee96381a648646a; 3ca593a22c594f6071bb4e47ac3e99c98942bd64; b2b89b7d3e2a195949c1dacb6ac82b9b0082f424; f83270ba96807bf8c58e206407a6b460a97f469a; 954dcd112c976a5ae0cc551e121f2f38cc57e469; c11015c15fefb635760fab2097c5eb94fecd4a73; 0d273e27cb68c70fcac80432fb25bcb436e6474e; b22e81db4c56b009c01e69fc35aac44fe8bcb810; 21a97e06f9e3d1642378903bbb0f46eeeea6cbe6; 8a7064ff6bae6e80524b23b2226166c1468b3215; efb75211d4fe2244704e320456e1df86ee7b6ccc; 36c078b072e242d60b41b7745ea853f2ceb91978; 21cda0d469da7ea3344e2cff639769d3666bd720; 0b51d7ca3b8efacd55d046462e8724758561e762; 19944f198684bd9a58538009588bfbdc8984ec9d; 985c86c62e2f6efc63016a0199a9e70dd944e9ff; f54bcd34f1d157dd2c670b2886de595577078992; 0ed5bdc586987619444370d7c764c83b5797f2e0; 6dab4d17475702064cc410ed6371922af04ccc30; ae199468dbb3c0fb62592d47dab70c4ab05772b0; f6cd12055e2be21fbf493d4314df1dff81b372cc; 31ac56a47da7ed544ae4520fff7ce750813e7034; 24299fb4442d552e73b9aac83a0b426b04db996f; 31e5323dbc374acac5ea9457d8897c45e005cdd8; 3f88cf969298dc31ef6fb3989ef9848c30ddfe88; c4f7008a4b39a2d921620d4fd8a2911f200c5104; 28568157b84b5629cd35e5b5487f64e1ed8e40bd; b3c15845c50aaa2efa07bb959bf93aba57a90421; 5c9ba1962d5efa64846a7c2332bd3cc1ec6dea9a; 1121d6a268100f52cde004c841d816c54a1d9ccc; a9415f6d43146eda508fd3cc23ad55e8334232f5; 0f111c6bb0eba1fdcfcb678f8f92e84671daa59d; 248b5c2c2d8a2b1afb7ea578fe26b674e4a034d7; 602431f959b4d6f11e7a5855910301a255106898; bd43a4645a72e780a81bc105ad15558f0a01bf9e; b1cb9294920b1947ee7e4e6df5315af4fde29362; 0a7fdbc4220b22d292243d3c4deb2fd309acdf06; ac5c862980e9dd2d9a893561309dccb402ef9b09; 611619fccabe361dc8a1ec8bac20b8be4cfc3c7b; aa824df8210fc29896a767f92353b14b3d964a62; 0995dffcaf7e6ed77f47085503c6a952448078e3; ef7fb1c6811b84a2217f287140cafda7d428cd88; ac227089fa9f0eb74629e2e38897dc8444543a52; 666e80780cd32cbbaee1f0829b34dbedaee4b9b4; 9b41564ebe52e7802c334edf61e9f881e116bb9f; f609a4476282f3c553edd935a4d8f9ac99a10fee; b0b6c202330ebfd71d51ef0402796e5dd04f767e; b646dd4039d26d11f599e3561416d73c0be7b843; 597e9c2a55a0c9d8fa9e113f312a6173b2bc9f35; 82432688a348af43381148765d9b590f6aaf5a66; eb58f15c55b045db935c8619ff96e710e6b7bec8; b87947eb687d77e3b9b86ef2d6ff4d6630da3826; d0ad72ddf8830d559287e17bf4e00030f153a05c; a0f5e3995ca3019006fec3b5f7d3747a2f365b59; b3d368fb8361b340b409591b008388104329229f; e7033c40002d286de9d2fe2d01a30167ba17ec39; 7afd28d004274091810d4ee4563dcedf5a68d41a; 6030deb8a421ae30d56116aacb5ea5b4b1a63ead; 8f8e58310c1b0eaa967427cd740a3947b39c4c94; 3e1f6595090a17f7d35e08563d7c46154cf64361; 3b0dbb660da34b19e0e030ca58de6d1399f0450d; 155a5d1838b02809edc68caa8ec4971989d86846; 5031b2b0b1c40c9f0a6883af6d760454a00a641f; bf5c254bb413a66f3d118185352bf44f69b35822; e46ffbe1a49f9eabfeaba6c26ed81019f9bebd72; 050c5353e5e81f62051cedd24aea95a296b773d0; 3403c7e4683d98bbb736cf94f39533da97905bff; 1c9ef0b1e4d0dd4fcdd1f6fce6fb5d939936e631; c447b4fc18bac3d18b9607df80a3936356f09b58; 9de4c998c671789cf2c9369899602d2303d1e2a3; 63e2656196b00e1497c8446f386bad9273686877; 2842e66a4ae40efdee18ba41b1f491696d9392f0; 6e776e17a17e09a5d7b19901fcf2ee906fde7b92; 85fdd1ce75643be5972849a5bbd197487c930b4e; ad04bb345d060f0a3517f4a5783082f70514cda5; 21b50f88622060b46500f3b117fe0f7de26c5b17; ec993f9363f25285aa1c4f567f06a2bde7f5e14d; 2ad2f8fbdc85436578896aced69aa7c83c99d678; 817614e1c96fe20b78dfa7b4c4cfb12991d20d7c; c5782509bc1db9f270562a417569c2c2b934dd4a; 8180fe9a9d695ea300cc6f8bc720d0cab0e1a1cc; 070eb4598dd41e4f5acbed0ca68e8a0b3a9f94d5; 7e5c4ea95c082b0d0cb0e7322689c215eee07ae8; 820c7994cb1859f761358897f712b65ff42a56fb; 428cff4b05b53375498ef07aeedfe0a2dfa2c4fb; 33da19e6ea67ef00aff4e3536e0f2f49a1fbd13d; 5dec321e9b23a7ab78730761d62a9b5b1daad927; e4890edadc9a2fa7fa820416e687e6e4cf63f454; b2900a4418acfe00980792e90f81a088fb4d6fd8; 8e71035988efb4723545de950ed5a131b29c1e80; ef2f637804e2252a473d517e8d14af9987d111e0; ed5c87a52c3eb446ecf95d7f9a17afdd097a1b1b; dc3c9d74c81a5e557906e1e3ff3a75d526666871; 838b48e27a4400d3b3440638a518403dbde94d20; f7ca899517ca61774913c60dc72902e4ae9be806; ac6351e1e40e4bb74c21c9b8d372ae9f19287c28; 620137f091c6e40fa9b196ceffb1df3bc02902c7; 87a104ced8dd1b59ec62b66bc9d99a452d1c098f; eadad94aaae34548b4f8adbec5f6020681e4f2ef; 8c50d6f27f80ff333e4264fa658994628519b5fb; 2712b40085970ae5f505ce0e4c8be3a524828623; 479e68c137bd48873272490aa71e2ce8e2356e68; b599f5fe918f9f12a80fb96bdf7748d6b9f359cd; 12c3bd18bd7a3da8bf79378838d2b1a26e7c71eb; b893093d791b7e7e2bd8793a2af91a1b2739c951; 3b48d9a7fc53f1caf33a2432a79500071c259be6; 2655f76966a53e5284cca5f8a19c05a33773c37f; c68d33dcd49e8c4c2afeed30f7f443839ad6577d; fd77168316d07965fc17452151fb6b4f91776012; a64e775a826191019b88d32cd7e364907c8a1903; e21434ea4bb5a0893c6b3b1a33c6cc946a493667; 9e8b419453b901b350334bb5b023f08260c8d607; 279083beb55618fc61f1831737d04b1a15a0a099; 399ff67a97ae224b78ab777f1d3cb7217018b554; d1ab9b3b71b3423bae499be9e26e259a6bcc7db8; 484be7398a72b4da712ef5b708a12f7d8cbd04c1; ebd7e9bdd3a22fc28c650f78e1417ccc70394516; 7d6c7fefdc093b05abfaf2140afaf3915d60f463; 8fb725a7025d0b39887a5d9bc0d9823ce45c892d; 7501eb6353515005fb04f3aa4520f9dc6cc76a1a; aac35cfe31a3c93e54f08c352428be086040930a; ed664312aefbbd5e6ea7be3b01ddc6b8296135e5; 25f4c94a66debdcac66a59d92c348be12a49eada; 3f9add4df33480bc16aea614a73cdd87a5394b48; 1c7d16c5ca873556c42f4f05554bf7e96ccee311; 2e181ef20b470cef1232af253b995d6f1128c7d5; 724298b92665cf35790d8d387b6b84f9d40d90ea; 431c5555df8a1bb3eff89c9d41536a7e1ba95dc1; 0e081bc847ae4c3ffd3e0147bc9942568ddf1505; 1c7fe11bd7b3d7b20efab772d1b1c23eed5a1a2a; f213276f14c7841377202054a80793ce828cbb6d; 1e6260782ba409ee31cac0e59592eb9b274b535e; 629d78ba5451ebb10b4e733d58d132ff0b057d99; 4933743899bde2ed693d71764b75ca05c77b0dbb; 766b82712db2fc2977d35ded4f8fb4ee5d1297e6; 4dfba713fb5be0f331eca20ff62f6d50466ebae0; 10b54a8d53dc093d18c574838933b4e4c3ea3995; 8dd5fc7527369c054d62ef48dd55eb7560be2cae; c70e29a9b5f87199cfdcf1500c4ecf2c405d920b; 22287aa252751c6ce68d3afe347a0a27c703da78; 9e20484994542f670db54037fbff1351c54483a5; 53648522d4e3ac086c10b596f6c6aae6243fb3a6; d51bf1c4a60d10bb25abae17c838a77c3093a809; 891c8f90f4004733f7b2906fcd76b0812831f3b0; aac9ff137b2ea80cb5bc21232d9725280ea66fe3, the union covers 2955 record paths, leaving 426466 before this batch. 291 inventories were combined. Unpublished local coverage is explicitly not published or merged main coverage. Snapshot-row context paths are excluded.
+Coverage: full; 1 reviewed / 1 in the declared population.
+Source: working_tree at Git base 04b0ba0c0f96865ee18438b4ec9a9bb206d896c8.
+Working-tree hashes do not imply those bytes were committed.
+
+| Target | Path / selector | Kind | Label |
+| --- | --- | --- | --- |
+| EC:2.1.1.346 | data/traits/function/enzymatic_activity/ec/2-1-1-346-ec2-1-1-346.yaml | generated | U6 snRNA m(6)A methyltransferase |
+
+## Validation
+
+| Check | Status | Required | Targets | Result |
+| --- | --- | --- | --- | --- |
+| Closed schema | passed | True | EC:2.1.1.346 | Single target validated in closed mode. |
+| Closed schema and applicable source semantics | passed | True | EC:2.1.1.346 | One shared invocation scanned all ten listed batch targets; target SHA256 matches before and after execution. Source-specific checks apply where implemented; this gate does not establish scientific class semantics or independently qualify every legacy protein example. |
+| Causal graph integrity | passed | True | EC:2.1.1.346 | Structural causal-graph integrity was checked on the exact target; deterministic checks do not independently verify the scientific claims. |
+| Curation history validity | passed | True | EC:2.1.1.346 | Full curation-history gate; this review adds no history event. |
+| Source reference inspection | passed | True | EC:2.1.1.346 | Identity and focal reaction references resolve in current authoritative/provider captures. Complete declared source scopes, whole selected/local records and exact native inputs were inspected. The human and worm full articles were read with explicit figure-image and separate-supplement limits; two other U6 article requests failed without being treated as article text. |
+
+## Scientific And Domain Assessments
+
+### Source identity and protein-trait scope
+
+identity: supported. Targets: EC:2.1.1.346.
+
+This class is U6 snRNA adenosine N6-methylation, distinct from methylation of mRNA substrates by the same METTL16 proteins. The base/MECHANISTIC definitions, GO:0120048 and RHEA:52808 agree; the GENERAL layer and EC 2 → EC 2.1 → EC 2.1.1 ancestry are appropriate.
+
+### Trait nomenclature
+
+nomenclature: supported. Targets: EC:2.1.1.346.
+
+The accepted U6 snRNA m(6)A methyltransferase label identifies the focal reaction. The human A43 frame in GO/literature is not a universal numeric coordinate for every organism. The target reaction and reactive-part nodes do not assert such a cross-species coordinate.
+
+### Requirement scope and scientific status
+
+scope: concern. Targets: EC:2.1.1.346.
+
+The focal reaction class is supported, but the current REVIEWED lifecycle flag encodes an automatic graph-generation transition rather than documented curator sign-off. This agent review is not human approval.
+
+### Source grounding and trait associations
+
+grounding: concern. Targets: EC:2.1.1.346.
+
+Q09357 has current direct provider attribution and independent whole-article support for METT-10-dependent U6 methylation in C. elegans. The paper identifies CE31860, linked by current WormBase cross-reference to Q09357-1. Its U6 evidence is knockout plus site-specific RNA analysis, distinct from its recombinant sams-RNA assays. Q61J97 and Q5ZIA0 remain similarity-supported; the human VCR study does not independently assay them.
+
+### Class-level evidence and scientific scope
+
+evidence: supported. Targets: EC:2.1.1.346.
+
+All declared current provider/indexed scopes were read in full, with exact URL/hash/original UTC retained. Catalogue membership, provider attribution, direct experimental findings and inferred features remain distinct. Whole PMC7229813 and PMC8208822 delivered text, captions, tables and references were read. Figure pixels, linked raw datasets and separately linked supplementary files were not inspected; inline supplementary figure captions in PMC8208822 were read.
+
+### Protein trait class completeness
+
+completeness: supported. Targets: EC:2.1.1.346.
+
+The complete selected record, all definitions and ancestry, mappings, examples, participant graph and history were reviewed. Reaction identity is resolved within the declared evidence scope. Optional unavailable full texts limit experimental detail without preventing the bounded current conclusions.
+
+### Trait schema
+
+schema: supported. Targets: EC:2.1.1.346.
+
+Actual closed-schema, scoped semantic, graph-integrity and history checks passed on these unchanged captured inputs. Structural success does not establish biological class semantics, experimental support or curator approval.
+
+### Trait hierarchy and source relationships
+
+consistency: supported. Targets: EC:2.1.1.346.
+
+Current GO and Rhea definitions support the focal U6 mapping. IUBMB vertebrate context does not exclude the direct worm U6 evidence in the 2021 article. Human VCR binding/turnover results are empirical, while the proposed bent-U6 arrangement is inferred. Additional sams/MAT2A RNA methylation remains a separate substrate activity of the protein.
+
+### Source attribution and release provenance
+
+provenance: concern. Targets: EC:2.1.1.346.
+
+Current snapshots retain original acquisition timestamps and source hashes, including reused bulk resources. The confirmed defect concerns CURATOR on automatic ENZYME DR imports; it does not imply that the linked protein identity is false.
+
+### Defining representation and axis/category
+
+representation: supported. Targets: EC:2.1.1.346.
+
+FUNCTION/FUNC_ENZYMATIC_ACTIVITY remains a reaction class. Generic U6 polynucleotide carrier nodes and their nucleotide-residue parts are supported by Rhea and permitted by the schema. Whole-protein VCR/orthology context and other RNA substrates do not redefine these class-level participant nodes.
+
+### Causal mechanism evidence
+
+graph: supported. Targets: EC:2.1.1.346.
+
+All eleven current edges match the Rhea U6 carrier/reactive-part chemistry, ec2go source row and ENZYME DR accessions. The AMP and N6-methyl-AMP reactive groups are part of generic U6 polynucleotide carriers; rp1 is a local reactive-part identifier, not nucleotide position 1. The RESIDUE category is not amino-acid-only. Independent atom/charge balance supports the focal net methylation, not a detailed RNA-binding mechanism.
+
+### Maintained trait emitter
+
+ownership: supported. Targets: EC:2.1.1.346.
+
+The seven current owner routes identify the maintained EC seeder, GENERAL and MECHANISTIC definition composers, reaction graph builder, authoritative schema and two graph-guidance skills. Correct the emitter/guidance for reproducibility while preserving source-backed reaction content and append-only history.
+
+## Findings
+
+### F1: Automated graph generation is recorded as curator sign-off
+
+major / open / confirmed; issue key: automated-reviewed-status.
+
+mapping_status is REVIEWED and the sole current history entry states SEEDED -&gt; REVIEWED with llm_assisted: true. The maintained builder performs that replacement when it adds a graph, and graph guidance directs the same transition. The schema reserves REVIEWED for curator sign-off on label, definition and parents; successful generation and structural validation do not document that sign-off.
+
+### F2: Imported ENZYME DR examples are labeled curator-picked
+
+minor / open / confirmed; issue key: imported-dr-curator-provenance.
+
+Each canonical_examples entry explicitly notes an ExPASy ENZYME DR cross-reference but has source: CURATOR. The current seeder takes the first up to three DR entries and emits this value; the enum defines it as a curator-picked archetype. The source-resolved proteins remain supported at their stated evidence tiers, but the repository selection provenance is inaccurate.
+
+## Recommended Actions And Acceptance Checks
+
+### A1
+
+Separate graph-generation completion from curator approval in the maintained builder and both graph-guidance workflows. Preserve the historical LLM-assisted event; record an append-only status correction or a distinct authorized curator sign-off after the required review.
+
+- Graph construction alone does not promote a seeded record to REVIEWED.
+- The selected record has an accurate lifecycle status and an append-only explanation; the original event remains traceable.
+- The builder, schema meaning and graph guidance agree on the explicit sign-off prerequisite.
+
+### A2
+
+Represent the actual ENZYME DR import process in the maintained emitter and example provenance, using a reviewed schema-compatible mechanism. Preserve exact accessions and direct-versus-transferred support; use CURATOR only after an explicit documented curator selection.
+
+- Re-emission does not describe an automatic DR import as a curator-picked archetype.
+- All current valid accession links and provider evidence tiers remain traceable.
+- Any provenance vocabulary change passes the maintained closed schema and source semantics.
+
+## Category Boundaries
+
+
+## Evidence
+
+| Evidence | Reference / locator | Support | Observation |
+| --- | --- | --- | --- |
+| native-01 | .claude/skills/curate-yaml-record/SKILL.md; Complete native context input; exact SHA256 captured by inspect | context_only | Current maintained rule, schema, owner or dependency input bound by native inspection and prior whole-source continuity; used for review requirements, provenance and emitter attribution, not as experimental biological evidence. |
+| native-02 | .claude/skills/curate-yaml-record/references/review-checklist.md; Complete native context input; exact SHA256 captured by inspect | context_only | Current maintained rule, schema, owner or dependency input bound by native inspection and prior whole-source continuity; used for review requirements, provenance and emitter attribution, not as experimental biological evidence. |
+| native-03 | .claude/skills/edison-causal-graphs/SKILL.md; Complete native context input; exact SHA256 captured by inspect | context_only | Current maintained rule, schema, owner or dependency input bound by native inspection and prior whole-source continuity; used for review requirements, provenance and emitter attribution, not as experimental biological evidence. |
+| native-04 | .claude/skills/molecular-causal-graphs/SKILL.md; Complete native context input; exact SHA256 captured by inspect | context_only | Current maintained rule, schema, owner or dependency input bound by native inspection and prior whole-source continuity; used for review requirements, provenance and emitter attribution, not as experimental biological evidence. |
+| native-05 | .claude/skills/review-yaml-record/SKILL.md; Complete native context input; exact SHA256 captured by inspect | context_only | Current maintained rule, schema, owner or dependency input bound by native inspection and prior whole-source continuity; used for review requirements, provenance and emitter attribution, not as experimental biological evidence. |
+| native-06 | AGENTS.md; Complete native context input; exact SHA256 captured by inspect | context_only | Current maintained rule, schema, owner or dependency input bound by native inspection and prior whole-source continuity; used for review requirements, provenance and emitter attribution, not as experimental biological evidence. |
+| native-07 | LICENSE; Complete native context input; exact SHA256 captured by inspect | context_only | Current maintained rule, schema, owner or dependency input bound by native inspection and prior whole-source continuity; used for review requirements, provenance and emitter attribution, not as experimental biological evidence. |
+| native-08 | LICENSE-DATA; Complete native context input; exact SHA256 captured by inspect | context_only | Current maintained rule, schema, owner or dependency input bound by native inspection and prior whole-source continuity; used for review requirements, provenance and emitter attribution, not as experimental biological evidence. |
+| native-09 | conf/record_review.yaml; Complete native context input; exact SHA256 captured by inspect | context_only | Current maintained rule, schema, owner or dependency input bound by native inspection and prior whole-source continuity; used for review requirements, provenance and emitter attribution, not as experimental biological evidence. |
+| native-10 | data/grounding/README.md; Complete native context input; exact SHA256 captured by inspect | context_only | Current maintained rule, schema, owner or dependency input bound by native inspection and prior whole-source continuity; used for review requirements, provenance and emitter attribution, not as experimental biological evidence. |
+| native-11 | data/traits/function/enzymatic_activity/ec/2-1-1-346-ec2-1-1-346.yaml; Complete native target input; exact SHA256 captured by inspect | supports | Entire current selected record, all ordered definitions, mappings, examples, graph nodes/edges and curation history; scientific judgments concern these exact bytes. |
+| native-12 | data/traits/function/enzymatic_activity/ec/2-1-1-ec2-1-1--.yaml; Complete native context input; exact SHA256 captured by inspect | context_only | Entire current EC ancestor record; used for hierarchy/GENERAL-definition context. Ancestor protein examples are not selected examples for this leaf. |
+| native-13 | data/traits/function/enzymatic_activity/ec/2-1-ec2-1----.yaml; Complete native context input; exact SHA256 captured by inspect | context_only | Entire current EC ancestor record; used for hierarchy/GENERAL-definition context. Ancestor protein examples are not selected examples for this leaf. |
+| native-14 | data/traits/function/enzymatic_activity/ec/2-ec2------.yaml; Complete native context input; exact SHA256 captured by inspect | context_only | Entire current EC ancestor record; used for hierarchy/GENERAL-definition context. Ancestor protein examples are not selected examples for this leaf. |
+| native-15 | data/traits/function/enzymatic_activity/rhea/adenosine-in-u6-snrna-s-adenosyl-l-methionine-n-6-methyladenosine-in-u-rhea52808.yaml; Complete native context input; exact SHA256 captured by inspect | context_only | Entire current local GO/Rhea reference record; context and exact source-parent correspondence, not an independent external experiment. |
+| native-16 | data/traits/function/molecular_function/go/u6-snrna-adenine-43-n6-methyltransferase-activity-go0120048.yaml; Complete native context input; exact SHA256 captured by inspect | context_only | Entire current local GO/Rhea reference record; context and exact source-parent correspondence, not an independent external experiment. |
+| native-17 | docs/fetch-migration.md; Complete native context input; exact SHA256 captured by inspect | context_only | Current maintained rule, schema, owner or dependency input bound by native inspection and prior whole-source continuity; used for review requirements, provenance and emitter attribution, not as experimental biological evidence. |
+| native-18 | docs/record-review-profile.md; Complete native context input; exact SHA256 captured by inspect | context_only | Current maintained rule, schema, owner or dependency input bound by native inspection and prior whole-source continuity; used for review requirements, provenance and emitter attribution, not as experimental biological evidence. |
+| native-19 | docs/record-reviews.md; Complete native context input; exact SHA256 captured by inspect | context_only | Current maintained rule, schema, owner or dependency input bound by native inspection and prior whole-source continuity; used for review requirements, provenance and emitter attribution, not as experimental biological evidence. |
+| native-20 | download.yaml; Complete native context input; exact SHA256 captured by inspect | context_only | Current maintained rule, schema, owner or dependency input bound by native inspection and prior whole-source continuity; used for review requirements, provenance and emitter attribution, not as experimental biological evidence. |
+| native-21 | history/README.md; Complete native context input; exact SHA256 captured by inspect | context_only | Current maintained rule, schema, owner or dependency input bound by native inspection and prior whole-source continuity; used for review requirements, provenance and emitter attribution, not as experimental biological evidence. |
+| native-22 | justfile; Complete native context input; exact SHA256 captured by inspect | context_only | Current maintained rule, schema, owner or dependency input bound by native inspection and prior whole-source continuity; used for review requirements, provenance and emitter attribution, not as experimental biological evidence. |
+| native-23 | research/uniprot-organism-protein-grounding-plan.md; Complete native context input; exact SHA256 captured by inspect | context_only | Current maintained rule, schema, owner or dependency input bound by native inspection and prior whole-source continuity; used for review requirements, provenance and emitter attribution, not as experimental biological evidence. |
+| native-24 | schema/record_review.yaml; Complete native context input; exact SHA256 captured by inspect | context_only | Current maintained rule, schema, owner or dependency input bound by native inspection and prior whole-source continuity; used for review requirements, provenance and emitter attribution, not as experimental biological evidence. |
+| native-25 | scripts/build_docs_index.py; Complete native context input; exact SHA256 captured by inspect | context_only | Current maintained rule, schema, owner or dependency input bound by native inspection and prior whole-source continuity; used for review requirements, provenance and emitter attribution, not as experimental biological evidence. |
+| native-26 | scripts/build_ec_causal_graphs.py; Complete native context input; exact SHA256 captured by inspect | context_only | Current maintained rule, schema, owner or dependency input bound by native inspection and prior whole-source continuity; used for review requirements, provenance and emitter attribution, not as experimental biological evidence. |
+| native-27 | scripts/build_rhea_causal_graphs.py; Complete native context input; exact SHA256 captured by inspect | context_only | Current maintained rule, schema, owner or dependency input bound by native inspection and prior whole-source continuity; used for review requirements, provenance and emitter attribution, not as experimental biological evidence. |
+| native-28 | scripts/deflib.py; Complete native context input; exact SHA256 captured by inspect | context_only | Current maintained rule, schema, owner or dependency input bound by native inspection and prior whole-source continuity; used for review requirements, provenance and emitter attribution, not as experimental biological evidence. |
+| native-29 | scripts/enrich_ec_general_defs.py; Complete native context input; exact SHA256 captured by inspect | context_only | Current maintained rule, schema, owner or dependency input bound by native inspection and prior whole-source continuity; used for review requirements, provenance and emitter attribution, not as experimental biological evidence. |
+| native-30 | scripts/enrich_mechanistic_defs.py; Complete native context input; exact SHA256 captured by inspect | context_only | Current maintained rule, schema, owner or dependency input bound by native inspection and prior whole-source continuity; used for review requirements, provenance and emitter attribution, not as experimental biological evidence. |
+| native-31 | scripts/record_io.py; Complete native context input; exact SHA256 captured by inspect | context_only | Current maintained rule, schema, owner or dependency input bound by native inspection and prior whole-source continuity; used for review requirements, provenance and emitter attribution, not as experimental biological evidence. |
+| native-32 | scripts/rhea_rdf.py; Complete native context input; exact SHA256 captured by inspect | context_only | Current maintained rule, schema, owner or dependency input bound by native inspection and prior whole-source continuity; used for review requirements, provenance and emitter attribution, not as experimental biological evidence. |
+| native-33 | scripts/seed_ec.py; Complete native context input; exact SHA256 captured by inspect | context_only | Current maintained rule, schema, owner or dependency input bound by native inspection and prior whole-source continuity; used for review requirements, provenance and emitter attribution, not as experimental biological evidence. |
+| native-34 | scripts/yaml_emit.py; Complete native context input; exact SHA256 captured by inspect | context_only | Current maintained rule, schema, owner or dependency input bound by native inspection and prior whole-source continuity; used for review requirements, provenance and emitter attribution, not as experimental biological evidence. |
+| native-35 | src/proteintraitsmech/schema/proteintraitsmech.yaml; Complete native context input; exact SHA256 captured by inspect | context_only | Current maintained rule, schema, owner or dependency input bound by native inspection and prior whole-source continuity; used for review requirements, provenance and emitter attribution, not as experimental biological evidence. |
+| iubmb | https://iubmb.qmul.ac.uk/enzyme/EC2/1/1/346.html; Complete normalized delivered HTML text excluding script/style. | supports | Complete current EC 2.1.1.346 page: N6 methylation of adenosine in U6 snRNA. It cites PMID28525753 and 29051200 and discusses additional RNA/MAT2A functions. Its vertebrate context is complemented by the independently captured worm study; additional RNA activity does not erase the focal U6 class. |
+| protein-Q09357 | https://rest.uniprot.org/uniprotkb/Q09357.json; Entire delivered UniProt JSON including exact sequence residues and all crossreference databases; sequence SHA256 is additional verification, not a substitute for residues. | supports | Complete C. elegans METT-10 entry: focal U6 catalytic activity carries ECO:0000269 PMID33930289 and GO:0120048 has direct-assay attribution. WormBase CE31860/ZK1128.2a maps to Q09357-1 and links the current accession to the protein identifier in the whole article. The separate splice-site RNA activity is retained as broader protein context. |
+| protein-Q5ZIA0 | https://rest.uniprot.org/uniprotkb/Q5ZIA0.json; Entire delivered UniProt JSON including exact sequence residues and all crossreference databases; sequence SHA256 is additional verification, not a substitute for residues. | supports | Complete chicken METTL16 entry: focal function, catalytic activity and relevant sites are transferred by similarity from human Q86W50. Its cDNA reference establishes sequence provenance rather than a direct catalytic assay. Human U6 A43 and VCR experiments are not independently repeated evidence for this chicken accession. |
+| protein-Q61J97 | https://rest.uniprot.org/uniprotkb/Q61J97.json; Entire delivered UniProt JSON including exact sequence residues and all crossreference databases; sequence SHA256 is additional verification, not a substitute for residues. | supports | Complete C. briggsae METTL16 entry: focal function/catalytic support is by similarity, including transfer from C. elegans Q09357; the genome publication is not a focal enzymatic assay. Current provider-supported inclusion is preserved with that evidence tier. |
+| paper-28525753 | https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:28525753%20AND%20SRC:MED&amp;format=json&amp;resultType=core; Entire delivered indexed MED envelope and result, including all bibliography, authors, abstract, access fields and correction presence/value. No full article. | supports | Complete CORE envelope and abstract report human METTL16-dependent U6 methylation and MAT2A intron-retention/SAM-homeostasis regulation. These human findings establish class context and are not direct assays of all three selected orthologs. The advertised PMC article was not delivered by its attempted XML request. |
+| paper-32266935 | https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:32266935%20AND%20SRC:MED&amp;format=json&amp;resultType=core; Entire delivered indexed MED envelope and result, including all bibliography, authors, abstract, access fields and correction presence/value. No full article. | supports | Complete CORE envelope identifies the human METTL16 VCR structural/functional study. The corresponding full PMC7229813 article was also read separately, allowing its empirical binding/methylation evidence to be distinguished from the proposed RNA conformational mechanism. |
+| chemical-15378 | https://www.ebi.ac.uk/chebi/backend/api/public/compound/15378/; Exactly eight complete declared fields: id,chebi_accession,ascii_name,name,definition,names,chemical_data,ontology_relations. Other API fields excluded. | supports | Complete declared ChEBI scope for hydron: id, chebi_accession, ascii_name, name, definition, names, chemical_data and ontology_relations. Formula, charge, names and ontology relations support participant correspondence. Other API fields, including separate structure and citation objects, are outside this reading scope; no additional stereochemistry is inferred. |
+| chemical-57856 | https://www.ebi.ac.uk/chebi/backend/api/public/compound/57856/; Exactly eight complete declared fields: id,chebi_accession,ascii_name,name,definition,names,chemical_data,ontology_relations. Other API fields excluded. | supports | Complete declared ChEBI scope for S-adenosyl-L-homocysteine: id, chebi_accession, ascii_name, name, definition, names, chemical_data and ontology_relations. Formula, charge, names and ontology relations support participant correspondence. Other API fields, including separate structure and citation objects, are outside this reading scope; no additional stereochemistry is inferred. |
+| chemical-59789 | https://www.ebi.ac.uk/chebi/backend/api/public/compound/59789/; Exactly eight complete declared fields: id,chebi_accession,ascii_name,name,definition,names,chemical_data,ontology_relations. Other API fields excluded. | supports | Complete declared ChEBI scope for S-adenosyl-L-methionine: id, chebi_accession, ascii_name, name, definition, names, chemical_data and ontology_relations. Formula, charge, names and ontology relations support participant correspondence. Other API fields, including separate structure and citation objects, are outside this reading scope; no additional stereochemistry is inferred. |
+| chemical-74411 | https://www.ebi.ac.uk/chebi/backend/api/public/compound/74411/; Exactly eight complete declared fields: id,chebi_accession,ascii_name,name,definition,names,chemical_data,ontology_relations. Other API fields excluded. | supports | Complete declared ChEBI scope for adenosine monophosphate residue: id, chebi_accession, ascii_name, name, definition, names, chemical_data and ontology_relations. Formula, charge, names and ontology relations support participant correspondence. Other API fields, including separate structure and citation objects, are outside this reading scope; no additional stereochemistry is inferred. |
+| chemical-74449 | https://www.ebi.ac.uk/chebi/backend/api/public/compound/74449/; Exactly eight complete declared fields: id,chebi_accession,ascii_name,name,definition,names,chemical_data,ontology_relations. Other API fields excluded. | supports | Complete declared ChEBI scope for N6-methyladenosine monophosphate residue: id, chebi_accession, ascii_name, name, definition, names, chemical_data and ontology_relations. Formula, charge, names and ontology relations support participant correspondence. Other API fields, including separate structure and citation objects, are outside this reading scope; no additional stereochemistry is inferred. |
+| go-QuickGO | https://www.ebi.ac.uk/QuickGO/services/ontology/go/terms/GO%3A0120048; Complete delivered JSON envelope. | supports | Complete current QuickGO term envelope identifies non-obsolete GO:0120048 and the U6 adenine N6-methylation activity, with the human U6 A43 frame and cited studies. This is a reaction/ontology mapping, not evidence that each selected protein was tested. |
+| go-OLS | https://www.ebi.ac.uk/ols4/api/ontologies/go/terms?iri=http%3A%2F%2Fpurl.obolibrary.org%2Fobo%2FGO_0120048; Complete delivered JSON envelope. | supports | Complete OLS term envelope independently retains the current U6 methyltransferase name, definition, identifiers and relation metadata. Provider exact-match cross-references do not by themselves replace the record graph closeMatch with scientific identity of entire proteins. |
+| paper-29051200 | https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:29051200%20AND%20SRC:MED&amp;format=json&amp;resultType=core; Entire CORE envelope, including abstract and exact identifiers | supports | Complete CORE envelope and abstract explicitly report human METTL16 U6 A43 methylation and broader RNA-binding observations. Binding to other RNAs is not automatically catalytic methylation of every bound RNA. The associated PMC5666602 request returned an error. |
+| paper-33930289 | https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:33930289%20AND%20SRC:MED&amp;format=json&amp;resultType=core; Entire CORE envelope, including abstract and exact identifiers | supports | Complete CORE envelope and abstract concern C. elegans METT-10 methylation of SAM-synthetase splice-site RNA. Its full PMC8208822 article, read separately, additionally documents direct biological U6 methylation evidence not stated in that abstract. |
+| article-32266935 | https://www.ebi.ac.uk/europepmc/webservices/rest/PMC7229813/fullTextXML; Entire delivered article text/structure; figure images and separately linked supplement files excluded | supports | Whole delivered human METTL16 article, including text, methods, five figure captions, table and 54 references. Recombinant human proteins, coupled SAH-luminescence turnover and gel-shift binding support the VCR contribution; its linker-deletion VCR structure is not a complete enzyme-U6 complex. The bent-U6/transition-region arrangement is a model. Human results are class context for the selected chicken/nematode examples. |
+| article-33930289 | https://www.ebi.ac.uk/europepmc/webservices/rest/PMC8208822/fullTextXML; Entire delivered article text/structure; figure images and separately linked supplement files excluded | supports | Whole delivered worm METT-10 article, including methods, 15 figure objects/captions, resource table and 105 references. U6 m6A-IP-seq and site-specific SCARLET on worm RNA show methylation lost in the mett-10 knockout. Recombinant assays on sams splice-site RNA are separate. Paper CE31860 maps through the current provider to Q09357-1; current sequence-byte identity is not claimed. Chicken and C. briggsae were not independently assayed here. |
+| article-access-1 | https://www.ebi.ac.uk/europepmc/webservices/rest/PMC5502809/fullTextXML; Entire retained error response and HTTP metadata | unknown | The exact attempted article request returned HTTP 500 and 150 bytes of error/challenge content. This response supplies access provenance only and contains no usable article evidence. |
+| article-access-2 | https://www.ebi.ac.uk/europepmc/webservices/rest/PMC5666602/fullTextXML; Entire retained error response and HTTP metadata | unknown | The exact attempted article request returned HTTP 500 and 150 bytes of error/challenge content. This response supplies access provenance only and contains no usable article evidence. |
+| authority-enzyme | https://ftp.expasy.org/databases/enzyme/enzyme.dat; Complete selected ENZYME leaf stanza | supports | Exact EC:2.1.1.346 leaf stanza supports its label, net reaction and DR catalogue membership. Catalogue DR pointers are not evidence that this repository independently picked textbook archetypes. |
+| authority-hierarchy | https://ftp.expasy.org/databases/enzyme/enzclass.txt; Exact EC 2, EC 2.1 and EC 2.1.1 ancestor lines | supports | The three classification lines support transferase → one-carbon-group transferase → methyltransferase ancestry. |
+| authority-ec2go | https://current.geneontology.org/ontology/external2go/ec2go; Exact selected EC leaf lookup, including a zero-row result where applicable | supports | The exact current leaf lookup yields the mapped GO term used by the selected graph; it does not qualify individual protein experiments. |
+| authority-rhea2ec | https://ftp.expasy.org/databases/rhea/tsv/rhea2ec.tsv; Exact selected EC leaf mapping rows | supports | The selected leaf maps to RHEA:52808; the master/directional identifiers are kept distinct. |
+| rdf | https://ftp.expasy.org/databases/rhea/rdf/rhea.rdf.gz; Complete selected recursive RDF closure with repeated subject blocks | supports | Complete selected RHEA:52808 recursive closure: generic U6 polynucleotide carriers contain AMP and N6-methyl-AMP reactive parts, with SAM, SAH and hydron in the net reaction. The rp1 labels are local reactive-part identifiers rather than sequence coordinates. This archive scope does not supply protein assay evidence or an RNA-binding mechanism. |
+| policy-enzyme | https://ftp.expasy.org/databases/enzyme/enzuser.txt; Complete delivered manual text | context_only | The full ENZYME manual defines DR entries as external protein-database cross-references; it does not assert repository curator selection. |
+| policy-skos | https://www.w3.org/TR/skos-reference/; Complete captured mapping-properties section 10 | context_only | SKOS mapping relations have distinct semantics; a mapping does not establish experimental protein activity. |
+| policy-input | https://www.ebi.ac.uk/ols4/api/ontologies/ro/properties?iri=http%3A%2F%2Fpurl.obolibrary.org%2Fobo%2FRO_0002233; Complete captured property envelope | context_only | The has-input relation supplies the input role used by the participant graph. |
+| policy-output | https://www.ebi.ac.uk/ols4/api/ontologies/ro/properties?iri=http%3A%2F%2Fpurl.obolibrary.org%2Fobo%2FRO_0002234; Complete captured property envelope | context_only | The has-output relation supplies the output role used by the participant graph. |
+| policy-enables | https://www.ebi.ac.uk/ols4/api/ontologies/ro/properties?iri=http%3A%2F%2Fpurl.obolibrary.org%2Fobo%2FRO_0002327; Complete captured property envelope | context_only | The enables relation expresses the protein-to-activity assertion; its evidence tier still requires separate examination. |
+| policy-partof | https://www.ebi.ac.uk/ols4/api/ontologies/ro/properties?iri=http%3A%2F%2Fpurl.obolibrary.org%2Fobo%2FBFO_0000050; Complete captured property envelope | context_only | The part-of property supports the relation of a nucleotide residue to its polynucleotide carrier. |
+| attained-structural-checks | /private/tmp/ptm-record-reviews-20261021/batch-291/ec-contract-structural291-qa.json; Entire independent current native-input and 22-check structural gate; original setup failure and successful recovery remain separately attributed | supports | The attained current structural gate verifies exact native inputs, successful recovered setup, all 20 target checks and both batch/history checks. It establishes structural validity on unchanged source bytes, not biological truth or human curator sign-off. |
+| validation-1 | just validate data/traits/function/enzymatic_activity/ec/2-1-1-346-ec2-1-1-346.yaml; Executed 2026-11-01T07:09:55Z through 2026-11-01T07:09:57Z; exit 0 | supports | === validate-strict summary ===<br>  files scanned:      1<br>  files with ERROR:   0<br>  total ERROR rows:   0<br>  TSV:                reports/instance_validation_failures.tsv |
+| validation-2 | just validate-all data/traits/function/enzymatic_activity/ec/2-1-1-339-ec2-1-1-339.yaml data/traits/function/enzymatic_activity/ec/2-1-1-34-ec2-1-1-34.yaml data/traits/function/enzymatic_activity/ec/2-1-1-340-ec2-1-1-340.yaml data/traits/function/enzymatic_activity/ec/2-1-1-341-ec2-1-1-341.yaml data/traits/function/enzymatic_activity/ec/2-1-1-342-ec2-1-1-342.yaml data/traits/function/enzymatic_activity/ec/2-1-1-343-ec2-1-1-343.yaml data/traits/function/enzymatic_activity/ec/2-1-1-344-ec2-1-1-344.yaml data/traits/function/enzymatic_activity/ec/2-1-1-345-ec2-1-1-345.yaml data/traits/function/enzymatic_activity/ec/2-1-1-346-ec2-1-1-346.yaml data/traits/function/enzymatic_activity/ec/2-1-1-347-ec2-1-1-347.yaml; Executed 2026-11-01T07:09:38Z through 2026-11-01T07:10:51Z; exit 0 | supports | === validate-strict summary ===<br>  files scanned:      10<br>  files with ERROR:   0<br>  total ERROR rows:   0<br>  TSV:                reports/instance_validation_failures.tsv<br>files scanned: 10<br>registry proteins: 13532<br>source evidence objects: 23062<br>qualified record bindings: 23062<br>UniProt membership objects: 431<br>hierarchy records: 0<br>semantic findings: 0<br>TSV: /private/tmp/ptm-record-reviews-20261021/repo/reports/uniprot-grounding/validation.tsv |
+| validation-3 | just audit-graphs data/traits/function/enzymatic_activity/ec/2-1-1-346-ec2-1-1-346.yaml; Executed 2026-11-01T07:09:57Z through 2026-11-01T07:09:57Z; exit 0 | supports | causal-graph audit: 1 records, 1 graphs, 12 nodes, 11 edges &#124; grounded nodes 12/12, snippet-cited edges 11/11 &#124; 0 errors, 0 warnings |
+| validation-4 | just validate-history; Executed 2026-11-01T07:10:51Z through 2026-11-01T07:10:53Z; exit 0 | supports | No issues found |
+
+## Limits And Additional Notes
+
+- Whole PMC7229813 and PMC8208822 delivered text, captions, tables and references were read. Figure pixels, linked raw datasets and separately linked supplementary files were not inspected; inline supplementary figure captions in PMC8208822 were read.
+- PMC5502809 and PMC5666602 XML requests returned HTTP 500 error envelopes. Their complete CORE abstracts remain available; no content is inferred from the failed article requests.
+- The current accession link to the worm article is composed through CE31860; no claim equates current sequence bytes with the historical experimental construct. Chicken Q5ZIA0 and C. briggsae Q61J97 remain transferred examples.
+- Human VCR-domain and RNA-binding models are not generalized to nematode proteins lacking vertebrate-conserved regions. The paper does not establish global splicing impairment from U6 methylation loss or physiological use of every candidate mammalian splice-site substrate.
+- This is an agent scientific review of unchanged records, not human curator sign-off. Source acquisition and native operations were performed by ROOT; this proposal performs none.
+
+## Complete Structured Record
+
+The sibling review.yaml is authoritative.
+
+```yaml
+schema_version: 1.0.0
+review_id: 20261101T074416Z-2-1-1-346-ec2-1-1-346
+kind: record
+repository: CultureBotAI/proteintraitsmech
+title: Review of U6 snRNA m(6)A methyltransferase
+started_at: '2026-11-01T07:09:05Z'
+finished_at: '2026-11-01T07:44:16Z'
+reviewer:
+  identity: Codex
+  kind: agent
+  independence: unknown
+  independence_basis: Unchanged target bytes assessed against inspected primary sources
+    and repository rules, with independent source-acquisition and scope checks. Prior
+    authorship independence is not established; this is not human sign-off.
+skill: .claude/skills/review-yaml-record/SKILL.md
+completion: completed
+verdict: needs_curation
+scientific_review: true
+summary: This class is U6 snRNA adenosine N6-methylation, distinct from methylation
+  of mRNA substrates by the same METTL16 proteins. The base/MECHANISTIC definitions,
+  GO:0120048 and RHEA:52808 agree; the GENERAL layer and EC 2 → EC 2.1 → EC 2.1.1
+  ancestry are appropriate. Curation is required for the automatic REVIEWED transition
+  and imported-CURATOR provenance.
+source:
+  git_revision: 04b0ba0c0f96865ee18438b4ec9a9bb206d896c8
+  state: working_tree
+  inputs:
+  - path: .claude/skills/curate-yaml-record/SKILL.md
+    sha256: f28b4fb7ad5b2891ba8569b2f923559e99cec7b18dd42557b6b0e4becb8f4762
+    role: context
+  - path: .claude/skills/curate-yaml-record/references/review-checklist.md
+    sha256: 59f39fad3e6447e7be30da72667befd3d2e383b68bea5f497952f2ab080da90d
+    role: context
+  - path: .claude/skills/edison-causal-graphs/SKILL.md
+    sha256: 2392f62014a428813a328f13e768eb3f08d4c853c9e0d2c439f5379d7f2cb66b
+    role: context
+  - path: .claude/skills/molecular-causal-graphs/SKILL.md
+    sha256: de35c69487283d2b28cae6048cf2c02953012aba41e897680999c4e3bde3dbc1
+    role: context
+  - path: .claude/skills/review-yaml-record/SKILL.md
+    sha256: ac1094d8aef512845dbe56ee041e62e62aeeed32326578ff3f7dd8455495f303
+    role: context
+  - path: AGENTS.md
+    sha256: 8bfd4da2ecf01cbe56cdbfe1e7860a9f343eefdb984ef6775c7031a7c02a3349
+    role: context
+  - path: LICENSE
+    sha256: d920683ada4ab4646467cbe49944e08172d8f10c92ce3e631d6f3460b4b40a52
+    role: context
+  - path: LICENSE-DATA
+    sha256: 9e5f1b3c610b9c2da5c313bf81d577a7d1acec686bdb0384edefa6df0f90cd94
+    role: context
+  - path: conf/record_review.yaml
+    sha256: a776553cee8cbe239d4d00ea27d728c271ee7462a42532ccf7e5bd2a9e285a2b
+    role: context
+  - path: data/grounding/README.md
+    sha256: 83155f235a0cefa98dfaf88ea888f4d65a1ba056587f9869b4fbbd92df1a91c3
+    role: context
+  - path: data/traits/function/enzymatic_activity/ec/2-1-1-346-ec2-1-1-346.yaml
+    sha256: a12c1b7ed5780a230d6d75b1fe04f6188ef551c7a086d06599f1c6e73bba3afd
+    role: target
+  - path: data/traits/function/enzymatic_activity/ec/2-1-1-ec2-1-1--.yaml
+    sha256: f4b4f116efbd2c1e7783ef6c7a367b94e6d89e332e79a78cc9eaa075cae964c2
+    role: context
+  - path: data/traits/function/enzymatic_activity/ec/2-1-ec2-1----.yaml
+    sha256: 32716fc253b73b542e99356a53f00bd28486c6595d0cfc2ee7c0b872c0ff4c53
+    role: context
+  - path: data/traits/function/enzymatic_activity/ec/2-ec2------.yaml
+    sha256: c6ae59fb7667626b2a578da2ae849b9b246a6690823e046c63f656b59026cabe
+    role: context
+  - path: data/traits/function/enzymatic_activity/rhea/adenosine-in-u6-snrna-s-adenosyl-l-methionine-n-6-methyladenosine-in-u-rhea52808.yaml
+    sha256: c09e8f6a95a2295cafb5ef0d34aa37984efbe7a2bc90018cd72db1481124f9ee
+    role: context
+  - path: data/traits/function/molecular_function/go/u6-snrna-adenine-43-n6-methyltransferase-activity-go0120048.yaml
+    sha256: f006197ff02422820fc38c02efb9415ded67bebb40e3d30309210f3cb85b7fc5
+    role: context
+  - path: docs/fetch-migration.md
+    sha256: 11718531ccc1346002cfafbe62e8cfdc3859271ded178c34a17e26dabc70b55c
+    role: context
+  - path: docs/record-review-profile.md
+    sha256: 06cec6693ded193231a378bba04e7c1ad3e295f88903ee8b7c30b3238daab9df
+    role: context
+  - path: docs/record-reviews.md
+    sha256: 452a19ab688276747b7c4308523a14d4d99c1c39ef6909ae8a90b85b7a9b3e9b
+    role: context
+  - path: download.yaml
+    sha256: 63a62092f919dc534d7b5d9087ada35dea39ed88579f3fd281f8f0ffe6ef4417
+    role: context
+  - path: history/README.md
+    sha256: db3db1da49f08244c863689856f31bc764aadb6e629b25aff45b3b4598dbef2c
+    role: context
+  - path: justfile
+    sha256: 44ea312c36abbe090da0315b60a8c0727db9ba5c766607aa77c81bf85c025233
+    role: context
+  - path: research/uniprot-organism-protein-grounding-plan.md
+    sha256: 99f0eded9310561155198b863c6c9ea05aeb145b1d4f76109df000646d2b1a7f
+    role: context
+  - path: schema/record_review.yaml
+    sha256: 229baf9b69118a1fe318e4c31085c0820e4e3d1365e7b04d6ace451b7c35f9bb
+    role: context
+  - path: scripts/build_docs_index.py
+    sha256: 6d1f4b70648cddb3147fe22233c1111e51ac514552444f193c4f2f03dfa6c1ea
+    role: context
+  - path: scripts/build_ec_causal_graphs.py
+    sha256: d5fdfc7fab74cc3b50b3707669bddd6e58b58299a0178528c6748c6f05f37a2d
+    role: context
+  - path: scripts/build_rhea_causal_graphs.py
+    sha256: ac1785a1d65e4f747f3e0f6661a2c97cea8df20aefdbab9bbe12c7e236ded5f8
+    role: context
+  - path: scripts/deflib.py
+    sha256: 5dbb70e6812fef6a19b77b044235cfe31c88369078e2399efa32cfec0aafd929
+    role: context
+  - path: scripts/enrich_ec_general_defs.py
+    sha256: 45708aa03e049d2ab395e6be0d5f5b1816c9ae4707a478a9e3b321ebb675ad97
+    role: context
+  - path: scripts/enrich_mechanistic_defs.py
+    sha256: e4238b8bffc0de3ce84ad0cec3691e0a1af5d45ee6553fca92a21ef04c3afdf3
+    role: context
+  - path: scripts/record_io.py
+    sha256: ebe9153319474f2c7333b8b4709f32b00eddae1d2abe3d6a1420c74356e585bf
+    role: context
+  - path: scripts/rhea_rdf.py
+    sha256: 4a7a05bfdedce442e38cd3da5d4dc83ea5c2796ea1099c6fc804321c4a4c5af9
+    role: context
+  - path: scripts/seed_ec.py
+    sha256: 606eac99b5465ec95f40071de6421c79adcd0394e71d9e7acd7d92eb2b98c98e
+    role: context
+  - path: scripts/yaml_emit.py
+    sha256: 2507aaa5ed8f44634082183aecdde91f259b5700b6530f55a133507a2ca0a388
+    role: context
+  - path: src/proteintraitsmech/schema/proteintraitsmech.yaml
+    sha256: 7d29139f696497dffa018b8d68b3f72d4e1adbadd4f67f7904ddbb4b12275418
+    role: context
+scope:
+  description: Field-by-field scientific review of one complete ProteinTraitRecord.
+  selection: Path-order position 9 in batch 291. Fresh main inventory has 429421 records.
+    Main and validated published review heads (batch-001 at b36c4b5ad6c1ee1f31f1cc8c4da5cad94651719d;
+    batch-002 at 357a22ff037976ab142a6bf2267191b5f4a98d21; batch-003 at cc32a8c59ea04af980930b521773705380a9d85a;
+    batch-004 at 23d5cee9fdad2ee701ca7d5cadfc76b54df242ca; batch-005 at 678797be94bf7bcf5673a5c9dcd2e779ec1c76cc;
+    batch-006 at 1696e53c414be3be3641f470a8eade2ec004b6b1; batch-007 at ecd1ed5f09754b6cee1695d813f62f9b23b6ccf5;
+    batch-008 at 914248190c8fd158835c16572946efde3dd87af4; batch-009 at 12d47e9145517b395c6ffdacd172003af66f5618;
+    batch-010 at d51f823a5de8645ec50586992dc9e2e27fdef83f; batch-011 at 3f0697b8989b56af606b2eee7248b55fa21cd4f5;
+    batch-012 at 86f94d00a00a8b0fbaa16d5301a35ff03fa8abc0; batch-013 at ef73f3abddbb3786a9d95cc0e4616aeaea5ca3fb;
+    batch-014 at dc70a3cb9267c42c78bc4c356ec28109fb45114f; batch-015 at 10d0148878b3b2e203d2f368ac3b3fd48c8b0e50;
+    batch-016 at 8a2bb4c2441c87fb0eeda6e7623c87c0e0a6c1fd; batch-017 at 952d4d2227f24b9d7a96481536971328f8c9e7c9;
+    batch-018 at 63c8c7d6546a6e5e23c634b191f7dbb9791c6a3c; batch-019 at a14da7a2c18c5f53a33fb69c8556ca6de9526a87;
+    batch-020 at 58ea13ba743688b992e16e34888a75384d259bc7; batch-021 at 27121a6951a72021e2037a04ee1e1424215a61df;
+    batch-022 at 484164d64a30c3578caabf4600044501f6c73ce5; batch-023 at bf8f281b87817f23531ae0fdd2aefa452f4c9242;
+    batch-024 at 01f60cc4160c18fe3e62768ca960a8c76bb60616; batch-025 at 0246872bdbfd520403011891f03194457ebd2b98)
+    cover 305 record paths. Including validated unpublished local review commit(s)
+    da9c0fc6fbdf249f87d3cceba1b83c6cb2ac975d; 2e4943d62d132241cbbe931c3347abb8e45719bd;
+    f67243be00c3d9c891c24c22a32c932ea7bee099; 55a71f32ee7c35ceb6449d1bd1d85954b9609d18;
+    ac3fcf7c6a5710b240a7aa0db1d09bcb2f09529b; 00702985331951f0990ffdc7b352b5a1657160b7;
+    b6ee361647a739487903ad0d184297a280189333; 94d787f848b7b9a1c123f7ae54f1cacedd7f55eb;
+    c6dacdf0e1f79554d56ebfff47b08d3ef1f4c585; 2713fb4cb42716b649bb40a055bf29cf2138dca4;
+    756ecaf67cacd45cb5bf9d7b5666b4fbde632e96; 6a22474e153e8283e66d85844806dbc27784eebb;
+    ee9a05771251fd84096ca40cfee30ea23e064f91; c589a5515b45e7337f41a032609859f3a20fb7f9;
+    b87f4bd08683d7d13c943c409fd2fc191918135b; 43b6868b10bbbe28d4030e9eaf0a06a4400f47dd;
+    95ad98ca67c636454fb543a53f9157b574d64cb6; 538ccd21f618ad8ae64adfe2667af153feae8ff1;
+    08a4a1d5e2d7457ce4696303db2cb67cf3f5f752; 68138e97c6706d7c0fbb0ab30f58d5fd179b6661;
+    8f8d7bc536c122a1caa0f9fe02bd19aa3af2e79b; 896749322d48bf0a8efd3b822d34ff9f6ada7ffc;
+    2d4dd0983f0604f70a485c085e43942b24e520ac; 6f9ec803cc5193aa056ad3e7b42678d05a11e1ad;
+    cad414749af988265991078a351e7bff329f012f; decc32c20475e07ec196d4fb3c930979344ca1f3;
+    00f14ceee7dff47cc5ebdea68fc434e6433bebba; 19ec1cc7e4b21f351a5cdc2b18611dd7361b088e;
+    e12f670fd4896cdce45b65eab2547ef679ef1cf7; 2af17182bdaaee828e308b030b76a675442fba5c;
+    18d3c2d4119314ba267f54e08397c1c889f6407c; 028198be440bc2ac7e50245c4444c30425798739;
+    8130eea18e4e9234bccbc8af19d08f040a3645c8; 0089dcf1bc90bc2737892baa2670dbe64b214810;
+    91b6b1b722fd89902ef210ed30beda1c94a5bd5f; 99d0578fb48bc77c11102c40e2989aa30b2a0dac;
+    2ba88a35fdb646bbe295cdad6c62826e0a187f44; 2f4bacaeedd95045a5e15c309d43c033e408e325;
+    ef616d50f93f5715042a1cd3562d34b2d7f9a127; f4cb59c32d03a12ea6736f618de5acf20a4439d6;
+    ff23e5df0c3487e32ffb957c67675c67c16b41c2; 75ad3a291726b092c359f97917a71cfe8e2e6af8;
+    02b349a5fd82cfb33d9194b5cc7a40ff50f366fd; cfb19dc9d57ec551c66101215d03f6e1d43d0eff;
+    c3d9c57c6538a844da118acc99853d274d0a4806; 8abfd5711bfe4893ca2a72758d6ed38497200e1b;
+    8dd1ec15880ec4357357dac79943ea67382c19bd; 612a48f9fee6d2a47670d8a9dcba8ba7a4a3ef17;
+    9b575fbbb6874c6a70f7461b3fce32d06141cf7a; c022030b5e1a201b57819eb42bb559638014fe9e;
+    b1d3cd26d82f923901ad03edbd671c0756d0ecbd; c95fe22c3576a31202663b274ea8ab708796f5b3;
+    83b626799fbe7a712b670a6cde18587c03c9b642; 67c32e6581cd85d000e501335ed1cea86edb64fd;
+    544e1d260461741d6e33957881d9397ee07b4159; fbc8060b3f156689ff1c9187c0a4f8fb58f02b54;
+    162ff91cc410b6d11c2a228a74fa1763d24eec61; f52add53b1d8cc6ce345f604c076223b6534aba3;
+    751989196f24b1f2a0c1fb0701d8a0812072232f; 5f2e76e40a672c9cff0869bd1603d3696314e210;
+    c2806d7e525fa0f7eb1c525da8c0a811f2a84f4d; 64b8692fe04e57d6de5e8f64d89d69fcf88f5cd6;
+    156c17ab70a878767ae231ed5f823055993c5a39; eec5f399f735fb4e6cfe372a210a6091b8af2509;
+    916ca112e82b09cf0741f3bedace363e4c164cdf; 1094e78cebf5eb94d5757d7a36ebdf535cb11704;
+    403388fd601f7e516781e19472be7d418ef9c678; 83cbeeb06066f2ae99b9e6239078863103e97e85;
+    4274276609c085aa059b09669b018cb10b7113da; feaa20463c425a3fcdcc782599f5ff3133a19067;
+    fcee8eb7470aeb0738fb65262f7c7bd82cf9a34e; 577ae0e39e5bde0e4da363cf41f9f39a37afb356;
+    850a910aabc759168f0e749d313e4c21fb2387ec; 3e66545b045adc938bf9b0b1471532cc0ae266c4;
+    817d5e6fe5d4ca5a9c4cd88ee035c6a3b5de5436; 39e70039bc443da8955862c4a845defe88c5c385;
+    e3e294c90026f72ef87acb583aef9b435dc08d8f; 853e2ca43ae9dc1812a20a68ccecfda15061109d;
+    f99a413f3ac540b5526af7d65c0fea82bb11c881; d03ea4ee80be28aa2fb34602f730170c9541a666;
+    2618b15c61d1e4061f3674a249db897d257b5a9e; 00a57e8acb204780df68a3d9d8429cbd43086c16;
+    ef0d145e14270698802dd649a9c346bab53ed2ca; aadecba057531eff15d0117aa957d71b6efbdcc7;
+    c2283b6ba39c7f66e7eede2a166c94c4692a3ff9; 2a98cb4271fbe15a6280c3039e86243248b7076f;
+    aade04271813734e76a5f381c5e6aa11c48c4586; 33622742735c62c57d5a2356634b6fc922db6f6f;
+    e9e6f0d1043c65d8302c284f41fda4a27fb7b873; 955219ebb51f49d6efeeaff398883ed6c96834a2;
+    81a8175da6a3f1e6fb5f4b4935657190723f9aa0; 272c2a8bd759243561d08a515732c631c8a91540;
+    bef507f5b340a81db4212994a8b0b91f37d806d3; 0eb23e8c8f3888995462c1f1b97cbd44694a823a;
+    42e54e3e2797a3a7b51417dbcebb0b9c4a7b0cf6; 4848fbf8933e623045babe4baed8e4e7c54f6230;
+    43eb98cf14f2542c7e7f602651ccf204a54da0f6; c6737819b8f5bd1a06ddd6853432cdee1bd1bfe0;
+    354bfc21667fb534f5eef295984647af689f6447; c38451d06601b7a1197e7a6962fe21ebf96e0fef;
+    aa7698d0ed63abad4280ed1bd0cdcabe114ed3c2; 83fa541c35bbc36c57ba253240b01ff6b5feade1;
+    036c6b1118d17a5cc3515176f914ef6bb0ec14d7; 40d259197445aa2f47c10bf4058835e362528019;
+    332dc98b4b9fdbedec00b1c809f18f03a630945c; 3f3d5320fdb0f5dbd33ea70f3d7a164eff403575;
+    71b0d4586ae89d103ce97b8e4289f07cb66dc249; 40156bc2beacbb7d4f4a88eea25bb8e63fce6fad;
+    f7235e5f4b93a3ef0a4d541180c1f7ef8fea00a3; 20085d9e39447af672fef4875299f6b8a921e34a;
+    e57f7a6fcdc244ee2c841c7bea6816fc21debd01; 2d3659a9e0f4b900b54ed58d6864f4c8c2685a73;
+    17fab5aa093f688b7742ad179f9c7ff49bbcf01e; 03fe3b878d21da8cf4309a6acfc1c04269daa216;
+    50e8fbee6f1ac7b66da1f68998cd0edbbed8b876; bdab443a280b4395e8ba21cef021465ae13475cc;
+    f6a810c1fb200ac9437dd7d4384ee11a65b8da34; ce1b420fc27a19254091e1be9e09b0113daa4ee5;
+    b553b959240a1f20c73054385ed1c5c034604b29; d17da9f5c93efb7ed50684364197776fcae59560;
+    51f60c7644920159d535217eeee96381a648646a; 3ca593a22c594f6071bb4e47ac3e99c98942bd64;
+    b2b89b7d3e2a195949c1dacb6ac82b9b0082f424; f83270ba96807bf8c58e206407a6b460a97f469a;
+    954dcd112c976a5ae0cc551e121f2f38cc57e469; c11015c15fefb635760fab2097c5eb94fecd4a73;
+    0d273e27cb68c70fcac80432fb25bcb436e6474e; b22e81db4c56b009c01e69fc35aac44fe8bcb810;
+    21a97e06f9e3d1642378903bbb0f46eeeea6cbe6; 8a7064ff6bae6e80524b23b2226166c1468b3215;
+    efb75211d4fe2244704e320456e1df86ee7b6ccc; 36c078b072e242d60b41b7745ea853f2ceb91978;
+    21cda0d469da7ea3344e2cff639769d3666bd720; 0b51d7ca3b8efacd55d046462e8724758561e762;
+    19944f198684bd9a58538009588bfbdc8984ec9d; 985c86c62e2f6efc63016a0199a9e70dd944e9ff;
+    f54bcd34f1d157dd2c670b2886de595577078992; 0ed5bdc586987619444370d7c764c83b5797f2e0;
+    6dab4d17475702064cc410ed6371922af04ccc30; ae199468dbb3c0fb62592d47dab70c4ab05772b0;
+    f6cd12055e2be21fbf493d4314df1dff81b372cc; 31ac56a47da7ed544ae4520fff7ce750813e7034;
+    24299fb4442d552e73b9aac83a0b426b04db996f; 31e5323dbc374acac5ea9457d8897c45e005cdd8;
+    3f88cf969298dc31ef6fb3989ef9848c30ddfe88; c4f7008a4b39a2d921620d4fd8a2911f200c5104;
+    28568157b84b5629cd35e5b5487f64e1ed8e40bd; b3c15845c50aaa2efa07bb959bf93aba57a90421;
+    5c9ba1962d5efa64846a7c2332bd3cc1ec6dea9a; 1121d6a268100f52cde004c841d816c54a1d9ccc;
+    a9415f6d43146eda508fd3cc23ad55e8334232f5; 0f111c6bb0eba1fdcfcb678f8f92e84671daa59d;
+    248b5c2c2d8a2b1afb7ea578fe26b674e4a034d7; 602431f959b4d6f11e7a5855910301a255106898;
+    bd43a4645a72e780a81bc105ad15558f0a01bf9e; b1cb9294920b1947ee7e4e6df5315af4fde29362;
+    0a7fdbc4220b22d292243d3c4deb2fd309acdf06; ac5c862980e9dd2d9a893561309dccb402ef9b09;
+    611619fccabe361dc8a1ec8bac20b8be4cfc3c7b; aa824df8210fc29896a767f92353b14b3d964a62;
+    0995dffcaf7e6ed77f47085503c6a952448078e3; ef7fb1c6811b84a2217f287140cafda7d428cd88;
+    ac227089fa9f0eb74629e2e38897dc8444543a52; 666e80780cd32cbbaee1f0829b34dbedaee4b9b4;
+    9b41564ebe52e7802c334edf61e9f881e116bb9f; f609a4476282f3c553edd935a4d8f9ac99a10fee;
+    b0b6c202330ebfd71d51ef0402796e5dd04f767e; b646dd4039d26d11f599e3561416d73c0be7b843;
+    597e9c2a55a0c9d8fa9e113f312a6173b2bc9f35; 82432688a348af43381148765d9b590f6aaf5a66;
+    eb58f15c55b045db935c8619ff96e710e6b7bec8; b87947eb687d77e3b9b86ef2d6ff4d6630da3826;
+    d0ad72ddf8830d559287e17bf4e00030f153a05c; a0f5e3995ca3019006fec3b5f7d3747a2f365b59;
+    b3d368fb8361b340b409591b008388104329229f; e7033c40002d286de9d2fe2d01a30167ba17ec39;
+    7afd28d004274091810d4ee4563dcedf5a68d41a; 6030deb8a421ae30d56116aacb5ea5b4b1a63ead;
+    8f8e58310c1b0eaa967427cd740a3947b39c4c94; 3e1f6595090a17f7d35e08563d7c46154cf64361;
+    3b0dbb660da34b19e0e030ca58de6d1399f0450d; 155a5d1838b02809edc68caa8ec4971989d86846;
+    5031b2b0b1c40c9f0a6883af6d760454a00a641f; bf5c254bb413a66f3d118185352bf44f69b35822;
+    e46ffbe1a49f9eabfeaba6c26ed81019f9bebd72; 050c5353e5e81f62051cedd24aea95a296b773d0;
+    3403c7e4683d98bbb736cf94f39533da97905bff; 1c9ef0b1e4d0dd4fcdd1f6fce6fb5d939936e631;
+    c447b4fc18bac3d18b9607df80a3936356f09b58; 9de4c998c671789cf2c9369899602d2303d1e2a3;
+    63e2656196b00e1497c8446f386bad9273686877; 2842e66a4ae40efdee18ba41b1f491696d9392f0;
+    6e776e17a17e09a5d7b19901fcf2ee906fde7b92; 85fdd1ce75643be5972849a5bbd197487c930b4e;
+    ad04bb345d060f0a3517f4a5783082f70514cda5; 21b50f88622060b46500f3b117fe0f7de26c5b17;
+    ec993f9363f25285aa1c4f567f06a2bde7f5e14d; 2ad2f8fbdc85436578896aced69aa7c83c99d678;
+    817614e1c96fe20b78dfa7b4c4cfb12991d20d7c; c5782509bc1db9f270562a417569c2c2b934dd4a;
+    8180fe9a9d695ea300cc6f8bc720d0cab0e1a1cc; 070eb4598dd41e4f5acbed0ca68e8a0b3a9f94d5;
+    7e5c4ea95c082b0d0cb0e7322689c215eee07ae8; 820c7994cb1859f761358897f712b65ff42a56fb;
+    428cff4b05b53375498ef07aeedfe0a2dfa2c4fb; 33da19e6ea67ef00aff4e3536e0f2f49a1fbd13d;
+    5dec321e9b23a7ab78730761d62a9b5b1daad927; e4890edadc9a2fa7fa820416e687e6e4cf63f454;
+    b2900a4418acfe00980792e90f81a088fb4d6fd8; 8e71035988efb4723545de950ed5a131b29c1e80;
+    ef2f637804e2252a473d517e8d14af9987d111e0; ed5c87a52c3eb446ecf95d7f9a17afdd097a1b1b;
+    dc3c9d74c81a5e557906e1e3ff3a75d526666871; 838b48e27a4400d3b3440638a518403dbde94d20;
+    f7ca899517ca61774913c60dc72902e4ae9be806; ac6351e1e40e4bb74c21c9b8d372ae9f19287c28;
+    620137f091c6e40fa9b196ceffb1df3bc02902c7; 87a104ced8dd1b59ec62b66bc9d99a452d1c098f;
+    eadad94aaae34548b4f8adbec5f6020681e4f2ef; 8c50d6f27f80ff333e4264fa658994628519b5fb;
+    2712b40085970ae5f505ce0e4c8be3a524828623; 479e68c137bd48873272490aa71e2ce8e2356e68;
+    b599f5fe918f9f12a80fb96bdf7748d6b9f359cd; 12c3bd18bd7a3da8bf79378838d2b1a26e7c71eb;
+    b893093d791b7e7e2bd8793a2af91a1b2739c951; 3b48d9a7fc53f1caf33a2432a79500071c259be6;
+    2655f76966a53e5284cca5f8a19c05a33773c37f; c68d33dcd49e8c4c2afeed30f7f443839ad6577d;
+    fd77168316d07965fc17452151fb6b4f91776012; a64e775a826191019b88d32cd7e364907c8a1903;
+    e21434ea4bb5a0893c6b3b1a33c6cc946a493667; 9e8b419453b901b350334bb5b023f08260c8d607;
+    279083beb55618fc61f1831737d04b1a15a0a099; 399ff67a97ae224b78ab777f1d3cb7217018b554;
+    d1ab9b3b71b3423bae499be9e26e259a6bcc7db8; 484be7398a72b4da712ef5b708a12f7d8cbd04c1;
+    ebd7e9bdd3a22fc28c650f78e1417ccc70394516; 7d6c7fefdc093b05abfaf2140afaf3915d60f463;
+    8fb725a7025d0b39887a5d9bc0d9823ce45c892d; 7501eb6353515005fb04f3aa4520f9dc6cc76a1a;
+    aac35cfe31a3c93e54f08c352428be086040930a; ed664312aefbbd5e6ea7be3b01ddc6b8296135e5;
+    25f4c94a66debdcac66a59d92c348be12a49eada; 3f9add4df33480bc16aea614a73cdd87a5394b48;
+    1c7d16c5ca873556c42f4f05554bf7e96ccee311; 2e181ef20b470cef1232af253b995d6f1128c7d5;
+    724298b92665cf35790d8d387b6b84f9d40d90ea; 431c5555df8a1bb3eff89c9d41536a7e1ba95dc1;
+    0e081bc847ae4c3ffd3e0147bc9942568ddf1505; 1c7fe11bd7b3d7b20efab772d1b1c23eed5a1a2a;
+    f213276f14c7841377202054a80793ce828cbb6d; 1e6260782ba409ee31cac0e59592eb9b274b535e;
+    629d78ba5451ebb10b4e733d58d132ff0b057d99; 4933743899bde2ed693d71764b75ca05c77b0dbb;
+    766b82712db2fc2977d35ded4f8fb4ee5d1297e6; 4dfba713fb5be0f331eca20ff62f6d50466ebae0;
+    10b54a8d53dc093d18c574838933b4e4c3ea3995; 8dd5fc7527369c054d62ef48dd55eb7560be2cae;
+    c70e29a9b5f87199cfdcf1500c4ecf2c405d920b; 22287aa252751c6ce68d3afe347a0a27c703da78;
+    9e20484994542f670db54037fbff1351c54483a5; 53648522d4e3ac086c10b596f6c6aae6243fb3a6;
+    d51bf1c4a60d10bb25abae17c838a77c3093a809; 891c8f90f4004733f7b2906fcd76b0812831f3b0;
+    aac9ff137b2ea80cb5bc21232d9725280ea66fe3, the union covers 2955 record paths,
+    leaving 426466 before this batch. 291 inventories were combined. Unpublished local
+    coverage is explicitly not published or merged main coverage. Snapshot-row context
+    paths are excluded.
+  coverage: full
+  population_size: 1
+  reviewed_target_ids:
+  - EC:2.1.1.346
+targets:
+- target_id: EC:2.1.1.346
+  path: data/traits/function/enzymatic_activity/ec/2-1-1-346-ec2-1-1-346.yaml
+  label: U6 snRNA m(6)A methyltransferase
+  record_class: ProteinTraitRecord
+  kind: generated
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/seed_ec.py
+    role: Maintained EC seed identity, base definition, synonyms, mapping and legacy
+      example emitter
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/enrich_ec_general_defs.py
+    role: Maintained GENERAL definition composer from the EC hierarchy
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/enrich_mechanistic_defs.py
+    role: Maintained MECHANISTIC layer composer from the existing reaction definition
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/build_ec_causal_graphs.py
+    role: Maintained reaction chemistry, mapping and exemplar graph builder with status/history
+      emission
+  - repository: CultureBotAI/proteintraitsmech
+    path: src/proteintraitsmech/schema/proteintraitsmech.yaml
+    role: Authoritative causal-node category schema and semantic contract
+  - repository: CultureBotAI/proteintraitsmech
+    path: .claude/skills/molecular-causal-graphs/SKILL.md
+    role: Maintained molecular graph construction and node-type guidance
+  - repository: CultureBotAI/proteintraitsmech
+    path: .claude/skills/edison-causal-graphs/SKILL.md
+    role: Maintained Edison graph construction, participant typing and status-transition
+      guidance
+checks:
+- check_id: gate-1
+  name: Closed schema
+  command: just validate data/traits/function/enzymatic_activity/ec/2-1-1-346-ec2-1-1-346.yaml
+  exit_code: 0
+  status: passed
+  required: true
+  summary: Single target validated in closed mode.
+  target_ids:
+  - EC:2.1.1.346
+  evidence_ids:
+  - validation-1
+- check_id: gate-2
+  name: Closed schema and applicable source semantics
+  command: just validate-all data/traits/function/enzymatic_activity/ec/2-1-1-339-ec2-1-1-339.yaml
+    data/traits/function/enzymatic_activity/ec/2-1-1-34-ec2-1-1-34.yaml data/traits/function/enzymatic_activity/ec/2-1-1-340-ec2-1-1-340.yaml
+    data/traits/function/enzymatic_activity/ec/2-1-1-341-ec2-1-1-341.yaml data/traits/function/enzymatic_activity/ec/2-1-1-342-ec2-1-1-342.yaml
+    data/traits/function/enzymatic_activity/ec/2-1-1-343-ec2-1-1-343.yaml data/traits/function/enzymatic_activity/ec/2-1-1-344-ec2-1-1-344.yaml
+    data/traits/function/enzymatic_activity/ec/2-1-1-345-ec2-1-1-345.yaml data/traits/function/enzymatic_activity/ec/2-1-1-346-ec2-1-1-346.yaml
+    data/traits/function/enzymatic_activity/ec/2-1-1-347-ec2-1-1-347.yaml
+  exit_code: 0
+  status: passed
+  required: true
+  summary: One shared invocation scanned all ten listed batch targets; target SHA256
+    matches before and after execution. Source-specific checks apply where implemented;
+    this gate does not establish scientific class semantics or independently qualify
+    every legacy protein example.
+  target_ids:
+  - EC:2.1.1.346
+  evidence_ids:
+  - validation-2
+- check_id: gate-3
+  name: Causal graph integrity
+  command: just audit-graphs data/traits/function/enzymatic_activity/ec/2-1-1-346-ec2-1-1-346.yaml
+  exit_code: 0
+  status: passed
+  required: true
+  summary: Structural causal-graph integrity was checked on the exact target; deterministic
+    checks do not independently verify the scientific claims.
+  target_ids:
+  - EC:2.1.1.346
+  evidence_ids:
+  - validation-3
+- check_id: gate-4
+  name: Curation history validity
+  command: just validate-history
+  exit_code: 0
+  status: passed
+  required: true
+  summary: Full curation-history gate; this review adds no history event.
+  target_ids:
+  - EC:2.1.1.346
+  evidence_ids:
+  - validation-4
+- check_id: source-resolution
+  name: Source reference inspection
+  status: passed
+  required: true
+  summary: Identity and focal reaction references resolve in current authoritative/provider
+    captures. Complete declared source scopes, whole selected/local records and exact
+    native inputs were inspected. The human and worm full articles were read with
+    explicit figure-image and separate-supplement limits; two other U6 article requests
+    failed without being treated as article text.
+  target_ids:
+  - EC:2.1.1.346
+  evidence_ids:
+  - iubmb
+  - authority-enzyme
+  - authority-rhea2ec
+  - rdf
+  - protein-Q61J97
+  - protein-Q09357
+  - protein-Q5ZIA0
+  - article-32266935
+  - article-33930289
+evidence:
+- evidence_id: native-01
+  kind: record_content
+  reference: .claude/skills/curate-yaml-record/SKILL.md
+  locator: Complete native context input; exact SHA256 captured by inspect
+  accessed_at: '2026-11-01T07:09:05Z'
+  snapshot_sha256: f28b4fb7ad5b2891ba8569b2f923559e99cec7b18dd42557b6b0e4becb8f4762
+  support: context_only
+  summary: Current maintained rule, schema, owner or dependency input bound by native
+    inspection and prior whole-source continuity; used for review requirements, provenance
+    and emitter attribution, not as experimental biological evidence.
+- evidence_id: native-02
+  kind: record_content
+  reference: .claude/skills/curate-yaml-record/references/review-checklist.md
+  locator: Complete native context input; exact SHA256 captured by inspect
+  accessed_at: '2026-11-01T07:09:05Z'
+  snapshot_sha256: 59f39fad3e6447e7be30da72667befd3d2e383b68bea5f497952f2ab080da90d
+  support: context_only
+  summary: Current maintained rule, schema, owner or dependency input bound by native
+    inspection and prior whole-source continuity; used for review requirements, provenance
+    and emitter attribution, not as experimental biological evidence.
+- evidence_id: native-03
+  kind: record_content
+  reference: .claude/skills/edison-causal-graphs/SKILL.md
+  locator: Complete native context input; exact SHA256 captured by inspect
+  accessed_at: '2026-11-01T07:09:05Z'
+  snapshot_sha256: 2392f62014a428813a328f13e768eb3f08d4c853c9e0d2c439f5379d7f2cb66b
+  support: context_only
+  summary: Current maintained rule, schema, owner or dependency input bound by native
+    inspection and prior whole-source continuity; used for review requirements, provenance
+    and emitter attribution, not as experimental biological evidence.
+- evidence_id: native-04
+  kind: record_content
+  reference: .claude/skills/molecular-causal-graphs/SKILL.md
+  locator: Complete native context input; exact SHA256 captured by inspect
+  accessed_at: '2026-11-01T07:09:05Z'
+  snapshot_sha256: de35c69487283d2b28cae6048cf2c02953012aba41e897680999c4e3bde3dbc1
+  support: context_only
+  summary: Current maintained rule, schema, owner or dependency input bound by native
+    inspection and prior whole-source continuity; used for review requirements, provenance
+    and emitter attribution, not as experimental biological evidence.
+- evidence_id: native-05
+  kind: record_content
+  reference: .claude/skills/review-yaml-record/SKILL.md
+  locator: Complete native context input; exact SHA256 captured by inspect
+  accessed_at: '2026-11-01T07:09:05Z'
+  snapshot_sha256: ac1094d8aef512845dbe56ee041e62e62aeeed32326578ff3f7dd8455495f303
+  support: context_only
+  summary: Current maintained rule, schema, owner or dependency input bound by native
+    inspection and prior whole-source continuity; used for review requirements, provenance
+    and emitter attribution, not as experimental biological evidence.
+- evidence_id: native-06
+  kind: record_content
+  reference: AGENTS.md
+  locator: Complete native context input; exact SHA256 captured by inspect
+  accessed_at: '2026-11-01T07:09:05Z'
+  snapshot_sha256: 8bfd4da2ecf01cbe56cdbfe1e7860a9f343eefdb984ef6775c7031a7c02a3349
+  support: context_only
+  summary: Current maintained rule, schema, owner or dependency input bound by native
+    inspection and prior whole-source continuity; used for review requirements, provenance
+    and emitter attribution, not as experimental biological evidence.
+- evidence_id: native-07
+  kind: record_content
+  reference: LICENSE
+  locator: Complete native context input; exact SHA256 captured by inspect
+  accessed_at: '2026-11-01T07:09:05Z'
+  snapshot_sha256: d920683ada4ab4646467cbe49944e08172d8f10c92ce3e631d6f3460b4b40a52
+  support: context_only
+  summary: Current maintained rule, schema, owner or dependency input bound by native
+    inspection and prior whole-source continuity; used for review requirements, provenance
+    and emitter attribution, not as experimental biological evidence.
+- evidence_id: native-08
+  kind: record_content
+  reference: LICENSE-DATA
+  locator: Complete native context input; exact SHA256 captured by inspect
+  accessed_at: '2026-11-01T07:09:05Z'
+  snapshot_sha256: 9e5f1b3c610b9c2da5c313bf81d577a7d1acec686bdb0384edefa6df0f90cd94
+  support: context_only
+  summary: Current maintained rule, schema, owner or dependency input bound by native
+    inspection and prior whole-source continuity; used for review requirements, provenance
+    and emitter attribution, not as experimental biological evidence.
+- evidence_id: native-09
+  kind: record_content
+  reference: conf/record_review.yaml
+  locator: Complete native context input; exact SHA256 captured by inspect
+  accessed_at: '2026-11-01T07:09:05Z'
+  snapshot_sha256: a776553cee8cbe239d4d00ea27d728c271ee7462a42532ccf7e5bd2a9e285a2b
+  support: context_only
+  summary: Current maintained rule, schema, owner or dependency input bound by native
+    inspection and prior whole-source continuity; used for review requirements, provenance
+    and emitter attribution, not as experimental biological evidence.
+- evidence_id: native-10
+  kind: record_content
+  reference: data/grounding/README.md
+  locator: Complete native context input; exact SHA256 captured by inspect
+  accessed_at: '2026-11-01T07:09:05Z'
+  snapshot_sha256: 83155f235a0cefa98dfaf88ea888f4d65a1ba056587f9869b4fbbd92df1a91c3
+  support: context_only
+  summary: Current maintained rule, schema, owner or dependency input bound by native
+    inspection and prior whole-source continuity; used for review requirements, provenance
+    and emitter attribution, not as experimental biological evidence.
+- evidence_id: native-11
+  kind: record_content
+  reference: data/traits/function/enzymatic_activity/ec/2-1-1-346-ec2-1-1-346.yaml
+  locator: Complete native target input; exact SHA256 captured by inspect
+  accessed_at: '2026-11-01T07:09:05Z'
+  snapshot_sha256: a12c1b7ed5780a230d6d75b1fe04f6188ef551c7a086d06599f1c6e73bba3afd
+  support: supports
+  summary: Entire current selected record, all ordered definitions, mappings, examples,
+    graph nodes/edges and curation history; scientific judgments concern these exact
+    bytes.
+- evidence_id: native-12
+  kind: record_content
+  reference: data/traits/function/enzymatic_activity/ec/2-1-1-ec2-1-1--.yaml
+  locator: Complete native context input; exact SHA256 captured by inspect
+  accessed_at: '2026-11-01T07:09:05Z'
+  snapshot_sha256: f4b4f116efbd2c1e7783ef6c7a367b94e6d89e332e79a78cc9eaa075cae964c2
+  support: context_only
+  summary: Entire current EC ancestor record; used for hierarchy/GENERAL-definition
+    context. Ancestor protein examples are not selected examples for this leaf.
+- evidence_id: native-13
+  kind: record_content
+  reference: data/traits/function/enzymatic_activity/ec/2-1-ec2-1----.yaml
+  locator: Complete native context input; exact SHA256 captured by inspect
+  accessed_at: '2026-11-01T07:09:05Z'
+  snapshot_sha256: 32716fc253b73b542e99356a53f00bd28486c6595d0cfc2ee7c0b872c0ff4c53
+  support: context_only
+  summary: Entire current EC ancestor record; used for hierarchy/GENERAL-definition
+    context. Ancestor protein examples are not selected examples for this leaf.
+- evidence_id: native-14
+  kind: record_content
+  reference: data/traits/function/enzymatic_activity/ec/2-ec2------.yaml
+  locator: Complete native context input; exact SHA256 captured by inspect
+  accessed_at: '2026-11-01T07:09:05Z'
+  snapshot_sha256: c6ae59fb7667626b2a578da2ae849b9b246a6690823e046c63f656b59026cabe
+  support: context_only
+  summary: Entire current EC ancestor record; used for hierarchy/GENERAL-definition
+    context. Ancestor protein examples are not selected examples for this leaf.
+- evidence_id: native-15
+  kind: record_content
+  reference: data/traits/function/enzymatic_activity/rhea/adenosine-in-u6-snrna-s-adenosyl-l-methionine-n-6-methyladenosine-in-u-rhea52808.yaml
+  locator: Complete native context input; exact SHA256 captured by inspect
+  accessed_at: '2026-11-01T07:09:05Z'
+  snapshot_sha256: c09e8f6a95a2295cafb5ef0d34aa37984efbe7a2bc90018cd72db1481124f9ee
+  support: context_only
+  summary: Entire current local GO/Rhea reference record; context and exact source-parent
+    correspondence, not an independent external experiment.
+- evidence_id: native-16
+  kind: record_content
+  reference: data/traits/function/molecular_function/go/u6-snrna-adenine-43-n6-methyltransferase-activity-go0120048.yaml
+  locator: Complete native context input; exact SHA256 captured by inspect
+  accessed_at: '2026-11-01T07:09:05Z'
+  snapshot_sha256: f006197ff02422820fc38c02efb9415ded67bebb40e3d30309210f3cb85b7fc5
+  support: context_only
+  summary: Entire current local GO/Rhea reference record; context and exact source-parent
+    correspondence, not an independent external experiment.
+- evidence_id: native-17
+  kind: record_content
+  reference: docs/fetch-migration.md
+  locator: Complete native context input; exact SHA256 captured by inspect
+  accessed_at: '2026-11-01T07:09:05Z'
+  snapshot_sha256: 11718531ccc1346002cfafbe62e8cfdc3859271ded178c34a17e26dabc70b55c
+  support: context_only
+  summary: Current maintained rule, schema, owner or dependency input bound by native
+    inspection and prior whole-source continuity; used for review requirements, provenance
+    and emitter attribution, not as experimental biological evidence.
+- evidence_id: native-18
+  kind: record_content
+  reference: docs/record-review-profile.md
+  locator: Complete native context input; exact SHA256 captured by inspect
+  accessed_at: '2026-11-01T07:09:05Z'
+  snapshot_sha256: 06cec6693ded193231a378bba04e7c1ad3e295f88903ee8b7c30b3238daab9df
+  support: context_only
+  summary: Current maintained rule, schema, owner or dependency input bound by native
+    inspection and prior whole-source continuity; used for review requirements, provenance
+    and emitter attribution, not as experimental biological evidence.
+- evidence_id: native-19
+  kind: record_content
+  reference: docs/record-reviews.md
+  locator: Complete native context input; exact SHA256 captured by inspect
+  accessed_at: '2026-11-01T07:09:05Z'
+  snapshot_sha256: 452a19ab688276747b7c4308523a14d4d99c1c39ef6909ae8a90b85b7a9b3e9b
+  support: context_only
+  summary: Current maintained rule, schema, owner or dependency input bound by native
+    inspection and prior whole-source continuity; used for review requirements, provenance
+    and emitter attribution, not as experimental biological evidence.
+- evidence_id: native-20
+  kind: record_content
+  reference: download.yaml
+  locator: Complete native context input; exact SHA256 captured by inspect
+  accessed_at: '2026-11-01T07:09:05Z'
+  snapshot_sha256: 63a62092f919dc534d7b5d9087ada35dea39ed88579f3fd281f8f0ffe6ef4417
+  support: context_only
+  summary: Current maintained rule, schema, owner or dependency input bound by native
+    inspection and prior whole-source continuity; used for review requirements, provenance
+    and emitter attribution, not as experimental biological evidence.
+- evidence_id: native-21
+  kind: record_content
+  reference: history/README.md
+  locator: Complete native context input; exact SHA256 captured by inspect
+  accessed_at: '2026-11-01T07:09:05Z'
+  snapshot_sha256: db3db1da49f08244c863689856f31bc764aadb6e629b25aff45b3b4598dbef2c
+  support: context_only
+  summary: Current maintained rule, schema, owner or dependency input bound by native
+    inspection and prior whole-source continuity; used for review requirements, provenance
+    and emitter attribution, not as experimental biological evidence.
+- evidence_id: native-22
+  kind: record_content
+  reference: justfile
+  locator: Complete native context input; exact SHA256 captured by inspect
+  accessed_at: '2026-11-01T07:09:05Z'
+  snapshot_sha256: 44ea312c36abbe090da0315b60a8c0727db9ba5c766607aa77c81bf85c025233
+  support: context_only
+  summary: Current maintained rule, schema, owner or dependency input bound by native
+    inspection and prior whole-source continuity; used for review requirements, provenance
+    and emitter attribution, not as experimental biological evidence.
+- evidence_id: native-23
+  kind: record_content
+  reference: research/uniprot-organism-protein-grounding-plan.md
+  locator: Complete native context input; exact SHA256 captured by inspect
+  accessed_at: '2026-11-01T07:09:05Z'
+  snapshot_sha256: 99f0eded9310561155198b863c6c9ea05aeb145b1d4f76109df000646d2b1a7f
+  support: context_only
+  summary: Current maintained rule, schema, owner or dependency input bound by native
+    inspection and prior whole-source continuity; used for review requirements, provenance
+    and emitter attribution, not as experimental biological evidence.
+- evidence_id: native-24
+  kind: record_content
+  reference: schema/record_review.yaml
+  locator: Complete native context input; exact SHA256 captured by inspect
+  accessed_at: '2026-11-01T07:09:05Z'
+  snapshot_sha256: 229baf9b69118a1fe318e4c31085c0820e4e3d1365e7b04d6ace451b7c35f9bb
+  support: context_only
+  summary: Current maintained rule, schema, owner or dependency input bound by native
+    inspection and prior whole-source continuity; used for review requirements, provenance
+    and emitter attribution, not as experimental biological evidence.
+- evidence_id: native-25
+  kind: record_content
+  reference: scripts/build_docs_index.py
+  locator: Complete native context input; exact SHA256 captured by inspect
+  accessed_at: '2026-11-01T07:09:05Z'
+  snapshot_sha256: 6d1f4b70648cddb3147fe22233c1111e51ac514552444f193c4f2f03dfa6c1ea
+  support: context_only
+  summary: Current maintained rule, schema, owner or dependency input bound by native
+    inspection and prior whole-source continuity; used for review requirements, provenance
+    and emitter attribution, not as experimental biological evidence.
+- evidence_id: native-26
+  kind: record_content
+  reference: scripts/build_ec_causal_graphs.py
+  locator: Complete native context input; exact SHA256 captured by inspect
+  accessed_at: '2026-11-01T07:09:05Z'
+  snapshot_sha256: d5fdfc7fab74cc3b50b3707669bddd6e58b58299a0178528c6748c6f05f37a2d
+  support: context_only
+  summary: Current maintained rule, schema, owner or dependency input bound by native
+    inspection and prior whole-source continuity; used for review requirements, provenance
+    and emitter attribution, not as experimental biological evidence.
+- evidence_id: native-27
+  kind: record_content
+  reference: scripts/build_rhea_causal_graphs.py
+  locator: Complete native context input; exact SHA256 captured by inspect
+  accessed_at: '2026-11-01T07:09:05Z'
+  snapshot_sha256: ac1785a1d65e4f747f3e0f6661a2c97cea8df20aefdbab9bbe12c7e236ded5f8
+  support: context_only
+  summary: Current maintained rule, schema, owner or dependency input bound by native
+    inspection and prior whole-source continuity; used for review requirements, provenance
+    and emitter attribution, not as experimental biological evidence.
+- evidence_id: native-28
+  kind: record_content
+  reference: scripts/deflib.py
+  locator: Complete native context input; exact SHA256 captured by inspect
+  accessed_at: '2026-11-01T07:09:05Z'
+  snapshot_sha256: 5dbb70e6812fef6a19b77b044235cfe31c88369078e2399efa32cfec0aafd929
+  support: context_only
+  summary: Current maintained rule, schema, owner or dependency input bound by native
+    inspection and prior whole-source continuity; used for review requirements, provenance
+    and emitter attribution, not as experimental biological evidence.
+- evidence_id: native-29
+  kind: record_content
+  reference: scripts/enrich_ec_general_defs.py
+  locator: Complete native context input; exact SHA256 captured by inspect
+  accessed_at: '2026-11-01T07:09:05Z'
+  snapshot_sha256: 45708aa03e049d2ab395e6be0d5f5b1816c9ae4707a478a9e3b321ebb675ad97
+  support: context_only
+  summary: Current maintained rule, schema, owner or dependency input bound by native
+    inspection and prior whole-source continuity; used for review requirements, provenance
+    and emitter attribution, not as experimental biological evidence.
+- evidence_id: native-30
+  kind: record_content
+  reference: scripts/enrich_mechanistic_defs.py
+  locator: Complete native context input; exact SHA256 captured by inspect
+  accessed_at: '2026-11-01T07:09:05Z'
+  snapshot_sha256: e4238b8bffc0de3ce84ad0cec3691e0a1af5d45ee6553fca92a21ef04c3afdf3
+  support: context_only
+  summary: Current maintained rule, schema, owner or dependency input bound by native
+    inspection and prior whole-source continuity; used for review requirements, provenance
+    and emitter attribution, not as experimental biological evidence.
+- evidence_id: native-31
+  kind: record_content
+  reference: scripts/record_io.py
+  locator: Complete native context input; exact SHA256 captured by inspect
+  accessed_at: '2026-11-01T07:09:05Z'
+  snapshot_sha256: ebe9153319474f2c7333b8b4709f32b00eddae1d2abe3d6a1420c74356e585bf
+  support: context_only
+  summary: Current maintained rule, schema, owner or dependency input bound by native
+    inspection and prior whole-source continuity; used for review requirements, provenance
+    and emitter attribution, not as experimental biological evidence.
+- evidence_id: native-32
+  kind: record_content
+  reference: scripts/rhea_rdf.py
+  locator: Complete native context input; exact SHA256 captured by inspect
+  accessed_at: '2026-11-01T07:09:05Z'
+  snapshot_sha256: 4a7a05bfdedce442e38cd3da5d4dc83ea5c2796ea1099c6fc804321c4a4c5af9
+  support: context_only
+  summary: Current maintained rule, schema, owner or dependency input bound by native
+    inspection and prior whole-source continuity; used for review requirements, provenance
+    and emitter attribution, not as experimental biological evidence.
+- evidence_id: native-33
+  kind: record_content
+  reference: scripts/seed_ec.py
+  locator: Complete native context input; exact SHA256 captured by inspect
+  accessed_at: '2026-11-01T07:09:05Z'
+  snapshot_sha256: 606eac99b5465ec95f40071de6421c79adcd0394e71d9e7acd7d92eb2b98c98e
+  support: context_only
+  summary: Current maintained rule, schema, owner or dependency input bound by native
+    inspection and prior whole-source continuity; used for review requirements, provenance
+    and emitter attribution, not as experimental biological evidence.
+- evidence_id: native-34
+  kind: record_content
+  reference: scripts/yaml_emit.py
+  locator: Complete native context input; exact SHA256 captured by inspect
+  accessed_at: '2026-11-01T07:09:05Z'
+  snapshot_sha256: 2507aaa5ed8f44634082183aecdde91f259b5700b6530f55a133507a2ca0a388
+  support: context_only
+  summary: Current maintained rule, schema, owner or dependency input bound by native
+    inspection and prior whole-source continuity; used for review requirements, provenance
+    and emitter attribution, not as experimental biological evidence.
+- evidence_id: native-35
+  kind: record_content
+  reference: src/proteintraitsmech/schema/proteintraitsmech.yaml
+  locator: Complete native context input; exact SHA256 captured by inspect
+  accessed_at: '2026-11-01T07:09:05Z'
+  snapshot_sha256: 7d29139f696497dffa018b8d68b3f72d4e1adbadd4f67f7904ddbb4b12275418
+  support: context_only
+  summary: Current maintained rule, schema, owner or dependency input bound by native
+    inspection and prior whole-source continuity; used for review requirements, provenance
+    and emitter attribution, not as experimental biological evidence.
+- evidence_id: iubmb
+  kind: authority
+  reference: https://iubmb.qmul.ac.uk/enzyme/EC2/1/1/346.html
+  locator: Complete normalized delivered HTML text excluding script/style.
+  accessed_at: '2026-11-01T07:14:35.846001Z'
+  snapshot_sha256: 0735fd53907f39d69589ab213b587897854109984d091d542647395fb171f207
+  support: supports
+  summary: 'Complete current EC 2.1.1.346 page: N6 methylation of adenosine in U6
+    snRNA. It cites PMID28525753 and 29051200 and discusses additional RNA/MAT2A functions.
+    Its vertebrate context is complemented by the independently captured worm study;
+    additional RNA activity does not erase the focal U6 class.'
+- evidence_id: protein-Q09357
+  kind: database
+  reference: https://rest.uniprot.org/uniprotkb/Q09357.json
+  locator: Entire delivered UniProt JSON including exact sequence residues and all
+    crossreference databases; sequence SHA256 is additional verification, not a substitute
+    for residues.
+  accessed_at: '2026-11-01T07:14:37.735499Z'
+  snapshot_sha256: fa2d75692cab27264d559a5faaba85313408e065750483933f6f34aa7165504d
+  support: supports
+  summary: 'Complete C. elegans METT-10 entry: focal U6 catalytic activity carries
+    ECO:0000269 PMID33930289 and GO:0120048 has direct-assay attribution. WormBase
+    CE31860/ZK1128.2a maps to Q09357-1 and links the current accession to the protein
+    identifier in the whole article. The separate splice-site RNA activity is retained
+    as broader protein context.'
+- evidence_id: protein-Q5ZIA0
+  kind: database
+  reference: https://rest.uniprot.org/uniprotkb/Q5ZIA0.json
+  locator: Entire delivered UniProt JSON including exact sequence residues and all
+    crossreference databases; sequence SHA256 is additional verification, not a substitute
+    for residues.
+  accessed_at: '2026-11-01T07:14:38.566297Z'
+  snapshot_sha256: da58ec56fb9b4af19fa1275b1ffe64fe7df13ba70827e3636a2001dc5ac849d3
+  support: supports
+  summary: 'Complete chicken METTL16 entry: focal function, catalytic activity and
+    relevant sites are transferred by similarity from human Q86W50. Its cDNA reference
+    establishes sequence provenance rather than a direct catalytic assay. Human U6
+    A43 and VCR experiments are not independently repeated evidence for this chicken
+    accession.'
+- evidence_id: protein-Q61J97
+  kind: database
+  reference: https://rest.uniprot.org/uniprotkb/Q61J97.json
+  locator: Entire delivered UniProt JSON including exact sequence residues and all
+    crossreference databases; sequence SHA256 is additional verification, not a substitute
+    for residues.
+  accessed_at: '2026-11-01T07:14:37.633647Z'
+  snapshot_sha256: ff72ead5afa557488f46549f76cbf2a69b4f7021834209dc827fb8f240d4eced
+  support: supports
+  summary: 'Complete C. briggsae METTL16 entry: focal function/catalytic support is
+    by similarity, including transfer from C. elegans Q09357; the genome publication
+    is not a focal enzymatic assay. Current provider-supported inclusion is preserved
+    with that evidence tier.'
+- evidence_id: paper-28525753
+  kind: primary_source
+  reference: https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:28525753%20AND%20SRC:MED&format=json&resultType=core
+  locator: Entire delivered indexed MED envelope and result, including all bibliography,
+    authors, abstract, access fields and correction presence/value. No full article.
+  accessed_at: '2026-11-01T07:14:40.804784Z'
+  snapshot_sha256: 7cb82f7f29e0bd3b81ab31cce170ebf6ed8bdc4b655aa0abad5208989a9f539e
+  support: supports
+  summary: Complete CORE envelope and abstract report human METTL16-dependent U6 methylation
+    and MAT2A intron-retention/SAM-homeostasis regulation. These human findings establish
+    class context and are not direct assays of all three selected orthologs. The advertised
+    PMC article was not delivered by its attempted XML request.
+- evidence_id: paper-32266935
+  kind: primary_source
+  reference: https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:32266935%20AND%20SRC:MED&format=json&resultType=core
+  locator: Entire delivered indexed MED envelope and result, including all bibliography,
+    authors, abstract, access fields and correction presence/value. No full article.
+  accessed_at: '2026-11-01T07:14:40.059837Z'
+  snapshot_sha256: 04e179c1d1ef1ca1e1719e61400dca68ef5cff75c2b985f4d2501d8625985644
+  support: supports
+  summary: Complete CORE envelope identifies the human METTL16 VCR structural/functional
+    study. The corresponding full PMC7229813 article was also read separately, allowing
+    its empirical binding/methylation evidence to be distinguished from the proposed
+    RNA conformational mechanism.
+- evidence_id: chemical-15378
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/15378/
+  locator: 'Exactly eight complete declared fields: id,chebi_accession,ascii_name,name,definition,names,chemical_data,ontology_relations.
+    Other API fields excluded.'
+  accessed_at: '2026-10-21T18:41:44.104877Z'
+  snapshot_sha256: f34a9e435d0819031a1afea1406458164ca0b89f267c9bf5d2c612f9d3a10e5f
+  support: supports
+  summary: 'Complete declared ChEBI scope for hydron: id, chebi_accession, ascii_name,
+    name, definition, names, chemical_data and ontology_relations. Formula, charge,
+    names and ontology relations support participant correspondence. Other API fields,
+    including separate structure and citation objects, are outside this reading scope;
+    no additional stereochemistry is inferred.'
+- evidence_id: chemical-57856
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/57856/
+  locator: 'Exactly eight complete declared fields: id,chebi_accession,ascii_name,name,definition,names,chemical_data,ontology_relations.
+    Other API fields excluded.'
+  accessed_at: '2026-11-01T07:14:42.257741Z'
+  snapshot_sha256: 6ba3f966e7e653872e6b0d381e8f2fcd84f10bf0923c03bd788e6b58f99d1b8a
+  support: supports
+  summary: 'Complete declared ChEBI scope for S-adenosyl-L-homocysteine: id, chebi_accession,
+    ascii_name, name, definition, names, chemical_data and ontology_relations. Formula,
+    charge, names and ontology relations support participant correspondence. Other
+    API fields, including separate structure and citation objects, are outside this
+    reading scope; no additional stereochemistry is inferred.'
+- evidence_id: chemical-59789
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/59789/
+  locator: 'Exactly eight complete declared fields: id,chebi_accession,ascii_name,name,definition,names,chemical_data,ontology_relations.
+    Other API fields excluded.'
+  accessed_at: '2026-10-28T02:10:02.371430Z'
+  snapshot_sha256: 0752d2a04ac7383ad1ef05e4a1ab277c2aac6d772bb2d6e9f5491eea3117b6e1
+  support: supports
+  summary: 'Complete declared ChEBI scope for S-adenosyl-L-methionine: id, chebi_accession,
+    ascii_name, name, definition, names, chemical_data and ontology_relations. Formula,
+    charge, names and ontology relations support participant correspondence. Other
+    API fields, including separate structure and citation objects, are outside this
+    reading scope; no additional stereochemistry is inferred.'
+- evidence_id: chemical-74411
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/74411/
+  locator: 'Exactly eight complete declared fields: id,chebi_accession,ascii_name,name,definition,names,chemical_data,ontology_relations.
+    Other API fields excluded.'
+  accessed_at: '2026-10-31T17:51:33.934456Z'
+  snapshot_sha256: 369469c830c1f7d4a341c7560afaf46810222f6804389c9833ac6f3e46c8c517
+  support: supports
+  summary: 'Complete declared ChEBI scope for adenosine monophosphate residue: id,
+    chebi_accession, ascii_name, name, definition, names, chemical_data and ontology_relations.
+    Formula, charge, names and ontology relations support participant correspondence.
+    Other API fields, including separate structure and citation objects, are outside
+    this reading scope; no additional stereochemistry is inferred.'
+- evidence_id: chemical-74449
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/74449/
+  locator: 'Exactly eight complete declared fields: id,chebi_accession,ascii_name,name,definition,names,chemical_data,ontology_relations.
+    Other API fields excluded.'
+  accessed_at: '2026-10-31T17:51:34.278614Z'
+  snapshot_sha256: 06bb9f7f4b414bac6239b8b4963701af7e37ac968f4745da4b6431e9cf4ebfde
+  support: supports
+  summary: 'Complete declared ChEBI scope for N6-methyladenosine monophosphate residue:
+    id, chebi_accession, ascii_name, name, definition, names, chemical_data and ontology_relations.
+    Formula, charge, names and ontology relations support participant correspondence.
+    Other API fields, including separate structure and citation objects, are outside
+    this reading scope; no additional stereochemistry is inferred.'
+- evidence_id: go-QuickGO
+  kind: database
+  reference: https://www.ebi.ac.uk/QuickGO/services/ontology/go/terms/GO%3A0120048
+  locator: Complete delivered JSON envelope.
+  accessed_at: '2026-11-01T07:14:42.420166Z'
+  snapshot_sha256: 82280589963e2aad4f2c45e2e71e0353b4862e8b80ff7cf93ad9d1a5e224e8cf
+  support: supports
+  summary: Complete current QuickGO term envelope identifies non-obsolete GO:0120048
+    and the U6 adenine N6-methylation activity, with the human U6 A43 frame and cited
+    studies. This is a reaction/ontology mapping, not evidence that each selected
+    protein was tested.
+- evidence_id: go-OLS
+  kind: database
+  reference: https://www.ebi.ac.uk/ols4/api/ontologies/go/terms?iri=http%3A%2F%2Fpurl.obolibrary.org%2Fobo%2FGO_0120048
+  locator: Complete delivered JSON envelope.
+  accessed_at: '2026-11-01T07:14:42.594164Z'
+  snapshot_sha256: 941c265fd6d6d799fb202c2add77a76aebf6f755ded239453611f2cf901d582e
+  support: supports
+  summary: Complete OLS term envelope independently retains the current U6 methyltransferase
+    name, definition, identifiers and relation metadata. Provider exact-match cross-references
+    do not by themselves replace the record graph closeMatch with scientific identity
+    of entire proteins.
+- evidence_id: paper-29051200
+  kind: primary_source
+  reference: https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:29051200%20AND%20SRC:MED&format=json&resultType=core
+  locator: Entire CORE envelope, including abstract and exact identifiers
+  accessed_at: '2026-11-01T07:20:06.784064Z'
+  snapshot_sha256: 215c58db1471b4dcb1a598eb54c6a93bac135a33bf7d80d47b2d7df09f207016
+  support: supports
+  summary: Complete CORE envelope and abstract explicitly report human METTL16 U6
+    A43 methylation and broader RNA-binding observations. Binding to other RNAs is
+    not automatically catalytic methylation of every bound RNA. The associated PMC5666602
+    request returned an error.
+- evidence_id: paper-33930289
+  kind: primary_source
+  reference: https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:33930289%20AND%20SRC:MED&format=json&resultType=core
+  locator: Entire CORE envelope, including abstract and exact identifiers
+  accessed_at: '2026-11-01T07:22:53.208061Z'
+  snapshot_sha256: 83bdd1baafa20366de38913392c60694f0e9537b3e5b06490bab647fdac4f489
+  support: supports
+  summary: Complete CORE envelope and abstract concern C. elegans METT-10 methylation
+    of SAM-synthetase splice-site RNA. Its full PMC8208822 article, read separately,
+    additionally documents direct biological U6 methylation evidence not stated in
+    that abstract.
+- evidence_id: article-32266935
+  kind: primary_source
+  reference: https://www.ebi.ac.uk/europepmc/webservices/rest/PMC7229813/fullTextXML
+  locator: Entire delivered article text/structure; figure images and separately linked
+    supplement files excluded
+  accessed_at: '2026-11-01T07:20:07.446272Z'
+  snapshot_sha256: 45cbbd9cb14e15401f755c5790232e1321597a212bce63e259349efa3057964e
+  support: supports
+  summary: Whole delivered human METTL16 article, including text, methods, five figure
+    captions, table and 54 references. Recombinant human proteins, coupled SAH-luminescence
+    turnover and gel-shift binding support the VCR contribution; its linker-deletion
+    VCR structure is not a complete enzyme-U6 complex. The bent-U6/transition-region
+    arrangement is a model. Human results are class context for the selected chicken/nematode
+    examples.
+- evidence_id: article-33930289
+  kind: primary_source
+  reference: https://www.ebi.ac.uk/europepmc/webservices/rest/PMC8208822/fullTextXML
+  locator: Entire delivered article text/structure; figure images and separately linked
+    supplement files excluded
+  accessed_at: '2026-11-01T07:26:10.373753Z'
+  snapshot_sha256: 2ef0bbc71d865f5173aa4a497dca4045f47a1979b7ab36e9f713bda6089583c3
+  support: supports
+  summary: Whole delivered worm METT-10 article, including methods, 15 figure objects/captions,
+    resource table and 105 references. U6 m6A-IP-seq and site-specific SCARLET on
+    worm RNA show methylation lost in the mett-10 knockout. Recombinant assays on
+    sams splice-site RNA are separate. Paper CE31860 maps through the current provider
+    to Q09357-1; current sequence-byte identity is not claimed. Chicken and C. briggsae
+    were not independently assayed here.
+- evidence_id: article-access-1
+  kind: primary_source
+  reference: https://www.ebi.ac.uk/europepmc/webservices/rest/PMC5502809/fullTextXML
+  locator: Entire retained error response and HTTP metadata
+  accessed_at: '2026-11-01T07:20:06.281632Z'
+  snapshot_sha256: d30876cbd190a59f0773c9241417be069c6455baeae5491e0ad8d937f00374ee
+  support: unknown
+  summary: The exact attempted article request returned HTTP 500 and 150 bytes of
+    error/challenge content. This response supplies access provenance only and contains
+    no usable article evidence.
+- evidence_id: article-access-2
+  kind: primary_source
+  reference: https://www.ebi.ac.uk/europepmc/webservices/rest/PMC5666602/fullTextXML
+  locator: Entire retained error response and HTTP metadata
+  accessed_at: '2026-11-01T07:26:09.629279Z'
+  snapshot_sha256: c81fe1583a220bb0f0ea1b382553653781231a1950fd7dc4200acae36429c340
+  support: unknown
+  summary: The exact attempted article request returned HTTP 500 and 150 bytes of
+    error/challenge content. This response supplies access provenance only and contains
+    no usable article evidence.
+- evidence_id: authority-enzyme
+  kind: authority
+  reference: https://ftp.expasy.org/databases/enzyme/enzyme.dat
+  locator: Complete selected ENZYME leaf stanza
+  accessed_at: '2026-10-21T18:41:16.449142Z'
+  snapshot_sha256: 6e1f553fcaa15ba7018344d4181012002547cf15febeb9d3a03dacdd75963001
+  support: supports
+  summary: Exact EC:2.1.1.346 leaf stanza supports its label, net reaction and DR
+    catalogue membership. Catalogue DR pointers are not evidence that this repository
+    independently picked textbook archetypes.
+- evidence_id: authority-hierarchy
+  kind: authority
+  reference: https://ftp.expasy.org/databases/enzyme/enzclass.txt
+  locator: Exact EC 2, EC 2.1 and EC 2.1.1 ancestor lines
+  accessed_at: '2026-10-21T18:41:14.445710Z'
+  snapshot_sha256: a7e77777ac5260f6c86e6127211f036f202cbfb8e11bcc5e638979e538a14782
+  support: supports
+  summary: The three classification lines support transferase → one-carbon-group transferase
+    → methyltransferase ancestry.
+- evidence_id: authority-ec2go
+  kind: authority
+  reference: https://current.geneontology.org/ontology/external2go/ec2go
+  locator: Exact selected EC leaf lookup, including a zero-row result where applicable
+  accessed_at: '2026-10-21T18:41:13.615524Z'
+  snapshot_sha256: 1df1674cdc5547d4d25e6a744f628710daa89c52f406374e9174c4f5c4fe6aed
+  support: supports
+  summary: The exact current leaf lookup yields the mapped GO term used by the selected
+    graph; it does not qualify individual protein experiments.
+- evidence_id: authority-rhea2ec
+  kind: authority
+  reference: https://ftp.expasy.org/databases/rhea/tsv/rhea2ec.tsv
+  locator: Exact selected EC leaf mapping rows
+  accessed_at: '2026-10-21T18:41:14.769302Z'
+  snapshot_sha256: 33a62d491eb9f56b4e9e9a5ec2e0b27f5d92432d1afcd3afe101a4b36df331f8
+  support: supports
+  summary: The selected leaf maps to RHEA:52808; the master/directional identifiers
+    are kept distinct.
+- evidence_id: rdf
+  kind: authority
+  reference: https://ftp.expasy.org/databases/rhea/rdf/rhea.rdf.gz
+  locator: Complete selected recursive RDF closure with repeated subject blocks
+  accessed_at: '2026-10-21T18:42:30.539193Z'
+  snapshot_sha256: 8ee48d7044cf3eef1001fa730dae2a491902ab25b259b519d6826796bb8acedf
+  support: supports
+  summary: 'Complete selected RHEA:52808 recursive closure: generic U6 polynucleotide
+    carriers contain AMP and N6-methyl-AMP reactive parts, with SAM, SAH and hydron
+    in the net reaction. The rp1 labels are local reactive-part identifiers rather
+    than sequence coordinates. This archive scope does not supply protein assay evidence
+    or an RNA-binding mechanism.'
+- evidence_id: policy-enzyme
+  kind: authority
+  reference: https://ftp.expasy.org/databases/enzyme/enzuser.txt
+  locator: Complete delivered manual text
+  accessed_at: '2026-10-21T18:41:48.862549Z'
+  snapshot_sha256: 60d7858058e9a18441be2aa389cbc1c65beef9e9e1b62e03369bbdc43a7a1b53
+  support: context_only
+  summary: The full ENZYME manual defines DR entries as external protein-database
+    cross-references; it does not assert repository curator selection.
+- evidence_id: policy-skos
+  kind: authority
+  reference: https://www.w3.org/TR/skos-reference/
+  locator: Complete captured mapping-properties section 10
+  accessed_at: '2026-10-21T18:47:36.600445Z'
+  snapshot_sha256: 3aa00cd16ee4d86d3a19b75501bb317d0b0c134e1f4029e9f3098c4dd3669e4c
+  support: context_only
+  summary: SKOS mapping relations have distinct semantics; a mapping does not establish
+    experimental protein activity.
+- evidence_id: policy-input
+  kind: authority
+  reference: https://www.ebi.ac.uk/ols4/api/ontologies/ro/properties?iri=http%3A%2F%2Fpurl.obolibrary.org%2Fobo%2FRO_0002233
+  locator: Complete captured property envelope
+  accessed_at: '2026-10-21T18:48:12.705565Z'
+  snapshot_sha256: 517a4b1a0e53d9cfb54d4125d6ac5eb27642d4865487edcd529b96cbfdfb3471
+  support: context_only
+  summary: The has-input relation supplies the input role used by the participant
+    graph.
+- evidence_id: policy-output
+  kind: authority
+  reference: https://www.ebi.ac.uk/ols4/api/ontologies/ro/properties?iri=http%3A%2F%2Fpurl.obolibrary.org%2Fobo%2FRO_0002234
+  locator: Complete captured property envelope
+  accessed_at: '2026-10-21T18:48:12.705846Z'
+  snapshot_sha256: dce63cc8c8ebf5b8ec0f524b69eb8c3067ac8a38fb123b7aa4c87b22db632025
+  support: context_only
+  summary: The has-output relation supplies the output role used by the participant
+    graph.
+- evidence_id: policy-enables
+  kind: authority
+  reference: https://www.ebi.ac.uk/ols4/api/ontologies/ro/properties?iri=http%3A%2F%2Fpurl.obolibrary.org%2Fobo%2FRO_0002327
+  locator: Complete captured property envelope
+  accessed_at: '2026-10-21T18:48:12.705614Z'
+  snapshot_sha256: 5bbceaccdeae417c68a2344aac455d7a7607b3f29b5295d909a16de496b49419
+  support: context_only
+  summary: The enables relation expresses the protein-to-activity assertion; its evidence
+    tier still requires separate examination.
+- evidence_id: policy-partof
+  kind: authority
+  reference: https://www.ebi.ac.uk/ols4/api/ontologies/ro/properties?iri=http%3A%2F%2Fpurl.obolibrary.org%2Fobo%2FBFO_0000050
+  locator: Complete captured property envelope
+  accessed_at: '2026-10-21T18:48:12.705225Z'
+  snapshot_sha256: 5edb2a13402e9c1754585f30bd6cae1dd6fe956362c49f3a2e0fd738dd161098
+  support: context_only
+  summary: The part-of property supports the relation of a nucleotide residue to its
+    polynucleotide carrier.
+- evidence_id: attained-structural-checks
+  kind: validation
+  reference: /private/tmp/ptm-record-reviews-20261021/batch-291/ec-contract-structural291-qa.json
+  locator: Entire independent current native-input and 22-check structural gate; original
+    setup failure and successful recovery remain separately attributed
+  accessed_at: '2026-11-01T07:10:53.506876Z'
+  snapshot_sha256: f18fcad19ec67d38d5860d3b7e3578065792473900db74cd45486cac9d6a63e6
+  support: supports
+  summary: The attained current structural gate verifies exact native inputs, successful
+    recovered setup, all 20 target checks and both batch/history checks. It establishes
+    structural validity on unchanged source bytes, not biological truth or human curator
+    sign-off.
+- evidence_id: validation-1
+  kind: validation
+  reference: just validate data/traits/function/enzymatic_activity/ec/2-1-1-346-ec2-1-1-346.yaml
+  locator: Executed 2026-11-01T07:09:55Z through 2026-11-01T07:09:57Z; exit 0
+  accessed_at: '2026-11-01T07:09:57Z'
+  support: supports
+  summary: "=== validate-strict summary ===\n  files scanned:      1\n  files with\
+    \ ERROR:   0\n  total ERROR rows:   0\n  TSV:                reports/instance_validation_failures.tsv"
+- evidence_id: validation-2
+  kind: validation
+  reference: just validate-all data/traits/function/enzymatic_activity/ec/2-1-1-339-ec2-1-1-339.yaml
+    data/traits/function/enzymatic_activity/ec/2-1-1-34-ec2-1-1-34.yaml data/traits/function/enzymatic_activity/ec/2-1-1-340-ec2-1-1-340.yaml
+    data/traits/function/enzymatic_activity/ec/2-1-1-341-ec2-1-1-341.yaml data/traits/function/enzymatic_activity/ec/2-1-1-342-ec2-1-1-342.yaml
+    data/traits/function/enzymatic_activity/ec/2-1-1-343-ec2-1-1-343.yaml data/traits/function/enzymatic_activity/ec/2-1-1-344-ec2-1-1-344.yaml
+    data/traits/function/enzymatic_activity/ec/2-1-1-345-ec2-1-1-345.yaml data/traits/function/enzymatic_activity/ec/2-1-1-346-ec2-1-1-346.yaml
+    data/traits/function/enzymatic_activity/ec/2-1-1-347-ec2-1-1-347.yaml
+  locator: Executed 2026-11-01T07:09:38Z through 2026-11-01T07:10:51Z; exit 0
+  accessed_at: '2026-11-01T07:10:51Z'
+  support: supports
+  summary: "=== validate-strict summary ===\n  files scanned:      10\n  files with\
+    \ ERROR:   0\n  total ERROR rows:   0\n  TSV:                reports/instance_validation_failures.tsv\n\
+    files scanned: 10\nregistry proteins: 13532\nsource evidence objects: 23062\n\
+    qualified record bindings: 23062\nUniProt membership objects: 431\nhierarchy records:\
+    \ 0\nsemantic findings: 0\nTSV: /private/tmp/ptm-record-reviews-20261021/repo/reports/uniprot-grounding/validation.tsv"
+- evidence_id: validation-3
+  kind: validation
+  reference: just audit-graphs data/traits/function/enzymatic_activity/ec/2-1-1-346-ec2-1-1-346.yaml
+  locator: Executed 2026-11-01T07:09:57Z through 2026-11-01T07:09:57Z; exit 0
+  accessed_at: '2026-11-01T07:09:57Z'
+  support: supports
+  summary: 'causal-graph audit: 1 records, 1 graphs, 12 nodes, 11 edges | grounded
+    nodes 12/12, snippet-cited edges 11/11 | 0 errors, 0 warnings'
+- evidence_id: validation-4
+  kind: validation
+  reference: just validate-history
+  locator: Executed 2026-11-01T07:10:51Z through 2026-11-01T07:10:53Z; exit 0
+  accessed_at: '2026-11-01T07:10:53Z'
+  support: supports
+  summary: No issues found
+assessments:
+- area: identity
+  outcome: supported
+  summary: This class is U6 snRNA adenosine N6-methylation, distinct from methylation
+    of mRNA substrates by the same METTL16 proteins. The base/MECHANISTIC definitions,
+    GO:0120048 and RHEA:52808 agree; the GENERAL layer and EC 2 → EC 2.1 → EC 2.1.1
+    ancestry are appropriate.
+  evidence_ids:
+  - native-11
+  - iubmb
+  - authority-enzyme
+  - authority-hierarchy
+  - rdf
+  target_ids:
+  - EC:2.1.1.346
+  assessment_id: assessment-1
+  topic: Source identity and protein-trait scope
+- area: nomenclature
+  outcome: supported
+  summary: The accepted U6 snRNA m(6)A methyltransferase label identifies the focal
+    reaction. The human A43 frame in GO/literature is not a universal numeric coordinate
+    for every organism. The target reaction and reactive-part nodes do not assert
+    such a cross-species coordinate.
+  evidence_ids:
+  - native-11
+  - iubmb
+  - authority-enzyme
+  - go-QuickGO
+  - go-OLS
+  target_ids:
+  - EC:2.1.1.346
+  assessment_id: assessment-2
+  topic: Trait nomenclature
+- area: scope
+  outcome: concern
+  summary: The focal reaction class is supported, but the current REVIEWED lifecycle
+    flag encodes an automatic graph-generation transition rather than documented curator
+    sign-off. This agent review is not human approval.
+  evidence_ids:
+  - native-11
+  - native-35
+  - native-26
+  - native-03
+  target_ids:
+  - EC:2.1.1.346
+  assessment_id: assessment-3
+  topic: Requirement scope and scientific status
+- area: grounding
+  outcome: concern
+  summary: Q09357 has current direct provider attribution and independent whole-article
+    support for METT-10-dependent U6 methylation in C. elegans. The paper identifies
+    CE31860, linked by current WormBase cross-reference to Q09357-1. Its U6 evidence
+    is knockout plus site-specific RNA analysis, distinct from its recombinant sams-RNA
+    assays. Q61J97 and Q5ZIA0 remain similarity-supported; the human VCR study does
+    not independently assay them.
+  evidence_ids:
+  - native-11
+  - authority-enzyme
+  - protein-Q61J97
+  - protein-Q09357
+  - protein-Q5ZIA0
+  - article-33930289
+  target_ids:
+  - EC:2.1.1.346
+  assessment_id: assessment-4
+  topic: Source grounding and trait associations
+- area: evidence
+  outcome: supported
+  summary: All declared current provider/indexed scopes were read in full, with exact
+    URL/hash/original UTC retained. Catalogue membership, provider attribution, direct
+    experimental findings and inferred features remain distinct. Whole PMC7229813
+    and PMC8208822 delivered text, captions, tables and references were read. Figure
+    pixels, linked raw datasets and separately linked supplementary files were not
+    inspected; inline supplementary figure captions in PMC8208822 were read.
+  evidence_ids:
+  - iubmb
+  - protein-Q09357
+  - protein-Q5ZIA0
+  - protein-Q61J97
+  - paper-28525753
+  - paper-32266935
+  - chemical-15378
+  - chemical-57856
+  - chemical-59789
+  - chemical-74411
+  - chemical-74449
+  - go-QuickGO
+  - go-OLS
+  - paper-29051200
+  - paper-33930289
+  - article-32266935
+  - article-33930289
+  - authority-enzyme
+  - authority-hierarchy
+  - authority-ec2go
+  - authority-rhea2ec
+  - rdf
+  - policy-enzyme
+  - policy-skos
+  - policy-input
+  - policy-output
+  - policy-enables
+  - policy-partof
+  - attained-structural-checks
+  target_ids:
+  - EC:2.1.1.346
+  assessment_id: assessment-5
+  topic: Class-level evidence and scientific scope
+- area: completeness
+  outcome: supported
+  summary: The complete selected record, all definitions and ancestry, mappings, examples,
+    participant graph and history were reviewed. Reaction identity is resolved within
+    the declared evidence scope. Optional unavailable full texts limit experimental
+    detail without preventing the bounded current conclusions.
+  evidence_ids:
+  - native-11
+  - iubmb
+  - rdf
+  - protein-Q61J97
+  - protein-Q09357
+  - protein-Q5ZIA0
+  target_ids:
+  - EC:2.1.1.346
+  assessment_id: assessment-6
+  topic: Protein trait class completeness
+- area: schema
+  outcome: supported
+  summary: Actual closed-schema, scoped semantic, graph-integrity and history checks
+    passed on these unchanged captured inputs. Structural success does not establish
+    biological class semantics, experimental support or curator approval.
+  evidence_ids:
+  - native-11
+  - native-24
+  - native-35
+  - attained-structural-checks
+  target_ids:
+  - EC:2.1.1.346
+  assessment_id: assessment-7
+  topic: Trait schema
+- area: consistency
+  outcome: supported
+  summary: Current GO and Rhea definitions support the focal U6 mapping. IUBMB vertebrate
+    context does not exclude the direct worm U6 evidence in the 2021 article. Human
+    VCR binding/turnover results are empirical, while the proposed bent-U6 arrangement
+    is inferred. Additional sams/MAT2A RNA methylation remains a separate substrate
+    activity of the protein.
+  evidence_ids:
+  - native-11
+  - authority-ec2go
+  - authority-rhea2ec
+  - rdf
+  - go-QuickGO
+  - go-OLS
+  - article-32266935
+  - article-33930289
+  - iubmb
+  target_ids:
+  - EC:2.1.1.346
+  assessment_id: assessment-8
+  topic: Trait hierarchy and source relationships
+- area: provenance
+  outcome: concern
+  summary: Current snapshots retain original acquisition timestamps and source hashes,
+    including reused bulk resources. The confirmed defect concerns CURATOR on automatic
+    ENZYME DR imports; it does not imply that the linked protein identity is false.
+  evidence_ids:
+  - native-11
+  - native-33
+  - native-35
+  - authority-enzyme
+  - policy-enzyme
+  - protein-Q61J97
+  - protein-Q09357
+  - protein-Q5ZIA0
+  target_ids:
+  - EC:2.1.1.346
+  assessment_id: assessment-9
+  topic: Source attribution and release provenance
+- area: representation
+  outcome: supported
+  summary: FUNCTION/FUNC_ENZYMATIC_ACTIVITY remains a reaction class. Generic U6 polynucleotide
+    carrier nodes and their nucleotide-residue parts are supported by Rhea and permitted
+    by the schema. Whole-protein VCR/orthology context and other RNA substrates do
+    not redefine these class-level participant nodes.
+  evidence_ids:
+  - native-11
+  - native-35
+  - native-04
+  - rdf
+  target_ids:
+  - EC:2.1.1.346
+  assessment_id: assessment-10
+  topic: Defining representation and axis/category
+- area: graph
+  outcome: supported
+  summary: All eleven current edges match the Rhea U6 carrier/reactive-part chemistry,
+    ec2go source row and ENZYME DR accessions. The AMP and N6-methyl-AMP reactive
+    groups are part of generic U6 polynucleotide carriers; rp1 is a local reactive-part
+    identifier, not nucleotide position 1. The RESIDUE category is not amino-acid-only.
+    Independent atom/charge balance supports the focal net methylation, not a detailed
+    RNA-binding mechanism.
+  evidence_ids:
+  - native-11
+  - rdf
+  - authority-enzyme
+  - authority-ec2go
+  - policy-input
+  - policy-output
+  - policy-enables
+  - policy-partof
+  target_ids:
+  - EC:2.1.1.346
+  assessment_id: assessment-11
+  topic: Causal mechanism evidence
+- area: ownership
+  outcome: supported
+  summary: The seven current owner routes identify the maintained EC seeder, GENERAL
+    and MECHANISTIC definition composers, reaction graph builder, authoritative schema
+    and two graph-guidance skills. Correct the emitter/guidance for reproducibility
+    while preserving source-backed reaction content and append-only history.
+  evidence_ids:
+  - native-33
+  - native-29
+  - native-30
+  - native-26
+  - native-35
+  - native-03
+  - native-04
+  target_ids:
+  - EC:2.1.1.346
+  assessment_id: assessment-12
+  topic: Maintained trait emitter
+findings:
+- issue_key: automated-reviewed-status
+  category: scope
+  severity: major
+  certainty: confirmed
+  title: Automated graph generation is recorded as curator sign-off
+  description: 'mapping_status is REVIEWED and the sole current history entry states
+    SEEDED -> REVIEWED with llm_assisted: true. The maintained builder performs that
+    replacement when it adds a graph, and graph guidance directs the same transition.
+    The schema reserves REVIEWED for curator sign-off on label, definition and parents;
+    successful generation and structural validation do not document that sign-off.'
+  evidence_ids:
+  - native-11
+  - native-35
+  - native-26
+  - native-03
+  - native-04
+  finding_id: F1
+  status: open
+  target_ids:
+  - EC:2.1.1.346
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/seed_ec.py
+    role: Maintained EC seed identity, base definition, synonyms, mapping and legacy
+      example emitter
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/enrich_ec_general_defs.py
+    role: Maintained GENERAL definition composer from the EC hierarchy
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/enrich_mechanistic_defs.py
+    role: Maintained MECHANISTIC layer composer from the existing reaction definition
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/build_ec_causal_graphs.py
+    role: Maintained reaction chemistry, mapping and exemplar graph builder with status/history
+      emission
+  - repository: CultureBotAI/proteintraitsmech
+    path: src/proteintraitsmech/schema/proteintraitsmech.yaml
+    role: Authoritative causal-node category schema and semantic contract
+  - repository: CultureBotAI/proteintraitsmech
+    path: .claude/skills/molecular-causal-graphs/SKILL.md
+    role: Maintained molecular graph construction and node-type guidance
+  - repository: CultureBotAI/proteintraitsmech
+    path: .claude/skills/edison-causal-graphs/SKILL.md
+    role: Maintained Edison graph construction, participant typing and status-transition
+      guidance
+  rule_id: ProteinTraitRecord field checklist
+  native_severity: major
+  normalization_reason: The finding materially changes the meaning, scope, grounding
+    or representation of a defining assertion.
+- issue_key: imported-dr-curator-provenance
+  category: provenance
+  severity: minor
+  certainty: confirmed
+  title: Imported ENZYME DR examples are labeled curator-picked
+  description: 'Each canonical_examples entry explicitly notes an ExPASy ENZYME DR
+    cross-reference but has source: CURATOR. The current seeder takes the first up
+    to three DR entries and emits this value; the enum defines it as a curator-picked
+    archetype. The source-resolved proteins remain supported at their stated evidence
+    tiers, but the repository selection provenance is inaccurate.'
+  evidence_ids:
+  - native-11
+  - native-35
+  - native-33
+  - authority-enzyme
+  - policy-enzyme
+  - protein-Q61J97
+  - protein-Q09357
+  - protein-Q5ZIA0
+  finding_id: F2
+  status: open
+  target_ids:
+  - EC:2.1.1.346
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/seed_ec.py
+    role: Maintained EC seed identity, base definition, synonyms, mapping and legacy
+      example emitter
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/enrich_ec_general_defs.py
+    role: Maintained GENERAL definition composer from the EC hierarchy
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/enrich_mechanistic_defs.py
+    role: Maintained MECHANISTIC layer composer from the existing reaction definition
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/build_ec_causal_graphs.py
+    role: Maintained reaction chemistry, mapping and exemplar graph builder with status/history
+      emission
+  - repository: CultureBotAI/proteintraitsmech
+    path: src/proteintraitsmech/schema/proteintraitsmech.yaml
+    role: Authoritative causal-node category schema and semantic contract
+  - repository: CultureBotAI/proteintraitsmech
+    path: .claude/skills/molecular-causal-graphs/SKILL.md
+    role: Maintained molecular graph construction and node-type guidance
+  - repository: CultureBotAI/proteintraitsmech
+    path: .claude/skills/edison-causal-graphs/SKILL.md
+    role: Maintained Edison graph construction, participant typing and status-transition
+      guidance
+  rule_id: ProteinTraitRecord field checklist
+  native_severity: minor
+  normalization_reason: The core identity is intact; bounded wording, completeness
+    or interpretation needs follow-up.
+actions:
+- action_id: A1
+  description: Separate graph-generation completion from curator approval in the maintained
+    builder and both graph-guidance workflows. Preserve the historical LLM-assisted
+    event; record an append-only status correction or a distinct authorized curator
+    sign-off after the required review.
+  finding_ids:
+  - F1
+  target_ids:
+  - EC:2.1.1.346
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/seed_ec.py
+    role: Maintained EC seed identity, base definition, synonyms, mapping and legacy
+      example emitter
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/enrich_ec_general_defs.py
+    role: Maintained GENERAL definition composer from the EC hierarchy
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/enrich_mechanistic_defs.py
+    role: Maintained MECHANISTIC layer composer from the existing reaction definition
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/build_ec_causal_graphs.py
+    role: Maintained reaction chemistry, mapping and exemplar graph builder with status/history
+      emission
+  - repository: CultureBotAI/proteintraitsmech
+    path: src/proteintraitsmech/schema/proteintraitsmech.yaml
+    role: Authoritative causal-node category schema and semantic contract
+  - repository: CultureBotAI/proteintraitsmech
+    path: .claude/skills/molecular-causal-graphs/SKILL.md
+    role: Maintained molecular graph construction and node-type guidance
+  - repository: CultureBotAI/proteintraitsmech
+    path: .claude/skills/edison-causal-graphs/SKILL.md
+    role: Maintained Edison graph construction, participant typing and status-transition
+      guidance
+  acceptance_checks:
+  - Graph construction alone does not promote a seeded record to REVIEWED.
+  - The selected record has an accurate lifecycle status and an append-only explanation;
+    the original event remains traceable.
+  - The builder, schema meaning and graph guidance agree on the explicit sign-off
+    prerequisite.
+- action_id: A2
+  description: Represent the actual ENZYME DR import process in the maintained emitter
+    and example provenance, using a reviewed schema-compatible mechanism. Preserve
+    exact accessions and direct-versus-transferred support; use CURATOR only after
+    an explicit documented curator selection.
+  finding_ids:
+  - F2
+  target_ids:
+  - EC:2.1.1.346
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/seed_ec.py
+    role: Maintained EC seed identity, base definition, synonyms, mapping and legacy
+      example emitter
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/enrich_ec_general_defs.py
+    role: Maintained GENERAL definition composer from the EC hierarchy
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/enrich_mechanistic_defs.py
+    role: Maintained MECHANISTIC layer composer from the existing reaction definition
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/build_ec_causal_graphs.py
+    role: Maintained reaction chemistry, mapping and exemplar graph builder with status/history
+      emission
+  - repository: CultureBotAI/proteintraitsmech
+    path: src/proteintraitsmech/schema/proteintraitsmech.yaml
+    role: Authoritative causal-node category schema and semantic contract
+  - repository: CultureBotAI/proteintraitsmech
+    path: .claude/skills/molecular-causal-graphs/SKILL.md
+    role: Maintained molecular graph construction and node-type guidance
+  - repository: CultureBotAI/proteintraitsmech
+    path: .claude/skills/edison-causal-graphs/SKILL.md
+    role: Maintained Edison graph construction, participant typing and status-transition
+      guidance
+  acceptance_checks:
+  - Re-emission does not describe an automatic DR import as a curator-picked archetype.
+  - All current valid accession links and provider evidence tiers remain traceable.
+  - Any provenance vocabulary change passes the maintained closed schema and source
+    semantics.
+limitations:
+- Whole PMC7229813 and PMC8208822 delivered text, captions, tables and references
+  were read. Figure pixels, linked raw datasets and separately linked supplementary
+  files were not inspected; inline supplementary figure captions in PMC8208822 were
+  read.
+- PMC5502809 and PMC5666602 XML requests returned HTTP 500 error envelopes. Their
+  complete CORE abstracts remain available; no content is inferred from the failed
+  article requests.
+- The current accession link to the worm article is composed through CE31860; no claim
+  equates current sequence bytes with the historical experimental construct. Chicken
+  Q5ZIA0 and C. briggsae Q61J97 remain transferred examples.
+- Human VCR-domain and RNA-binding models are not generalized to nematode proteins
+  lacking vertebrate-conserved regions. The paper does not establish global splicing
+  impairment from U6 methylation loss or physiological use of every candidate mammalian
+  splice-site substrate.
+- This is an agent scientific review of unchanged records, not human curator sign-off.
+  Source acquisition and native operations were performed by ROOT; this proposal performs
+  none.
+tags:
+- unreviewed-path-order
+- batch-291
+- ec
+```
